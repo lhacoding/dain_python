@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="고1 정보가 쉬워지는 파이썬 2부 3장 집필 초안: 정수, 실수, 산술 연산자, 몫, 나머지, 문자열">
+<title>고1 정보가 쉬워지는 파이썬 | 2부 · 3장 숫자와 문자열의 규칙 이해하기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1D23; --body:#33383F; --paper:#FFFFFF; --wash:#F7F8F9;
+  --blue:#2E7CC4; --blue-d:#1F5E99; --yellow:#C9911A;
+  --code:#15181E; --muted:#7A818B; --line:#DFE2E6;
+  --sans:'IBM Plex Sans KR',system-ui,sans-serif;
+  --mono:'JetBrains Mono','D2Coding',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--body);font-family:var(--sans);
+  line-height:1.75;font-size:15.5px;-webkit-font-smoothing:antialiased}
+
+.wrap{display:flex;min-height:100vh;align-items:flex-start}
+.sidebar{width:272px;flex:0 0 272px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--wash);border-right:1px solid var(--line);padding:0 0 40px}
+.brand{padding:20px 20px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+.brand .tgt{display:block;font-size:11px;color:var(--blue);margin-bottom:5px}
+.brand .bk{display:block;font-weight:700;font-size:16px;line-height:1.4;color:var(--ink)}
+.brand .sub2{display:block;margin-top:7px;font-size:11.5px;color:var(--muted);line-height:1.55}
+.brand .by{display:block;margin-top:9px;font-size:11.5px;color:var(--muted)}
+.navlabel{padding:14px 20px 10px;border-bottom:1px solid var(--line)}
+.navlabel .part{display:block;font-size:11px;font-weight:700;color:var(--blue);margin-bottom:3px}
+.navlabel .chapter{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.toc{list-style:none;margin:0;padding:0}
+.toc a{display:flex;gap:9px;padding:8px 20px;text-decoration:none;color:var(--body);font-size:14px}
+.toc a:hover{background:#EDEFF2}
+.toc a .n{font-family:var(--mono);font-size:12px;color:var(--muted);flex:0 0 30px}
+.toc a.on{background:var(--blue-d);color:#FFF;font-weight:500}
+.toc a.on .n{color:#BBD8F0}
+
+.main{flex:1;min-width:0;display:flex;justify-content:center;padding:0 44px 90px}
+.page{width:100%;max-width:720px;padding-top:38px}
+
+.banner{margin:0 0 26px}
+.banner .bmark{display:none}
+.partkicker{display:block;margin-bottom:10px;color:var(--blue-d);font-size:12px;font-weight:700;
+  letter-spacing:-.01em}
+h1{margin:0;font-size:25px;font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.4}
+h1 .num{border-bottom:3px solid var(--blue);padding-bottom:5px;margin-right:7px}
+h2{font-size:18px;font-weight:700;letter-spacing:-.025em;margin:44px 0 14px;color:var(--ink);
+  padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 .qn{color:var(--blue);margin-right:6px}
+h3{font-size:15.5px;font-weight:600;margin:26px 0 7px;color:var(--ink)}
+.lede{font-size:16px;color:var(--ink);margin:0 0 8px}
+p{margin:0 0 13px}
+strong{font-weight:600;color:var(--ink)}
+code{font-family:var(--mono);font-size:.88em;background:#EFF1F3;color:#2A5F8F;padding:1px 5px;border-radius:3px}
+
+.ask{border:1px solid var(--line);border-radius:4px;background:var(--wash);
+  padding:13px 17px;margin:0 0 26px;font-size:15.5px;color:var(--ink)}
+.ask .who{display:block;font-size:11.5px;color:var(--blue);margin-bottom:5px;font-weight:600}
+
+.codewrap{margin:14px 0}
+.codehead{font-size:12px;color:var(--muted);margin-bottom:5px}
+pre{margin:0;background:var(--code);color:#E4E7EC;border-radius:4px;padding:14px 17px;
+  overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.7}
+pre .c{color:#A3ADBD} pre .s{color:#E5C07B} pre .k{color:#C678DD}
+pre .f{color:#61AFEF} pre .b{color:#98C379}
+pre .bl{display:inline-block;min-width:2.2em;height:1.15em;background:#B9BFC9;
+  border-radius:2px;vertical-align:-.16em;margin:0 2px}
+pre .bl[data-a]{cursor:pointer;text-align:center;color:#15181E;font-weight:500;
+  line-height:1.15em;padding:0 5px;transition:background .12s}
+pre .bl[data-a]:hover{background:#D5DAE1}
+pre .bl.ok{background:#7BC47F;color:#0E2E12}
+pre .bl.no{background:#E38B7E;color:#3A0F08}
+.blmenu{
+  position:fixed;z-index:99;background:var(--paper);border:1px solid var(--line);
+  border-radius:5px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:5px;
+  max-height:270px;overflow-y:auto;min-width:132px;
+}
+.blmenu button{
+  display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  font-family:var(--mono);font-size:13px;color:var(--ink);padding:6px 10px;border-radius:3px;
+}
+.blmenu button:hover{background:var(--wash)}
+.blhint{margin:-6px 0 16px;font-size:13px;color:var(--muted)}
+.out{border:1px solid #D5D9E0;border-radius:4px;
+  background:#F5F6F8;padding:11px 17px 12px;margin:8px 0 14px;font-family:var(--mono);
+  font-size:13.5px;white-space:pre-wrap;line-height:1.7;color:var(--ink)}
+.out::before{content:'실행 결과';display:block;font-family:var(--sans);font-size:11px;
+  font-weight:600;color:#5F6875;margin-bottom:5px}
+.pair{margin:0 0 18px}
+.pair pre{border-radius:4px 4px 0 0}
+.pair .out{margin:0;border-radius:0 0 4px 4px;border-top:none}
+
+figure{margin:18px 0 20px}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.6}
+figcaption b{color:var(--ink);font-weight:600}
+
+.predict{border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin:18px 0}
+.predict .ttl{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:9px}
+.predict pre{margin-bottom:11px}
+.picks{display:flex;gap:7px;flex-wrap:wrap}
+.pick{flex:1 1 118px;border:1px solid var(--line);border-radius:3px;background:var(--wash);
+  padding:9px 11px;font-family:var(--mono);font-size:13px;white-space:pre-wrap;line-height:1.6}
+.pick .no{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}
+
+.note{border:1px solid var(--line);border-radius:4px;background:var(--wash);
+  padding:13px 17px;margin:18px 0;font-size:15px}
+.note .ttl{font-weight:600;font-size:14px;margin-bottom:6px;color:var(--ink)}
+.note p:last-child,.note ul{margin-bottom:0}
+.key{border:1px solid #E3D5AE;background:#FCFAF3;border-radius:4px;padding:14px 18px;margin:30px 0 8px}
+.key .ttl{font-size:12px;font-weight:600;color:#96700F;margin-bottom:7px}
+.key ul{margin:0;padding-left:17px} .key li{margin-bottom:3px}
+.warn{border:1px solid #E8CCC5;background:#FCF7F5;border-radius:4px;padding:13px 17px;margin:18px 0;font-size:15px}
+.warn .ttl{font-weight:600;font-size:13.5px;color:#A8412A;margin-bottom:5px}
+
+ul,ol{margin:0 0 14px;padding-left:20px} li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left}
+th{background:var(--wash);font-weight:600;font-size:13.5px;color:var(--ink)}
+
+.sumtbl{font-size:14px}
+.sumtbl th:first-child{width:180px}
+.sumtbl td{vertical-align:top;padding:12px 14px}
+.sumtbl td:first-child{font-weight:600;color:var(--ink)}
+.sumtbl .no{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:700;margin-right:7px}
+.sumtbl ul{margin:0;padding-left:18px;line-height:1.65}
+.sumtbl li{margin-bottom:2px}
+.bank{border:1px solid var(--line);border-radius:4px;padding:13px 17px;margin:16px 0}
+.bank .ttl{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:9px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:13px;background:var(--wash);border:1px solid var(--line);
+  border-radius:3px;padding:4px 10px;color:var(--ink)}
+details{border:1px solid var(--line);border-radius:4px;padding:11px 17px;margin:16px 0}
+details summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--blue-d)}
+details[open] summary{margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+details p:last-child{margin-bottom:0}
+
+.step{display:flex;gap:13px;margin-bottom:2px}
+.step .num{flex:0 0 22px;height:22px;border-radius:3px;background:var(--blue-d);color:#FFF;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;margin-top:6px}
+.step .body{flex:1;min-width:0}
+.step .body h3{margin-top:1px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:56px;
+  border-top:1px solid var(--line);padding-top:20px}
+.pager a{flex:1;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  padding:11px 15px;color:var(--body)}
+.pager a:hover{border-color:var(--blue)}
+.pager .dir{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}
+.pager .t{font-weight:600;font-size:13.5px;color:var(--ink)}
+.pager .next{text-align:right} .pager .ph{flex:1}
+.footnote{margin-top:30px;font-size:11.5px;color:var(--muted)}
+
+.mobbar{display:none}
+@media (max-width:980px){
+  .wrap{flex-direction:column}
+  .sidebar{position:static;width:100%;flex:none;height:auto;border-right:none;
+    border-bottom:1px solid var(--line);padding-bottom:10px}
+  .sidebar.collapsed .navlabel,.sidebar.collapsed .toc{display:none}
+  .main{padding:0 18px 60px} .page{padding-top:26px}
+  h1{font-size:21px} h2{font-size:17px;margin-top:34px}
+  .mobbar{display:block;margin:10px 18px 0;padding:7px 12px;border:1px solid var(--line);
+    border-radius:4px;background:var(--paper);font-size:13px;cursor:pointer;color:var(--ink);font-family:var(--sans)}
+  .picks{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar collapsed" id="sb">
+    <div class="brand">
+      <span class="tgt">예비 고1을 위한</span>
+      <span class="bk">고1 정보가 쉬워지는 파이썬</span>
+      <span class="sub2">스크래치를 몰라도 그림으로 원리를 보고,<br>파이썬 코드로 옮길 수 있습니다.</span>
+      <span class="by">이현아 · 한다인</span>
+    </div>
+    <button class="mobbar" id="mob">목차</button>
+    <div class="navlabel">
+      <span class="part">2부 데이터를 저장하고 계산하기</span>
+      <span class="chapter">3장 숫자와 문자열의 규칙 이해하기</span>
+    </div>
+    <ul class="toc" id="toc"></ul>
+  </aside>
+  <main class="main"><div class="page" id="pg"></div></main>
+</div>
+<script>
+const P=[{"n":"3장","t":"들어가며","h":"\n<div class=\"banner\"><h1><span class=\"num\">3장</span>숫자와 문자열의 규칙 이해하기</h1></div>\n\n<p class=\"lede\">파이썬은 숫자와 문자열을 서로 다른 자료형으로 구별한다. 숫자는 계산하고 문자열은 이어 붙이기 때문에 같은 연산자를 사용해도 결과가 달라질 수 있다.</p>\n\n<div class=\"out\">숫자 5와 3을 더하면 8\n문자열 '5'와 '3'을 더하면 53</div>\n\n<div class=\"codewrap\">\n  <div class=\"codehead\">완성할 코드</div>\n  <pre><span class=\"b\">x</span> = <span class=\"s\">5</span>\n<span class=\"b\">y</span> = <span class=\"s\">3</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'숫자 5와 3을 더하면 {x + y}'</span>)\n\n<span class=\"b\">a</span> = <span class=\"s\">'5'</span>\n<span class=\"b\">b</span> = <span class=\"s\">'3'</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">\"문자열 '5'와 '3'을 더하면 {a + b}\"</span>)</pre>\n</div>\n\n<h2>이번 장에서 배울 내용</h2>\n<ul>\n  <li>정수와 실수를 구별하고 숫자를 계산하는 방법</li>\n  <li>따옴표로 문자열을 만들고 문자열을 연산하는 방법</li>\n  <li>문자열 안에 따옴표, 줄바꿈, 탭을 넣는 방법</li>\n</ul>\n\n<div class=\"ask\"><span class=\"who\">먼저 생각하기</span>같은 <code>+</code>를 사용했는데 숫자는 <code>8</code>, 문자열은 <code>53</code>이 된 이유는 무엇일까?</div>\n"},{"n":"3-1","t":"숫자형 자료형과 연산","h":"\n<div class=\"banner\"><h1><span class=\"num\">3-1</span>숫자형 자료형과 연산</h1></div>\n\n<p class=\"lede\">숫자형 자료형에는 소수점이 없는 정수와 소수점이 있는 실수가 있다.</p>\n\n<table>\n  <tr><th>자료형</th><th>뜻</th><th>예</th></tr>\n  <tr><td>정수 <code>int</code></td><td>소수점이 없는 수</td><td><code>-3</code>, <code>0</code>, <code>17</code></td></tr>\n  <tr><td>실수 <code>float</code></td><td>소수점이 있는 수</td><td><code>-2.5</code>, <code>0.0</code>, <code>3.14</code></td></tr>\n</table>\n\n<h2><span class=\"qn\">1)</span><code>type()</code>으로 자료형 알아보기</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{type(10)}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{type(10.0)}'</span>)</pre>\n  <div class=\"out\">&lt;class 'int'&gt;\n&lt;class 'float'&gt;</div>\n</div>\n\n<p><code>10</code>은 정수이고 <code>10.0</code>은 실수다. 두 값의 크기는 같지만 자료형은 다르다.</p>\n\n<h2><span class=\"qn\">2)</span><code>float()</code>로 실수 변환하기</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">number1</span> = <span class=\"f\">float</span>(<span class=\"s\">'17.5'</span>)\n<span class=\"b\">number2</span> = <span class=\"f\">float</span>(<span class=\"s\">17</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{number1}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{number2}'</span>)</pre>\n  <div class=\"out\">17.5\n17.0</div>\n</div>\n\n<p><code>float()</code>는 정수나 실수 모양의 문자열을 실수로 변환한다.</p>\n\n<h2><span class=\"qn\">3)</span>정수와 실수를 함께 계산하면</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">result</span> = <span class=\"s\">10</span> + <span class=\"s\">2.5</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{result}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{type(result)}'</span>)</pre>\n  <div class=\"out\">12.5\n&lt;class 'float'&gt;</div>\n</div>\n\n<p>정수와 실수를 함께 계산하면 소수점 아래의 값을 보존할 수 있도록 결과가 실수가 된다.</p>\n\n<h2><span class=\"qn\">4)</span>숫자형 연산 기본 예제</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">x</span> = <span class=\"s\">5</span>\n<span class=\"b\">y</span> = <span class=\"s\">3</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x + y}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x - y}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x * y}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x / y}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x // y}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x % y}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x ** y}'</span>)</pre>\n  <div class=\"out\">8\n2\n15\n1.6666666666666667\n1\n2\n125</div>\n</div>\n\n<table>\n  <tr><th>연산자</th><th>뜻</th><th>예</th></tr>\n  <tr><td><code>+</code></td><td>더하기</td><td><code>x + y</code></td></tr>\n  <tr><td><code>-</code></td><td>빼기</td><td><code>x - y</code></td></tr>\n  <tr><td><code>*</code></td><td>곱하기</td><td><code>x * y</code></td></tr>\n  <tr><td><code>/</code></td><td>나눈 값</td><td><code>x / y</code></td></tr>\n  <tr><td><code>//</code></td><td>몫</td><td><code>x // y</code></td></tr>\n  <tr><td><code>%</code></td><td>나머지</td><td><code>x % y</code></td></tr>\n  <tr><td><code>**</code></td><td>거듭제곱</td><td><code>x ** y</code></td></tr>\n</table>\n\n<h2><span class=\"qn\">5)</span>125초를 2분 5초로 바꾸기</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">total_seconds</span> = <span class=\"s\">125</span>\n<span class=\"b\">minutes</span> = <span class=\"b\">total_seconds</span> // <span class=\"s\">60</span>\n<span class=\"b\">seconds</span> = <span class=\"b\">total_seconds</span> % <span class=\"s\">60</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{total_seconds}초는 {minutes}분 {seconds}초입니다.'</span>)</pre>\n  <div class=\"out\">125초는 2분 5초입니다.</div>\n</div>\n\n<p><code>//</code>로 60초가 몇 묶음인지 구하면 분이 된다. <code>%</code>로 묶고 남은 값을 구하면 초가 된다.</p>\n\n<div class=\"key\">\n  <div class=\"ttl\">이것만 기억하자</div>\n  <ul>\n    <li>정수의 자료형은 <code>int</code>, 실수의 자료형은 <code>float</code>다</li>\n    <li><code>float()</code>는 값을 실수로 변환한다</li>\n    <li><code>/</code>는 나눈 값, <code>//</code>는 몫, <code>%</code>는 나머지다</li>\n    <li><code>**</code>는 거듭제곱을 계산한다</li>\n  </ul>\n</div>\n"},{"n":"3-2","t":"문자열 자료형과 연산","h":"\n<div class=\"banner\"><h1><span class=\"num\">3-2</span>문자열 자료형과 연산</h1></div>\n\n<p class=\"lede\">파이썬은 따옴표로 감싼 내용을 문자열로 읽는다. 숫자처럼 보여도 따옴표 안에 있으면 문자열이다.</p>\n\n<div class=\"pair\">\n  <pre><span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{type(17)}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">\"{type('17')}\"</span>)</pre>\n  <div class=\"out\">&lt;class 'int'&gt;\n&lt;class 'str'&gt;</div>\n</div>\n\n<p><code>17</code>은 정수이고 <code>'17'</code>은 문자열이다. 따옴표가 자료형을 구별하는 표시가 된다.</p>\n\n<h2><span class=\"qn\">1)</span>변수 이름과 문자열 구별하기</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">a</span> = <span class=\"s\">'안녕'</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{a}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'a'</span>)</pre>\n  <div class=\"out\">안녕\na</div>\n</div>\n\n<p>따옴표가 없는 <code>a</code>는 변수 이름이므로 저장된 값을 가져온다. 따옴표로 감싼 <code>'a'</code>는 글자 a 자체를 뜻한다.</p>\n\n<h2><span class=\"qn\">2)</span>작은따옴표와 큰따옴표 사용하기</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'파이썬'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">\"파이썬\"</span>)</pre>\n  <div class=\"out\">파이썬\n파이썬</div>\n</div>\n\n<p>작은따옴표와 큰따옴표는 모두 문자열을 만든다. 문자열의 시작과 끝에는 같은 종류의 따옴표를 사용한다.</p>\n\n<h2><span class=\"qn\">3)</span>문장 안에 따옴표 넣기</h2>\n\n<div class=\"pair\">\n  <pre><span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">\"친구가 '안녕'이라고 말했다.\"</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'친구가 \"안녕\"이라고 말했다.'</span>)</pre>\n  <div class=\"out\">친구가 '안녕'이라고 말했다.\n친구가 \"안녕\"이라고 말했다.</div>\n</div>\n\n<p>문장 안에 작은따옴표가 있으면 바깥을 큰따옴표로 감싼다. 큰따옴표가 있으면 바깥을 작은따옴표로 감싸면 된다.</p>\n\n<h2><span class=\"qn\">4)</span>이스케이프 문자 사용하기</h2>\n\n<table>\n  <tr><th>표현</th><th>뜻</th></tr>\n  <tr><td><code>\\n</code></td><td>줄바꿈</td></tr>\n  <tr><td><code>\\t</code></td><td>탭</td></tr>\n  <tr><td><code>\\'</code></td><td>작은따옴표</td></tr>\n  <tr><td><code>\\\"</code></td><td>큰따옴표</td></tr>\n  <tr><td><code>\\\\</code></td><td>역슬래시</td></tr>\n</table>\n\n<div class=\"pair\">\n  <pre><span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'이름\\t나이\\n한다인\\t17'</span>)</pre>\n  <div class=\"out\">이름    나이\n한다인  17</div>\n</div>\n\n<p>역슬래시와 문자를 묶어 줄바꿈이나 탭처럼 특별한 기능을 나타낸 것을 이스케이프 문자라고 한다.</p>\n\n<h2><span class=\"qn\">5)</span>문자열의 <code>+</code>와 <code>*</code></h2>\n\n<table>\n  <tr><th>숫자 연산</th><th>결과</th><th>문자열 연산</th><th>결과</th></tr>\n  <tr><td><code>5 + 7</code></td><td><code>12</code></td><td><code>'5' + '7'</code></td><td><code>'57'</code></td></tr>\n  <tr><td><code>3 * 4</code></td><td><code>12</code></td><td><code>'=' * 3</code></td><td><code>'==='</code></td></tr>\n</table>\n\n<p>숫자의 곱셈을 반복되는 덧셈으로 생각할 수 있듯이, 문자열의 곱셈은 같은 문자열을 반복해서 연결하는 것으로 이해할 수 있다.</p>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">mark</span> = <span class=\"s\">'='</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{mark + mark + mark}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{mark * 3}'</span>)</pre>\n  <div class=\"out\">===\n===</div>\n</div>\n\n<p><code>mark + mark + mark</code>와 <code>mark * 3</code>은 같은 결과를 만든다. 문자열의 <code>*</code>에는 반복할 횟수인 정수를 사용한다.</p>\n\n<div class=\"key\">\n  <div class=\"ttl\">이것만 기억하자</div>\n  <ul>\n    <li>따옴표로 감싸면 문자열이다</li>\n    <li>변수 이름과 따옴표로 감싼 글자는 서로 다르다</li>\n    <li>문장 안의 따옴표는 바깥과 다른 종류를 사용한다</li>\n    <li>문자열의 <code>+</code>는 연결하고 <code>*</code>는 같은 문자열을 반복해서 연결한다</li>\n  </ul>\n</div>\n"},{"n":"마무리","t":"초를 분과 초로 바꾸기","h":"\n<div class=\"banner\"><h1><span class=\"num\">3장 마무리</span>초를 분과 초로 바꾸기</h1></div>\n\n<p class=\"lede\">입력한 값을 숫자로 계산하고, 계산 결과를 f-string으로 만든 문자열에 넣어 출력한다.</p>\n\n<div class=\"pair\">\n  <pre><span class=\"b\">total_seconds</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'초를 입력하세요: '</span>))\n<span class=\"b\">minutes</span> = <span class=\"b\">total_seconds</span> // <span class=\"s\">60</span>\n<span class=\"b\">seconds</span> = <span class=\"b\">total_seconds</span> % <span class=\"s\">60</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{total_seconds}초는 {minutes}분 {seconds}초입니다.'</span>)</pre>\n  <div class=\"out\">초를 입력하세요: 125\n125초는 2분 5초입니다.</div>\n</div>\n\n<div class=\"step\"><div class=\"num\">1</div><div class=\"body\"><h3>정수로 입력받는다</h3><p><code>int(input())</code>으로 입력한 값을 정수로 저장한다.</p></div></div>\n<div class=\"step\"><div class=\"num\">2</div><div class=\"body\"><h3>몫과 나머지를 계산한다</h3><p><code>//</code>로 분을 구하고 <code>%</code>로 남은 초를 구한다.</p></div></div>\n<div class=\"step\"><div class=\"num\">3</div><div class=\"body\"><h3>결과를 출력한다</h3><p>f-string으로 숫자 값을 한 문장에 넣어 출력한다.</p></div></div>\n\n<div class=\"ask\"><span class=\"who\">다음 장</span>다음 장에서는 문자열의 각 글자에 붙은 위치 번호를 이용해 필요한 글자와 범위를 꺼내는 방법을 배운다.</div>\n"},{"n":"점검","t":"빈칸과 요점 정리","h":"\n<div class=\"banner\"><h1><span class=\"num\">3장 점검</span>빈칸으로 흐름 확인하기</h1></div>\n\n<p class=\"lede\">보기에서 알맞은 것을 골라 125초를 분과 초로 바꾸는 코드를 완성한다.</p>\n\n<div class=\"bank\">\n  <div class=\"ttl\">보기</div>\n  <div class=\"chips\"><span class=\"chip\">① +</span><span class=\"chip\">② -</span><span class=\"chip\">③ *</span><span class=\"chip\">④ /</span><span class=\"chip\">⑤ //</span><span class=\"chip\">⑥ %</span><span class=\"chip\">⑦ **</span><span class=\"chip\">⑧ \\n</span></div>\n</div>\n\n<div class=\"codewrap\"><pre><span class=\"b\">total_seconds</span> = <span class=\"s\">125</span>\n<span class=\"b\">minutes</span> = <span class=\"b\">total_seconds</span> <span class=\"bl\" data-a=\"5\"></span> <span class=\"s\">60</span>\n<span class=\"b\">seconds</span> = <span class=\"b\">total_seconds</span> <span class=\"bl\" data-a=\"6\"></span> <span class=\"s\">60</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{minutes}분 {seconds}초'</span>)</pre></div>\n\n<details><summary>정답</summary><p><b>⑤ ⑥</b></p><p><code>//</code>로 분을 구하고 <code>%</code>로 남은 초를 구한다.</p></details>\n\n<h2>요점 정리</h2>\n<table class=\"sumtbl\">\n  <tr><th>구분</th><th>핵심 내용</th></tr>\n  <tr><td><span class=\"no\">3-1</span>숫자형</td><td>정수는 <code>int</code>, 실수는 <code>float</code>이며 산술 연산자로 계산한다</td></tr>\n  <tr><td><span class=\"no\">3-2</span>문자열</td><td>따옴표로 문자열을 만들고 <code>+</code>로 연결하며 <code>*</code>로 반복해서 연결한다</td></tr>\n</table>\n"},{"n":"연습","t":"연습문제","h":"\n<div class=\"banner\"><h1><span class=\"num\">3장</span>연습문제</h1></div>\n<p class=\"lede\">숫자형과 문자열의 자료형 및 연산을 확인한다.</p>\n\n<h2>1. 실행 결과 예상하기</h2>\n<div class=\"codewrap\"><pre><span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{type(7)}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{type(7.0)}'</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{7 + 0.5}'</span>)</pre></div>\n<details><summary>정답</summary><div class=\"out\">&lt;class 'int'&gt;\n&lt;class 'float'&gt;\n7.5</div><p>정수와 실수를 함께 계산한 결과는 실수다.</p></details>\n\n<h2>2. 분과 초를 전체 초로 바꾸기</h2>\n<p>2분 35초가 모두 몇 초인지 구하도록 빈칸을 완성한다.</p>\n<div class=\"codewrap\"><pre><span class=\"b\">minutes</span> = <span class=\"s\">2</span>\n<span class=\"b\">seconds</span> = <span class=\"s\">35</span>\n<span class=\"b\">total_seconds</span> = <span class=\"b\">minutes</span> <span class=\"bl\"></span> <span class=\"s\">60</span> <span class=\"bl\"></span> <span class=\"b\">seconds</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{minutes}분 {seconds}초는 모두 {total_seconds}초입니다.'</span>)</pre></div>\n<details><summary>정답</summary><div class=\"codewrap\"><pre><span class=\"b\">total_seconds</span> = <span class=\"b\">minutes</span> * <span class=\"s\">60</span> + <span class=\"b\">seconds</span></pre></div><div class=\"out\">2분 35초는 모두 155초입니다.</div></details>\n\n<h2>3. 문자열로 제목 구분선 만들기</h2>\n<p>빈칸을 채워 제목의 글자 너비에 맞는 구분선을 만든다.</p>\n<div class=\"codewrap\"><pre><span class=\"b\">title</span> = <span class=\"s\">'파이썬 자료형'</span>\n<span class=\"b\">line</span> = <span class=\"bl\"></span> * <span class=\"s\">13</span>\n\n<span class=\"f\">print</span>(<span class=\"b\">line</span>)\n<span class=\"f\">print</span>(<span class=\"b\">title</span>)\n<span class=\"f\">print</span>(<span class=\"b\">line</span>)</pre></div>\n<details><summary>정답</summary><div class=\"codewrap\"><pre><span class=\"b\">line</span> = <span class=\"s\">'='</span> * <span class=\"s\">13</span></pre></div><div class=\"out\">=============\n파이썬 자료형\n=============</div><p><code>'=' * 13</code>은 등호를 13번 반복해서 연결한다.</p></details>\n"},{"n":"Q&A","t":"수업 중에 자주 나오는 질문","h":"\n<div class=\"banner\"><h1><span class=\"num\">3장 Q&amp;A</span>수업 중에 자주 나오는 질문</h1></div>\n\n<div class=\"ask\"><span class=\"who\">질문 1</span><code>float('17.5')</code>는 무엇을 돌려주나요?</div>\n<p>문자열 <code>'17.5'</code>를 실수 <code>17.5</code>로 변환해 돌려준다.</p>\n\n<div class=\"ask\"><span class=\"who\">질문 2</span><code>10 / 2</code>의 결과가 왜 <code>5.0</code>인가요?</div>\n<p>파이썬에서 <code>/</code>로 나누면 결과를 실수로 돌려준다. 나누어떨어져도 결과는 <code>5.0</code>이다.</p>\n\n<div class=\"ask\"><span class=\"who\">질문 3</span><code>a</code>와 <code>'a'</code>는 무엇이 다른가요?</div>\n<p><code>a</code>는 변수 이름이고 <code>'a'</code>는 글자 a로 이루어진 문자열이다.</p>\n\n<div class=\"ask\"><span class=\"who\">질문 4</span>작은따옴표와 큰따옴표 중 무엇을 사용해야 하나요?</div>\n<p>둘 다 문자열을 만들 수 있다. 문장 안에 들어 있는 따옴표와 겹치지 않는 종류를 바깥에 사용하면 읽기 쉽다.</p>\n\n<div class=\"ask\"><span class=\"who\">질문 5</span>문자열의 <code>+</code>와 <code>*</code>는 무엇을 하나요?</div>\n<p><code>+</code>는 문자열을 이어 붙인다. <code>*</code>는 같은 문자열을 정수로 지정한 횟수만큼 반복해서 연결한다.</p>\n\n<div class=\"key\"><div class=\"ttl\">2부 · 3장 정리</div><ul>\n  <li>숫자는 정수 <code>int</code>와 실수 <code>float</code>로 구분한다</li>\n  <li>숫자는 산술 연산자로 계산한다</li>\n  <li>따옴표로 감싼 값은 문자열이다</li>\n  <li>문자열의 <code>+</code>는 연결하고 <code>*</code>는 같은 문자열을 반복해서 연결한다</li>\n</ul></div>\n"}];
+
+const toc=document.getElementById('toc'),pg=document.getElementById('pg');
+P.forEach((p,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<a href="#p${i}"><span class="n">${p.n}</span><span>${p.t}</span></a>`;
+  toc.appendChild(li);
+});
+function render(){
+  let i=parseInt((location.hash||'#p0').slice(2));
+  if(isNaN(i)||i<0||i>=P.length)i=0;
+  let nav='<div class="pager">';
+  nav += i>0?`<a href="#p${i-1}"><span class="dir">PREV</span><span class="t">${P[i-1].n} ${P[i-1].t}</span></a>`:'<span class="ph"></span>';
+  nav += i<P.length-1?`<a class="next" href="#p${i+1}"><span class="dir">NEXT</span><span class="t">${P[i+1].n} ${P[i+1].t}</span></a>`:'<span class="ph"></span>';
+  nav+='</div>';
+  const context='<div class="partkicker">2부 · 데이터를 저장하고 계산하기</div>';
+  pg.innerHTML=context+P[i].h+nav+'<p class="footnote">고1 정보가 쉬워지는 파이썬 · 2부 · 3장 · 집필 초안</p>';
+  document.querySelectorAll('.toc a').forEach((a,k)=>a.classList.toggle('on',k===i));
+  closeMenu();bindBlanks();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+const BANK=['+','-','*','/','//','%','**','\\n'];
+const CIRC=['①','②','③','④','⑤','⑥','⑦','⑧'];
+let menu=null;
+function closeMenu(){if(menu){menu.remove();menu=null;}}
+addEventListener('click',e=>{if(menu&&!menu.contains(e.target))closeMenu();});
+addEventListener('scroll',closeMenu,true);
+function bindBlanks(){
+  document.querySelectorAll('pre .bl[data-a]').forEach(bl=>{
+    bl.onclick=ev=>{
+      ev.stopPropagation();closeMenu();
+      const r=bl.getBoundingClientRect();
+      menu=document.createElement('div');menu.className='blmenu';
+      BANK.forEach((v,i)=>{
+        const b=document.createElement('button');
+        b.textContent=CIRC[i]+' '+v;
+        b.onclick=()=>{
+          bl.textContent=v;
+          bl.classList.remove('ok','no');
+          bl.classList.add(String(i+1)===bl.dataset.a?'ok':'no');
+          closeMenu();
+        };
+        menu.appendChild(b);
+      });
+      document.body.appendChild(menu);
+      const mh=menu.offsetHeight, mw=menu.offsetWidth;
+      let top=r.bottom+6, left=r.left;
+      if(top+mh>innerHeight-8) top=Math.max(8,r.top-mh-6);
+      if(left+mw>innerWidth-8) left=innerWidth-mw-8;
+      menu.style.top=top+'px';menu.style.left=left+'px';
+    };
+  });
+}
+addEventListener('hashchange',render);render();
+const sb=document.getElementById('sb'),mob=document.getElementById('mob');
+mob.onclick=()=>{sb.classList.toggle('collapsed');};
+if(innerWidth>980)sb.classList.remove('collapsed');
+addEventListener('resize',()=>{if(innerWidth>980)sb.classList.remove('collapsed')});
+document.querySelectorAll('.toc a').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=980)sb.classList.add('collapsed');}));
+</script>
+</body>
+</html>
