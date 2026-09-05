@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="고1 정보가 쉬워지는 파이썬 3부 6장: 조건에 따라 프로그램의 실행 흐름 바꾸기">
+<title>고1 정보가 쉬워지는 파이썬 | 3부 · 6장 조건에 따라 다르게 실행하기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1D23; --body:#33383F; --paper:#FFFFFF; --wash:#F7F8F9;
+  --blue:#2E7CC4; --blue-d:#1F5E99; --yellow:#C9911A;
+  --code:#15181E; --muted:#7A818B; --line:#DFE2E6;
+  --sans:'IBM Plex Sans KR',system-ui,sans-serif;
+  --mono:'JetBrains Mono','D2Coding',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--body);font-family:var(--sans);
+  line-height:1.75;font-size:15.5px;-webkit-font-smoothing:antialiased}
+
+.wrap{display:flex;min-height:100vh;align-items:flex-start}
+.sidebar{width:272px;flex:0 0 272px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--wash);border-right:1px solid var(--line);padding:0 0 40px}
+.brand{padding:20px 20px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+.brand .tgt{display:block;font-size:11px;color:var(--blue);margin-bottom:5px}
+.brand .bk{display:block;font-weight:700;font-size:16px;line-height:1.4;color:var(--ink)}
+.brand .sub2{display:block;margin-top:7px;font-size:11.5px;color:var(--muted);line-height:1.55}
+.brand .by{display:block;margin-top:9px;font-size:11.5px;color:var(--muted)}
+.navlabel{padding:14px 20px 10px;border-bottom:1px solid var(--line)}
+.navlabel .part{display:block;font-size:11px;font-weight:700;color:var(--blue);margin-bottom:3px}
+.navlabel .chapter{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.toc{list-style:none;margin:0;padding:0}
+.toc a{display:flex;gap:9px;padding:8px 20px;text-decoration:none;color:var(--body);font-size:14px}
+.toc a:hover{background:#EDEFF2}
+.toc a .n{font-family:var(--mono);font-size:12px;color:var(--muted);flex:0 0 30px}
+.toc a.on{background:var(--blue-d);color:#FFF;font-weight:500}
+.toc a.on .n{color:#BBD8F0}
+
+.main{flex:1;min-width:0;display:flex;justify-content:center;padding:0 44px 90px}
+.page{width:100%;max-width:720px;padding-top:38px}
+
+.banner{margin:0 0 26px}
+.banner .bmark{display:none}
+.partkicker{display:block;margin-bottom:10px;color:var(--blue-d);font-size:12px;font-weight:700;
+  letter-spacing:-.01em}
+h1{margin:0;font-size:25px;font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.4}
+h1 .num{border-bottom:3px solid var(--blue);padding-bottom:5px;margin-right:7px}
+h2{font-size:18px;font-weight:700;letter-spacing:-.025em;margin:44px 0 14px;color:var(--ink);
+  padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 .qn{color:var(--blue);margin-right:6px}
+h3{font-size:15.5px;font-weight:600;margin:26px 0 7px;color:var(--ink)}
+.lede{font-size:16px;color:var(--ink);margin:0 0 8px}
+p{margin:0 0 13px}
+strong{font-weight:600;color:var(--ink)}
+code{font-family:var(--mono);font-size:.88em;background:#EFF1F3;color:#2A5F8F;padding:1px 5px;border-radius:3px}
+code,pre,.out,.toc a .n{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+
+.ask{border:1px solid var(--line);border-radius:4px;background:var(--wash);
+  padding:13px 17px;margin:0 0 26px;font-size:15.5px;color:var(--ink)}
+.ask .who{display:block;font-size:11.5px;color:var(--blue);margin-bottom:5px;font-weight:600}
+
+.codewrap{margin:14px 0}
+.codehead{font-size:12px;color:var(--muted);margin-bottom:5px}
+pre{margin:0;background:var(--code);color:#E4E7EC;border-radius:4px;padding:14px 17px;
+  overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.7}
+pre .c{color:#748096} pre .s{color:#E5C07B} pre .k{color:#C678DD}
+pre .f{color:#61AFEF} pre .b{color:#98C379}
+pre .bl{display:inline-block;min-width:2.2em;height:1.15em;background:#B9BFC9;
+  border-radius:2px;vertical-align:-.16em;margin:0 2px}
+pre .bl[data-a]{cursor:pointer;text-align:center;color:#15181E;font-weight:500;
+  line-height:1.15em;padding:0 5px;transition:background .12s}
+pre .bl[data-a]:hover{background:#D5DAE1}
+pre .bl.ok{background:#7BC47F;color:#0E2E12}
+pre .bl.no{background:#E38B7E;color:#3A0F08}
+.blmenu{
+  position:fixed;z-index:99;background:var(--paper);border:1px solid var(--line);
+  border-radius:5px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:5px;
+  max-height:270px;overflow-y:auto;min-width:132px;
+}
+.blmenu button{
+  display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  font-family:var(--mono);font-size:13px;color:var(--ink);padding:6px 10px;border-radius:3px;
+}
+.blmenu button:hover{background:var(--wash)}
+.blhint{margin:-6px 0 16px;font-size:13px;color:var(--muted)}
+.out{border:1px solid #D5D9E0;border-radius:4px;
+  background:#F5F6F8;padding:11px 17px 12px;margin:8px 0 14px;font-family:var(--mono);
+  font-size:13.5px;white-space:pre-wrap;line-height:1.7;color:var(--ink)}
+.out::before{content:'실행 결과';display:block;font-family:var(--sans);font-size:11px;
+  font-weight:600;color:#5F6875;margin-bottom:5px}
+.pair{margin:0 0 18px}
+.pair pre{border-radius:4px 4px 0 0}
+.pair .out{margin:0;border-radius:0 0 4px 4px;border-top:none}
+
+figure{margin:18px 0 20px}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.6}
+figcaption b{color:var(--ink);font-weight:600}
+.memory-diagram-shot{margin:18px 0 22px}.memory-diagram-shot img{border:none;border-radius:16px;background:#fff}
+
+.predict{border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin:18px 0}
+.predict .ttl{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:9px}
+.predict pre{margin-bottom:11px}
+.picks{display:flex;gap:7px;flex-wrap:wrap}
+.pick{flex:1 1 118px;border:1px solid var(--line);border-radius:3px;background:var(--wash);
+  padding:9px 11px;font-family:var(--mono);font-size:13px;white-space:pre-wrap;line-height:1.6}
+.pick .no{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}
+
+.note{border:1px solid var(--line);border-radius:4px;background:var(--wash);
+  padding:13px 17px;margin:18px 0;font-size:15px}
+.note .ttl{font-weight:600;font-size:14px;margin-bottom:6px;color:var(--ink)}
+.note p:last-child,.note ul{margin-bottom:0}
+.key{border:1px solid #E3D5AE;background:#FCFAF3;border-radius:4px;padding:14px 18px;margin:30px 0 8px}
+.key .ttl{font-size:12px;font-weight:600;color:#96700F;margin-bottom:7px}
+.key ul{margin:0;padding-left:17px} .key li{margin-bottom:3px}
+.warn{border:1px solid #E8CCC5;background:#FCF7F5;border-radius:4px;padding:13px 17px;margin:18px 0;font-size:15px}
+.warn .ttl{font-weight:600;font-size:13.5px;color:#A8412A;margin-bottom:5px}
+
+ul,ol{margin:0 0 14px;padding-left:20px} li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left}
+th{background:var(--wash);font-weight:600;font-size:13.5px;color:var(--ink)}
+
+.sumtbl{font-size:14px}
+.sumtbl th:first-child{width:180px}
+.sumtbl td{vertical-align:top;padding:12px 14px}
+.sumtbl td:first-child{font-weight:600;color:var(--ink)}
+.sumtbl .no{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:700;margin-right:7px}
+.sumtbl ul{margin:0;padding-left:18px;line-height:1.65}
+.sumtbl li{margin-bottom:2px}
+.bank{border:1px solid var(--line);border-radius:4px;padding:13px 17px;margin:16px 0}
+.bank .ttl{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:9px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:13px;background:var(--wash);border:1px solid var(--line);
+  border-radius:3px;padding:4px 10px;color:var(--ink)}
+details{border:1px solid var(--line);border-radius:4px;padding:11px 17px;margin:16px 0}
+details summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--blue-d)}
+details[open] summary{margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+details p:last-child{margin-bottom:0}
+
+.step{display:flex;gap:13px;margin-bottom:2px}
+.step .num{flex:0 0 22px;height:22px;border-radius:3px;background:var(--blue-d);color:#FFF;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;margin-top:6px}
+.step .body{flex:1;min-width:0}
+.step .body h3{margin-top:1px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:56px;
+  border-top:1px solid var(--line);padding-top:20px}
+.pager a{flex:1;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  padding:11px 15px;color:var(--body)}
+.pager a:hover{border-color:var(--blue)}
+.pager .dir{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}
+.pager .t{font-weight:600;font-size:13.5px;color:var(--ink)}
+.pager .next{text-align:right} .pager .ph{flex:1}
+.footnote{margin-top:30px;font-size:11.5px;color:var(--muted)}
+
+.mobbar{display:none}
+@media (max-width:980px){
+  .wrap{flex-direction:column}
+  .sidebar{position:static;width:100%;flex:none;height:auto;border-right:none;
+    border-bottom:1px solid var(--line);padding-bottom:10px}
+  .sidebar.collapsed .navlabel,.sidebar.collapsed .toc{display:none}
+  .main{padding:0 18px 60px} .page{padding-top:26px}
+  h1{font-size:21px} h2{font-size:17px;margin-top:34px}
+  .mobbar{display:block;margin:10px 18px 0;padding:7px 12px;border:1px solid var(--line);
+    border-radius:4px;background:var(--paper);font-size:13px;cursor:pointer;color:var(--ink);font-family:var(--sans)}
+  .picks{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.idxtbl{width:100%;min-width:0;table-layout:fixed;font-size:11.5px}.idxtbl th,.idxtbl td{text-align:center;white-space:nowrap;padding:7px 2px;min-width:0}.idxtbl th{width:86px;white-space:normal;line-height:1.35}
+.memdiagram{margin:16px 0 12px;padding:12px;border:1px solid var(--line);background:#f8fafc}
+.memlookup{display:grid;grid-template-columns:minmax(160px,.9fr) 32px minmax(0,2fr);gap:8px;align-items:stretch;overflow:visible}
+.memstage{min-width:0;height:100%;display:flex;flex-direction:column;border:1px solid #aebbd0;background:#fff;border-radius:7px;overflow:hidden}
+.memstage-title{padding:7px 9px;background:#233375;color:#fff;font-size:12px;font-weight:700;text-align:center}
+.memlist{display:grid;grid-template-rows:repeat(4,1fr);flex:1;gap:4px;padding:8px}
+.memlist>div{display:grid;grid-template-columns:64px minmax(0,1fr);border:1px solid var(--line);background:#fff;font-size:11.5px;line-height:1.3}
+.memlist>div b,.memlist>div span{display:flex;align-items:center;justify-content:center;min-width:0;padding:6px 5px}
+.memlist>div b{border-right:1px solid var(--line)}
+.memlist>div span{font-family:var(--mono);font-size:10.5px;white-space:nowrap}
+.memlist .chosen{border-color:#d3ad3a;background:#fff8d9}
+.memarrow{display:flex;align-items:center;justify-content:center;color:#4058aa;font-size:23px;font-weight:700;line-height:1}
+.memchars{padding:8px;overflow:visible;flex:1;display:flex;flex-direction:column;justify-content:center}
+.memstring{margin-bottom:7px;text-align:center;font-size:11px;color:var(--muted)}
+.charrow,.idxrow{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));min-width:0}
+.charrow span,.idxrow span{text-align:center;padding:5px 0;border-right:1px solid var(--line);font-family:var(--mono);font-size:10px;line-height:1.2}
+.charrow span:first-child,.idxrow span:first-child{border-left:1px solid var(--line)}
+.charrow span{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+.idxrow span{padding-top:4px;color:#4a568a;border-bottom:1px solid var(--line);background:#f8fafc}
+.charrow .picked,.idxrow .picked{background:#fff6c7;color:#1d2e73;font-weight:700;box-shadow:inset 0 0 0 1px #263783}
+.memnote{margin:8px 8px 9px;padding:6px 7px;border:1px solid var(--line);background:#f8fafc;text-align:center;font-size:10.5px;line-height:1.35}
+.memresult{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:10px;font-family:var(--mono);font-size:14px;color:var(--ink)}
+.memresult code,.memresult strong code{font-size:14px}
+.memresult strong code{background:transparent;padding:0;color:inherit}
+.memresult strong{padding:3px 9px;border:1px solid #d3ad3a;background:#fff8d9;border-radius:5px;font-weight:600}
+.memcaption{margin:7px 0 0;text-align:center;color:var(--muted);font-size:11.5px;line-height:1.45}
+.slice-diagram{margin:12px 0 10px;padding:10px 12px;border:2px solid #18306b;border-radius:8px;background:#fff}
+.end-diagram{margin:12px 0 10px;padding:0;border:0;background:transparent}
+.slice-params{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.slice-param{overflow:hidden;border:1.5px solid #18306b;border-radius:7px;background:#fff;text-align:center}
+.slice-param b{display:block;padding:7px 3px;background:#123266;color:#fff;font-size:14px}
+.slice-param span{display:block;padding:8px 3px;background:#eef5ff;font-family:var(--mono);font-size:18px;color:#142e68}
+.slice-title{text-align:center;margin:5px 0 8px;font-size:16px;font-weight:700;color:#18306b}
+.slice-title code{padding:0;background:transparent;font-size:16px;color:inherit}
+.slice-track{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));width:100%;margin:0 auto}
+.slice-track span{display:flex;align-items:center;justify-content:center;min-width:0;font-family:var(--mono);color:#18306b}
+.slice-track .letter{padding:7px 1px;border-top:1px solid #7f8aa2;border-right:1px solid #7f8aa2;border-bottom:1px solid #7f8aa2;background:#fff;font-size:17px}
+.slice-track .letter.first{border-left:1px solid #7f8aa2}
+.slice-track .number{padding:4px 1px 1px;font-size:12px}
+.slice-track .take{background:#edf4ff}
+.slice-rule{margin:10px 0 8px;text-align:center;font-size:14.5px;font-weight:700;color:#18306b}
+.slice-result{display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--mono);font-size:16px}
+.slice-result code{font-size:16px}
+.slice-result>code{padding:5px 9px;border:1.5px solid #18306b;background:#fff;color:#18306b}
+.slice-result strong{padding:5px 10px;border:1.5px solid #18306b;background:#eef5ff;border-radius:5px}
+.slice-result strong code{padding:0;background:transparent;color:inherit}
+.slice-result small{font-family:var(--sans);font-size:12px;font-weight:600;color:#18306b}
+.end-grid{display:grid;grid-template-columns:76px repeat(14,minmax(0,1fr));overflow:hidden;border:1.5px solid #6f7b99;border-radius:8px;background:#fff}
+.end-grid>div{display:flex;align-items:center;justify-content:center;min-width:0;padding:8px 1px;border-right:1px solid #7f8aa2;border-bottom:1px solid #7f8aa2;font-family:var(--mono);font-size:12.5px;background:#fff}
+.end-grid>div:nth-child(15),.end-grid>div:nth-child(30),.end-grid>div:last-child{border-right:0}
+.end-grid>div:nth-child(n+31){border-bottom:0}
+.end-grid .label{font-family:var(--sans);font-size:14.5px;font-weight:700;color:#18306b;background:#edf1f8}
+.end-grid .take{background:#edf4ff}
+.end-grid .boundary{border-left:3px solid #d24d3e;background:#fff1ef;color:#bf4437}
+.end-grid .role-take{grid-column:span 6;min-height:46px;background:#edf4ff;font-family:var(--sans);font-size:12.5px;line-height:1.3;text-align:center}
+.end-grid .role-stop{grid-column:span 8;min-height:46px;background:#fff1ef;font-family:var(--sans);font-size:12.5px;line-height:1.3;text-align:center}
+.end-calc{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;padding:8px 12px;border:1.5px solid #6f7b99;border-radius:8px;background:#fff;font-size:14px}
+.end-calc b{color:#18306b}.end-calc code{font-size:14px}.paramrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}.paramrow span{display:flex;justify-content:center;gap:8px;padding:10px;background:#fbe4e8;border:1px solid #e7b1bc}.stopnote{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;color:var(--muted)}.stopnote b{color:var(--ink)}.endtbl{min-width:620px}.endtbl th,.endtbl td{text-align:center}.endtbl .take{background:#e9f3ff}.endtbl .stopcell{background:#fff1f1;border-left:4px solid #d34b4b}.calcbox{margin:16px 0;padding:16px 18px;background:#f5f7fa;border:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.calcbox code{font-size:16px;color:var(--navy)}
+@media(max-width:760px){.idxtbl{font-size:9px}.idxtbl th{width:62px;font-size:9px}.idxtbl th,.idxtbl td{padding:5px 1px}.memlookup{grid-template-columns:1fr;overflow:visible}.memarrow{display:flex;justify-content:center;align-items:center;transform:rotate(90deg)}.paramrow{grid-template-columns:repeat(2,1fr)}.memdiagram{padding:14px}}
+.scratch-shot{margin:16px 0 24px}.scratch-shot img{border:1.5px solid #aebbd0;border-radius:8px}.scratch-shot figcaption{margin-top:7px}
+.scratch-overview{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:18px 0}.scratch-overview>div{padding:13px 9px;border:1.5px solid #a7b3c9;border-radius:9px;background:#f8faff;text-align:center}.scratch-overview span{display:flex;align-items:center;justify-content:center;width:27px;height:27px;margin:0 auto 8px;border-radius:50%;background:#263775;color:#fff;font-weight:800}.scratch-overview b{display:block;color:#183475}.scratch-overview p{margin:7px 0 0;font-size:12px;line-height:1.55}
+.scratch-python{margin:-12px 0 28px;padding:13px 14px 14px;border:1.5px solid #97a6c2;border-radius:8px;background:#f7f9ff}.scratch-python .pair{margin:0}.scratch-python>p{margin:9px 2px 0}
+.parallel-list,.index-board{margin:16px 0;overflow:hidden;border:1.5px solid #73809d;border-radius:9px;background:#fff}
+.parallel-list>div,.ib-row{display:grid;grid-template-columns:120px repeat(3,minmax(0,1fr))}.parallel-list>div+div,.ib-row+.ib-row{border-top:1px solid #98a4bb}
+.parallel-list b,.parallel-list span,.ib-row b,.ib-row span{display:flex;align-items:center;justify-content:center;min-height:42px;padding:6px;border-right:1px solid #98a4bb}.parallel-list span:last-child,.ib-row span:last-child{border-right:0}
+.parallel-list b,.ib-row b{background:#edf3ff;color:#173475}.parallel-list>div:first-child span,.positive span{background:#f8faff;color:#24427f;font-family:var(--mono)}
+.compare-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.compare-cards section{overflow:hidden;padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#fff}.compare-cards h3{margin:0 0 10px;padding:0;background:none;color:#244b82;font-size:17px}.compare-cards pre{margin:0;border:0;border-radius:4px}.compare-cards p{margin:10px 0 0}.compare-cards .out{margin:8px 0 0;border-radius:4px}
+.index-board .ib-row{grid-template-columns:150px repeat(4,minmax(0,1fr))}.index-board .negative span{background:#fff8e5;color:#7b5300;font-family:var(--mono)}
+.nested-diagram{margin:16px 0;padding:12px;border:1.5px solid #6f7b99;border-radius:8px;background:#f8fafc}.nested-diagram>div{display:flex;align-items:center;justify-content:center;gap:14px;padding:9px;font-family:var(--mono);font-size:16px}.nested-diagram>div+div{border-top:1px solid var(--line)}.nested-diagram strong code{background:#fff8d9;color:#18306b}
+.methodtbl th,.methodtbl td{text-align:center}.methodtbl th:first-child{width:15%}
+.function-line{margin:20px 0 9px}.function-line b{margin-right:6px;color:#183475;font-size:17px}.function-table{table-layout:fixed;font-size:13px}.function-table th:nth-child(1){width:15%}.function-table th:nth-child(2){width:23%}.function-table th:nth-child(3){width:42%}.function-table th:nth-child(4){width:20%}.function-table td{vertical-align:middle}.function-table code{white-space:normal;line-height:1.65}
+.function-cards{display:grid;grid-template-columns:1fr;gap:16px;margin:14px 0 28px}.function-cards section{display:grid;grid-template-columns:150px minmax(0,1fr);overflow:hidden;padding:0;border:1px solid #c8ced9;border-radius:7px;background:#fff}.function-name{display:flex;align-items:flex-start;justify-content:center;padding:17px 12px;border-right:1px solid #c8ced9;background:#f3f6fa}.function-name code{padding:0;background:none;color:#244b82;font-size:18px;font-weight:700}.function-body{min-width:0;padding:14px}.function-purpose{display:inline;margin:0 8px 0 0;color:#384455;font-size:14px}.function-body p{display:inline;margin:0;padding:0;background:none;font-size:14px;line-height:1.65}.function-cards pre{margin:11px 0 0;padding:12px 15px;border:0;border-radius:4px;background:var(--code);color:#e4e7ec;font-size:12px;line-height:1.65}.function-cards pre .c{color:#748096}.function-cards pre .s{color:#e5c07b}.function-cards pre .k{color:#c678dd}.function-cards pre .f{color:#61afef}.function-cards pre .b{color:#98c379}.function-cards .out{margin:7px 0 0;padding:9px 15px;border:1px solid #d7dce5;border-radius:4px;background:#fff;font-size:12px}
+.formula,.unpack-diagram{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin:16px 0;padding:14px;border:1.5px solid #9ba8c1;border-radius:8px;background:#f8faff}.formula b{color:#183475;font-size:17px}
+.split-flow{display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1fr);align-items:stretch;margin:18px 0}.split-flow>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:92px;padding:10px;border:1.5px solid #8390ab;border-radius:8px;background:#f8faff}.split-flow>span{display:flex;align-items:center;justify-content:center;color:#263774;font-size:24px;font-weight:800}.split-flow b{color:#183475}
+.map-flow,.process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.map-flow>div,.process-grid>div{position:relative;padding:14px 10px;border:1.5px solid #9ba8c1;border-radius:8px;background:#f8faff;text-align:center}.map-flow span,.process-grid span{display:flex;align-items:center;justify-content:center;width:24px;height:24px;margin:0 auto 7px;border-radius:50%;background:#263775;color:#fff;font-weight:800}.map-flow b,.map-flow code{display:block;margin-top:5px}.process-grid b{color:#183475}.process-grid p{margin:7px 0 0;font-size:13px}
+@media(max-width:700px){.scratch-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-cards,.function-cards{grid-template-columns:1fr}.function-cards section{grid-template-columns:1fr}.function-name{justify-content:flex-start;padding:10px 12px;border-right:0;border-bottom:1px solid #c8ced9}.function-body{padding:12px}.parallel-list>div,.ib-row{grid-template-columns:82px repeat(3,minmax(0,1fr))}.index-board .ib-row{grid-template-columns:105px repeat(4,minmax(0,1fr))}.split-flow{grid-template-columns:1fr}.split-flow>span{height:28px;transform:rotate(90deg)}.map-flow,.process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.methodtbl{font-size:12px}.function-table{font-size:11px}.function-table th,.function-table td{padding:7px 4px}.function-cards p{min-height:0}.scratch-shot{margin-bottom:18px}}
+
+/* 6장 조건문 설명용 구성 */
+.flow-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}
+.flow-strip>div{padding:14px 10px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc;text-align:center}
+.flow-strip span{display:flex;align-items:center;justify-content:center;width:25px;height:25px;margin:0 auto 7px;border-radius:50%;background:#eef3f8;color:#244b82;font-family:var(--mono);font-weight:700}
+.flow-strip b{display:block;color:#26384f}.flow-strip p{margin:5px 0 0;font-size:12.5px}
+.scratch-compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:18px 0}
+.scratch-panel,.python-panel{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#fff}
+.scratch-panel h3,.python-panel h3{margin:0 0 11px;color:#244b82}
+.scratch-stack{padding:12px;background:#f7f8fa;border-radius:5px}
+.scratch-hat,.scratch-if,.scratch-say{width:max-content;max-width:100%;padding:8px 13px;border-radius:7px;color:#fff;font-weight:600;line-height:1.45}
+.scratch-hat{background:#f2a21b}.scratch-if{margin-top:5px;background:#f0a51b}.scratch-if .slot{display:inline-block;padding:2px 7px;border-radius:10px;background:#63b653;color:#fff;font-family:var(--mono)}
+.scratch-say{margin:5px 0 0 24px;background:#8066c9}.scratch-gap{margin-left:24px;padding:5px 0 2px;border-left:3px solid #efb13b}
+.indent-guide{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}
+.indent-guide>div{display:grid;grid-template-columns:120px minmax(0,1fr);border-bottom:1px solid #d9dde4}
+.indent-guide>div:last-child{border-bottom:0}.indent-guide b{padding:11px 13px;background:#f3f6fa;color:#30445e}.indent-guide span{padding:11px 13px}
+.truth-table td:first-child,.truth-table td:nth-child(2){font-family:var(--mono)}
+.truth-table td:last-child{text-align:center;font-family:var(--mono);font-weight:700}
+.branch-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.branch-cards>div{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc}
+.branch-cards b{display:block;margin-bottom:5px;color:#244b82}.branch-cards p{margin:0}
+.trace{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}
+.trace>div{display:grid;grid-template-columns:96px minmax(0,1fr);border-bottom:1px solid #d9dde4}
+.trace>div:last-child{border-bottom:0}.trace b{padding:10px 12px;background:#f3f6fa;color:#244b82;text-align:center}.trace span{padding:10px 13px}
+.flowchart{display:flex;flex-direction:column;align-items:center;gap:9px;margin:22px auto;padding:18px;border:1px solid #c8ced9;border-radius:8px;background:#fbfcfd}
+.fc-start,.fc-process,.fc-output{display:flex;align-items:center;justify-content:center;min-width:170px;min-height:48px;padding:9px 17px;border:1.5px solid #70809a;background:#fff;text-align:center}
+.fc-start{border-radius:50%}.fc-output{border-radius:3px;transform:skew(-12deg)}.fc-output>span{transform:skew(12deg)}.fc-process{border-radius:3px}
+.fc-diamond{display:flex;align-items:center;justify-content:center;width:118px;height:118px;margin:5px 0;transform:rotate(45deg);border:1.5px solid #70809a;background:#fff}
+.fc-diamond span{transform:rotate(-45deg);text-align:center;line-height:1.4}.fc-arrow{color:#52647f;font-size:20px;line-height:1}
+.fc-branches{display:grid;grid-template-columns:1fr 1fr;gap:26px;width:100%;max-width:540px}
+.fc-branches>div{display:flex;flex-direction:column;align-items:center;gap:7px}.fc-label{font-size:12px;font-weight:700;color:#244b82}
+.symbol-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.symbol-grid>div{padding:12px 8px;border:1px solid #c8ced9;border-radius:7px;background:#fff;text-align:center}.symbol-grid b{display:block;color:#244b82}.symbol-grid p{margin:5px 0 0;font-size:12px}
+.mini-symbol{display:flex;align-items:center;justify-content:center;width:88px;height:38px;margin:0 auto 9px;border:1.5px solid #70809a;background:#f8fafc;font-size:11px;color:#30445e}.mini-symbol.start{border-radius:50%}.mini-symbol.process{border-radius:2px}.mini-symbol.decision{width:54px;height:54px;margin-bottom:13px;transform:rotate(45deg)}.mini-symbol.decision span{transform:rotate(-45deg)}.mini-symbol.output{transform:skew(-12deg)}.mini-symbol.output span{transform:skew(12deg)}
+.boundary-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:14px 0}
+.boundary-row span{padding:9px 4px;border:1px solid #c8ced9;border-radius:4px;background:#f8fafc;text-align:center;font-family:var(--mono);font-weight:600;color:#244b82}
+.wrong-right{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.wrong-right h3{margin:0 0 8px}.wrong-right pre{height:100%}
+.checklist{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}.checklist>div{display:grid;grid-template-columns:42px minmax(0,1fr);border-bottom:1px solid #d9dde4}.checklist>div:last-child{border-bottom:0}.checklist b{display:flex;align-items:center;justify-content:center;background:#f3f6fa;color:#244b82}.checklist span{padding:10px 13px}
+@media(max-width:700px){.scratch-compare,.branch-cards,.wrong-right{grid-template-columns:1fr}.flow-strip{grid-template-columns:1fr}.symbol-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.boundary-row{grid-template-columns:repeat(5,minmax(52px,1fr));overflow-x:auto}.indent-guide>div{grid-template-columns:92px minmax(0,1fr)}.fc-branches{gap:10px}.fc-start,.fc-process,.fc-output{min-width:140px;padding:8px 10px;font-size:13px}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar collapsed" id="sb">
+    <div class="brand">
+      <span class="tgt">예비 고1을 위한</span>
+      <span class="bk">고1 정보가 쉬워지는 파이썬</span>
+      <span class="sub2">스크래치를 몰라도 그림으로 원리를 보고,<br>파이썬 코드로 옮길 수 있습니다.</span>
+      <span class="by">이현아 · 한다인</span>
+    </div>
+    <button class="mobbar" id="mob">목차</button>
+    <div class="navlabel">
+      <span class="part">3부 프로그램의 실행 흐름 바꾸기</span>
+      <span class="chapter">6장 조건에 따라 다르게 실행하기</span>
+    </div>
+    <ul class="toc" id="toc"></ul>
+  </aside>
+  <main class="main"><div class="page" id="pg"></div></main>
+</div>
+<script>
+const P=[
+  {
+    "n": "6장",
+    "t": "조건에 따라 다르게 실행하기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6장</span>조건에 따라 다르게 실행하기</h1></div>\n<p class=\"lede\">지금까지의 프로그램은 대부분 위에서 아래로 모든 코드를 실행했다. 조건문을 사용하면 입력값에 따라 필요한 코드만 골라 실행할 수 있다.</p>\n\n<div class=\"flow-strip\">\n  <div><span>1</span><b>입력</b><p>점수를 입력받는다.</p></div>\n  <div><span>2</span><b>판단</b><p>점수 구간을 확인한다.</p></div>\n  <div><span>3</span><b>선택 실행</b><p>알맞은 안내를 출력한다.</p></div>\n</div>\n\n<h2>입력한 점수에 따라 다른 결과 안내하기</h2>\n<div class=\"pair\"><pre><span class=\"b\">score</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'점수를 입력하세요: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'수료 기준을 통과했습니다.'</span>)\n<span class=\"k\">else</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'기초 문제부터 다시 확인하세요.'</span>)</pre><div class=\"out\">점수를 입력하세요: 75\n수료 기준을 통과했습니다.</div></div>\n<p><code>score</code>가 60 이상인지 판단한 뒤 두 문장 중 하나만 출력한다. 조건문을 배우면 같은 프로그램이 입력값에 따라 서로 다르게 움직이게 만들 수 있다.</p>\n\n<h2>이번 장에서 배울 내용</h2>\n<div class=\"key\"><div class=\"ttl\">학습 흐름</div><ol>\n  <li>콜론과 네 칸 들여쓰기로 실행 범위를 표시한다.</li>\n  <li><code>if</code>, <code>else</code>, <code>elif</code>로 한 갈래부터 여러 갈래까지 만든다.</li>\n  <li>중첩 조건문과 순서도로 복잡한 판단 구조를 확인한다.</li>\n  <li>경곗값을 넣어 조건이 정확하게 나뉘는지 검사한다.</li>\n</ol></div>"
+  },
+  {
+    "n": "스크래치",
+    "t": "블록과 들여쓰기 비교하기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">스크래치로</span>조건문의 실행 범위 비교하기</h1></div>\n<p class=\"lede\">스크래치는 블록의 안쪽 모양으로 실행 범위를 보여 준다. 파이썬은 같은 범위를 콜론과 들여쓰기로 표시한다.</p>\n\n<div class=\"scratch-compare\">\n  <section class=\"scratch-panel\"><h3>스크래치</h3><div class=\"scratch-stack\">\n    <div class=\"scratch-hat\">초록 깃발을 클릭했을 때</div>\n    <div class=\"scratch-if\">만약 <span class=\"slot\">점수 ≥ 60</span> (이)라면</div>\n    <div class=\"scratch-gap\"><div class=\"scratch-say\">수료라고 말하기</div></div>\n  </div></section>\n  <section class=\"python-panel\"><h3>파이썬</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'수료'</span>)</pre></section>\n</div>\n\n<div class=\"indent-guide\">\n  <div><b>조건의 끝</b><span>스크래치는 블록 모양, 파이썬은 <code>:</code>으로 나타낸다.</span></div>\n  <div><b>실행 범위</b><span>스크래치는 블록 안쪽, 파이썬은 같은 깊이의 들여쓰기로 나타낸다.</span></div>\n  <div><b>범위의 끝</b><span>파이썬에서는 들여쓰기가 끝나면 조건문의 실행 범위도 끝난다.</span></div>\n</div>\n\n<h2>들여쓰기가 달라지면 실행 범위도 달라진다</h2>\n<div class=\"compare-cards\">\n  <section><h3>조건이 참일 때만 실행</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'수료'</span>)</pre><p><code>print()</code>가 네 칸 들어가 있으므로 조건문 안의 코드다.</p></section>\n  <section><h3>조건과 관계없이 실행</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'수료'</span>)\n<span class=\"f\">print</span>(<span class=\"s\">'검사가 끝났습니다.'</span>)</pre><p>마지막 문장은 들여쓰지 않았으므로 조건문이 끝난 뒤 항상 실행된다.</p></section>\n</div>"
+  },
+  {
+    "n": "6-1",
+    "t": "콜론과 들여쓰기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6-1</span>콜론과 들여쓰기</h1></div>\n<p class=\"lede\">조건 뒤에는 콜론을 붙이고, 조건에 포함되는 코드는 같은 깊이로 들여쓴다. 파이썬은 들여쓰기를 문법으로 사용한다.</p>\n\n<h2><span class=\"qn\">1)</span>콜론 뒤에 실행할 코드의 범위</h2>\n<div class=\"pair\"><pre><span class=\"b\">temperature</span> = <span class=\"s\">31</span>\n\n<span class=\"k\">if</span> <span class=\"b\">temperature</span> &gt;= <span class=\"s\">30</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'물을 자주 마시세요.'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'야외 활동 시간을 줄이세요.'</span>)\n\n<span class=\"f\">print</span>(<span class=\"s\">'온도 확인을 마칩니다.'</span>)</pre><div class=\"out\">물을 자주 마시세요.\n야외 활동 시간을 줄이세요.\n온도 확인을 마칩니다.</div></div>\n<p>두 안내 문장은 같은 네 칸 들여쓰기이므로 모두 <code>if</code>에 포함된다. 마지막 문장은 맨 앞으로 돌아왔으므로 조건과 관계없이 실행된다.</p>\n\n<h2><span class=\"qn\">2)</span>네 칸 들여쓰기가 권장되는 이유</h2>\n<p>파이썬은 같은 블록에서 들여쓰기 깊이가 같기만 하면 실행할 수 있지만, 공식 스타일 지침인 PEP 8은 들여쓰기 한 단계를 공백 네 칸으로 권장한다. 편집기의 Tab 키가 서로 다른 수의 공백으로 바뀔 수 있으므로 공백 네 칸으로 통일하면 코드를 함께 볼 때 혼란이 줄어든다.</p>\n<div class=\"note\"><div class=\"ttl\">수업에서 지킬 규칙</div><p>콜론 다음 줄에서 한 단계 들어갈 때마다 공백 네 칸을 사용하고, 같은 실행 범위의 코드는 세로선을 맞춘다.</p></div>\n\n<h2><span class=\"qn\">3)</span>들여쓰기 오류 해결하기</h2>\n<div class=\"wrong-right\">\n  <section><h3>오류가 나는 코드</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n<span class=\"f\">print</span>(<span class=\"s\">'수료'</span>)</pre></section>\n  <section><h3>고친 코드</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'수료'</span>)</pre></section>\n</div>\n<div class=\"warn\"><div class=\"ttl\">IndentationError가 보이면</div><p>콜론 다음 줄이 들여쓰기되었는지, 같은 범위의 코드가 같은 깊이인지, Tab과 공백이 섞이지 않았는지 차례로 확인한다.</p></div>"
+  },
+  {
+    "n": "6-2",
+    "t": "if로 조건 판단하기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6-2</span><code>if</code>로 조건 판단하기</h1></div>\n<p class=\"lede\"><code>if</code>는 조건이 참일 때만 들여쓴 코드를 실행한다. 조건이 거짓이면 그 부분을 건너뛴다.</p>\n\n<h2><span class=\"qn\">1)</span>조건 자리에는 무엇이 들어가는가</h2>\n<p><code>if</code>와 콜론 사이에는 계산 결과가 <code>True</code> 또는 <code>False</code>가 되는 표현식을 쓴다.</p>\n<table class=\"truth-table\"><thead><tr><th>조건식</th><th>뜻</th><th>결과</th></tr></thead><tbody>\n  <tr><td>8 &gt; 5</td><td>8이 5보다 큰가?</td><td>True</td></tr>\n  <tr><td>8 == 5</td><td>8과 5가 같은가?</td><td>False</td></tr>\n  <tr><td>8 % 2 == 0</td><td>8을 2로 나눈 나머지가 0인가?</td><td>True</td></tr>\n</tbody></table>\n\n<h2><span class=\"qn\">2)</span>조건이 참일 때만 실행되는 코드</h2>\n<div class=\"compare-cards\">\n  <section><h3>입력값 8</h3><pre><span class=\"b\">number</span> = <span class=\"s\">8</span>\n<span class=\"k\">if</span> <span class=\"b\">number</span> &gt; <span class=\"s\">0</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'양수입니다.'</span>)\n<span class=\"f\">print</span>(<span class=\"s\">'판단 끝'</span>)</pre><div class=\"out\">양수입니다.\n판단 끝</div></section>\n  <section><h3>입력값 -8</h3><pre><span class=\"b\">number</span> = -<span class=\"s\">8</span>\n<span class=\"k\">if</span> <span class=\"b\">number</span> &gt; <span class=\"s\">0</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'양수입니다.'</span>)\n<span class=\"f\">print</span>(<span class=\"s\">'판단 끝'</span>)</pre><div class=\"out\">판단 끝</div></section>\n</div>\n\n<h2><span class=\"qn\">3)</span>홀수·짝수 판별하기</h2>\n<p>정수를 2로 나눈 나머지가 0이면 짝수다. 이 조건이 참일 때 짝수 안내를 출력하고, 홀수 안내는 다음 절의 <code>else</code>로 연결한다.</p>\n<div class=\"pair\"><pre><span class=\"b\">number</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'정수를 입력하세요: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">number</span> % <span class=\"s\">2</span> == <span class=\"s\">0</span>:\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입력한 값 {number}: 짝수'</span>)</pre><div class=\"out\">정수를 입력하세요: 8\n입력한 값 8: 짝수</div></div>\n<div class=\"key\"><div class=\"ttl\">조건 읽기</div><p><code>number % 2 == 0</code>은 “number를 2로 나눈 나머지가 0과 같은가?”라고 읽는다. 값을 저장하는 <code>=</code>과 같은지 비교하는 <code>==</code>를 구분한다.</p></div>"
+  },
+  {
+    "n": "6-3",
+    "t": "if-else로 두 갈래 만들기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6-3</span><code>if-else</code>로 두 갈래 만들기</h1></div>\n<p class=\"lede\">두 결과 중 하나를 반드시 선택해야 할 때는 <code>if-else</code>를 사용한다. 조건이 참이면 <code>if</code>, 거짓이면 <code>else</code>의 코드만 실행된다.</p>\n\n<div class=\"branch-cards\">\n  <div><b>조건이 True</b><p><code>if</code> 아래의 코드 실행</p></div>\n  <div><b>조건이 False</b><p><code>else</code> 아래의 코드 실행</p></div>\n</div>\n\n<h2><span class=\"qn\">1)</span><code>else</code>에는 조건을 쓰지 않는 이유</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">if</span> 조건:\n    참일 때 실행할 코드\n<span class=\"k\">else</span>:\n    거짓일 때 실행할 코드</pre></div>\n<p><code>else</code>는 앞의 조건이 거짓인 나머지 모든 경우를 뜻한다. 이미 실행할 경우가 정해져 있으므로 <code>else</code> 뒤에는 조건을 쓰지 않고 바로 콜론을 붙인다.</p>\n\n<h2><span class=\"qn\">2)</span>홀수·짝수 완성하기</h2>\n<div class=\"pair\"><pre><span class=\"b\">number</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'정수를 입력하세요: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">number</span> % <span class=\"s\">2</span> == <span class=\"s\">0</span>:\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입력한 값 {number}: 짝수'</span>)\n<span class=\"k\">else</span>:\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입력한 값 {number}: 홀수'</span>)</pre><div class=\"out\">정수를 입력하세요: 5\n입력한 값 5: 홀수</div></div>\n\n<h2><span class=\"qn\">3)</span>두 수 중 큰 값 찾기</h2>\n<div class=\"pair\"><pre><span class=\"b\">a</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'첫 번째 수: '</span>))\n<span class=\"b\">b</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'두 번째 수: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">a</span> &gt;= <span class=\"b\">b</span>:\n    <span class=\"b\">big</span> = <span class=\"b\">a</span>\n<span class=\"k\">else</span>:\n    <span class=\"b\">big</span> = <span class=\"b\">b</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'큰 값은 {big}입니다.'</span>)</pre><div class=\"out\">첫 번째 수: 3\n두 번째 수: 8\n큰 값은 8입니다.</div></div>\n\n<h2><span class=\"qn\">4)</span>경곗값을 넣어 결과 확인하기</h2>\n<table><thead><tr><th>a</th><th>b</th><th><code>a &gt;= b</code></th><th>선택되는 값</th></tr></thead><tbody>\n  <tr><td>8</td><td>3</td><td>True</td><td>a의 8</td></tr>\n  <tr><td>3</td><td>8</td><td>False</td><td>b의 8</td></tr>\n  <tr><td>7</td><td>7</td><td>True</td><td>a의 7</td></tr>\n</tbody></table>\n<p>두 수가 같은 경우에도 큰 값 자체는 7이므로 결과는 맞다. 두 수가 같다는 별도의 안내가 필요하다면 다음 절에서 배우는 <code>elif</code>로 같은 경우를 따로 나눈다.</p>"
+  },
+  {
+    "n": "6-4",
+    "t": "if-elif-else로 여러 갈래 만들기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6-4</span><code>if-elif-else</code>로 여러 갈래 만들기</h1></div>\n<p class=\"lede\">세 가지 이상의 결과 중 하나만 선택할 때는 <code>elif</code>를 사용한다. 위에서부터 조건을 확인하고 처음 참이 된 한 갈래만 실행한다.</p>\n\n<h2><span class=\"qn\">1)</span><code>if</code>를 여러 번 쓰는 것과 <code>elif</code>의 차이</h2>\n<div class=\"compare-cards\">\n  <section><h3><code>if</code> 두 번</h3><pre><span class=\"b\">score</span> = <span class=\"s\">95</span>\n<span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">90</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'90점 이상'</span>)\n<span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'60점 이상'</span>)</pre><div class=\"out\">90점 이상\n60점 이상</div><p>각 <code>if</code>가 독립적으로 판단되어 두 문장이 모두 출력된다.</p></section>\n  <section><h3><code>if-elif</code></h3><pre><span class=\"b\">score</span> = <span class=\"s\">95</span>\n<span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">90</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'90점 이상'</span>)\n<span class=\"k\">elif</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'60점 이상'</span>)</pre><div class=\"out\">90점 이상</div><p>첫 조건이 참이므로 뒤의 조건은 확인하지 않는다.</p></section>\n</div>\n\n<h2><span class=\"qn\">2)</span>입장료 계산하기</h2>\n<div class=\"note\"><div class=\"ttl\">입장료 규칙</div><p>기본 입장료는 5,000원이다. 8세 미만은 무료이고, 60세 이상은 50% 할인한다.</p></div>\n<div class=\"pair\"><pre><span class=\"b\">charge</span> = <span class=\"s\">5000</span>\n<span class=\"b\">age</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'나이를 입력하세요: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">age</span> &lt; <span class=\"s\">8</span>:\n    <span class=\"b\">charge</span> = <span class=\"s\">0</span>\n<span class=\"k\">elif</span> <span class=\"b\">age</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"b\">charge</span> = <span class=\"b\">charge</span> // <span class=\"s\">2</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입장료는 {charge}원입니다.'</span>)</pre><div class=\"out\">나이를 입력하세요: 65\n입장료는 2500원입니다.</div></div>\n<p>8세 이상 60세 미만은 두 조건이 모두 거짓이므로 처음 저장한 5,000원이 그대로 출력된다. 값이 바뀌지 않는 경우에는 <code>else</code>를 생략할 수도 있다.</p>\n\n<h2><span class=\"qn\">3)</span>조건의 순서가 결과를 바꾸는 경우</h2>\n<div class=\"wrong-right\">\n  <section><h3>잘못된 순서</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'통과'</span>)\n<span class=\"k\">elif</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">90</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'우수'</span>)</pre></section>\n  <section><h3>올바른 순서</h3><pre><span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">90</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'우수'</span>)\n<span class=\"k\">elif</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'통과'</span>)</pre></section>\n</div>\n<p>95는 60 이상이면서 90 이상이다. 범위가 겹치면 더 좁고 까다로운 조건을 앞에 두어야 한다.</p>"
+  },
+  {
+    "n": "6-5",
+    "t": "조건문 안에 조건문 넣기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6-5</span>조건문 안에 조건문 넣기</h1></div>\n<p class=\"lede\">한 번 판단한 뒤 그 결과 안에서 다시 판단해야 할 때는 조건문 안에 조건문을 넣는다. 안쪽 조건문은 한 단계 더 들여쓴다.</p>\n\n<h2><span class=\"qn\">1)</span>세 수 중 가장 큰 수 찾기</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">a</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'첫 번째 수: '</span>))\n<span class=\"b\">b</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'두 번째 수: '</span>))\n<span class=\"b\">c</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'세 번째 수: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">a</span> &gt;= <span class=\"b\">b</span>:\n    <span class=\"k\">if</span> <span class=\"b\">a</span> &gt;= <span class=\"b\">c</span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">a</span>\n    <span class=\"k\">else</span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">c</span>\n<span class=\"k\">else</span>:\n    <span class=\"k\">if</span> <span class=\"b\">b</span> &gt;= <span class=\"b\">c</span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">b</span>\n    <span class=\"k\">else</span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">c</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'가장 큰 수: {largest}'</span>)</pre></div>\n<div class=\"out\">첫 번째 수: 17\n두 번째 수: 21\n세 번째 수: 10\n가장 큰 수: 21</div>\n\n<h2><span class=\"qn\">2)</span>코드가 판단하는 순서</h2>\n<div class=\"trace\">\n  <div><b>첫 판단</b><span><code>17 &gt;= 21</code>은 <code>False</code>이므로 바깥쪽 <code>else</code>로 이동한다.</span></div>\n  <div><b>둘째 판단</b><span><code>21 &gt;= 10</code>은 <code>True</code>이므로 <code>largest</code>에 21을 저장한다.</span></div>\n  <div><b>출력</b><span>조건문이 끝난 뒤 <code>가장 큰 수: 21</code>을 출력한다.</span></div>\n</div>\n\n<h2><span class=\"qn\">3)</span>어느 <code>else</code>가 어느 <code>if</code>와 연결되는가</h2>\n<p><code>else</code>는 같은 들여쓰기 깊이에 있는 가장 가까운 <code>if</code>와 연결된다. 안쪽 <code>else</code>는 공백 네 칸 위치의 <code>if</code>와, 바깥쪽 <code>else</code>는 맨 앞의 <code>if</code>와 연결된다.</p>\n<div class=\"indent-guide\">\n  <div><b>0칸</b><span>바깥쪽 <code>if-else</code></span></div>\n  <div><b>4칸</b><span>바깥 조건 안에서 실행되는 안쪽 <code>if-else</code></span></div>\n  <div><b>8칸</b><span>안쪽 조건의 결과로 실행되는 코드</span></div>\n</div>\n<div class=\"key\"><div class=\"ttl\">동점도 확인</div><p>비교에 <code>&gt;=</code>를 사용했으므로 두 수 이상이 같은 최댓값이어도 가장 큰 값은 정확히 저장된다.</p></div>"
+  },
+  {
+    "n": "6-6",
+    "t": "순서도로 조건 구조 확인하기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6-6</span>순서도로 조건 구조 확인하기</h1></div>\n<p class=\"lede\">순서도는 프로그램의 실행 순서를 기호와 화살표로 나타낸 그림이다. 조건이 많아질수록 코드를 쓰기 전에 갈라지는 길을 먼저 확인하면 오류를 줄일 수 있다.</p>\n\n<h2><span class=\"qn\">1)</span>시작·처리·판단·출력 기호</h2>\n<div class=\"symbol-grid\">\n  <div><div class=\"mini-symbol start\">시작</div><b>시작·종료</b><p>순서도의 처음과 끝</p></div>\n  <div><div class=\"mini-symbol process\">계산</div><b>처리</b><p>계산하거나 값 저장</p></div>\n  <div><div class=\"mini-symbol decision\"><span>조건?</span></div><b>판단</b><p>참과 거짓으로 분기</p></div>\n  <div><div class=\"mini-symbol output\"><span>출력</span></div><b>입력·출력</b><p>값 입력이나 결과 출력</p></div>\n</div>\n\n<h2><span class=\"qn\">2)</span>갈라지는 길을 코드로 옮기기</h2>\n<div class=\"flowchart\">\n  <div class=\"fc-start\">시작</div><div class=\"fc-arrow\">↓</div>\n  <div class=\"fc-output\"><span>점수 입력</span></div><div class=\"fc-arrow\">↓</div>\n  <div class=\"fc-diamond\"><span>점수 ≥ 60?</span></div>\n  <div class=\"fc-branches\">\n    <div><span class=\"fc-label\">참</span><span class=\"fc-arrow\">↓</span><div class=\"fc-output\"><span>통과 출력</span></div></div>\n    <div><span class=\"fc-label\">거짓</span><span class=\"fc-arrow\">↓</span><div class=\"fc-output\"><span>보완 출력</span></div></div>\n  </div>\n</div>\n<div class=\"pair\"><pre><span class=\"b\">score</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'점수: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'통과'</span>)\n<span class=\"k\">else</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'보완 필요'</span>)</pre><div class=\"out\">점수: 60\n통과</div></div>\n\n<h2><span class=\"qn\">3)</span>코드를 작성하기 전에 경곗값 찾기</h2>\n<p>결과가 바뀌는 기준이 60점이라면 기준 바로 아래, 기준값, 기준 바로 위를 반드시 확인한다.</p>\n<div class=\"boundary-row\"><span>0</span><span>59</span><span>60</span><span>61</span><span>100</span></div>\n<table><thead><tr><th>입력값</th><th>확인할 내용</th><th>예상 결과</th></tr></thead><tbody>\n  <tr><td>59</td><td>기준 바로 아래</td><td>보완 필요</td></tr>\n  <tr><td>60</td><td>기준값 포함 여부</td><td>통과</td></tr>\n  <tr><td>61</td><td>기준 바로 위</td><td>통과</td></tr>\n</tbody></table>\n<div class=\"key\"><div class=\"ttl\">경곗값 검사</div><p><code>&gt;</code>와 <code>&gt;=</code>의 차이는 기준값을 직접 넣었을 때 드러난다. 범위의 시작과 끝, 그 바로 앞뒤 값을 검사한다.</p></div>"
+  },
+  {
+    "n": "마무리",
+    "t": "점수 구간별 결과와 학습 안내",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6장 마무리</span>점수 구간에 따라 결과와 학습 안내 출력하기</h1></div>\n<p class=\"lede\">점수를 입력받아 네 구간으로 나누고, 각 구간에 맞는 결과와 다음 학습 내용을 안내한다.</p>\n\n<div class=\"codewrap\"><pre><span class=\"b\">score</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'점수를 입력하세요: '</span>))\n\n<span class=\"k\">if</span> <span class=\"b\">score</span> &lt; <span class=\"s\">0</span> <span class=\"k\">or</span> <span class=\"b\">score</span> &gt; <span class=\"s\">100</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'0부터 100 사이의 점수를 입력하세요.'</span>)\n<span class=\"k\">elif</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">90</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'결과: 우수'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'학습 안내: 심화 문제에 도전하세요.'</span>)\n<span class=\"k\">elif</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">70</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'결과: 통과'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'학습 안내: 틀린 문제를 다시 확인하세요.'</span>)\n<span class=\"k\">elif</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'결과: 보완 후 통과'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'학습 안내: 조건식 문제를 한 번 더 풀어 보세요.'</span>)\n<span class=\"k\">else</span>:\n    <span class=\"f\">print</span>(<span class=\"s\">'결과: 재학습 필요'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'학습 안내: 비교 연산자부터 다시 확인하세요.'</span>)</pre></div>\n<div class=\"out\">점수를 입력하세요: 85\n결과: 통과\n학습 안내: 틀린 문제를 다시 확인하세요.</div>\n\n<h2>경곗값 확인</h2>\n<table><thead><tr><th>점수</th><th>선택되는 조건</th><th>결과</th></tr></thead><tbody>\n  <tr><td>-1, 101</td><td>허용 범위를 벗어남</td><td>다시 입력 안내</td></tr>\n  <tr><td>90, 100</td><td><code>score &gt;= 90</code></td><td>우수</td></tr>\n  <tr><td>70, 89</td><td><code>score &gt;= 70</code></td><td>통과</td></tr>\n  <tr><td>60, 69</td><td><code>score &gt;= 60</code></td><td>보완 후 통과</td></tr>\n  <tr><td>0, 59</td><td>앞의 모든 조건이 거짓</td><td>재학습 필요</td></tr>\n</tbody></table>\n\n<h2>6장 요점 정리</h2>\n<table class=\"sumtbl\"><thead><tr><th>구분</th><th>핵심 내용</th></tr></thead><tbody>\n  <tr><td><span class=\"no\">6-1</span>콜론·들여쓰기</td><td>콜론 뒤의 실행 범위를 같은 깊이의 공백 네 칸으로 표시한다.</td></tr>\n  <tr><td><span class=\"no\">6-2</span><code>if</code></td><td>조건이 참일 때만 들여쓴 코드를 실행한다.</td></tr>\n  <tr><td><span class=\"no\">6-3</span><code>if-else</code></td><td>서로 반대되는 두 갈래 중 하나를 선택한다.</td></tr>\n  <tr><td><span class=\"no\">6-4</span><code>if-elif-else</code></td><td>위에서부터 검사하여 처음 참이 된 한 갈래만 실행한다.</td></tr>\n  <tr><td><span class=\"no\">6-5</span>중첩 조건문</td><td>한 조건의 결과 안에서 다시 조건을 판단한다.</td></tr>\n  <tr><td><span class=\"no\">6-6</span>순서도·경곗값</td><td>갈라지는 길을 먼저 그리고 기준값의 앞뒤를 검사한다.</td></tr>\n</tbody></table>"
+  },
+  {
+    "n": "연습",
+    "t": "조건문 종합 연습문제",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">6장</span>조건문 종합 연습문제</h1></div>\n<p class=\"lede\">순차 구조부터 중첩 조건문까지 수업에서 다룬 여섯 문제를 빈칸으로 다시 완성해 보자.</p>\n\n<h2>문제 1. 사각형의 넓이 구하기</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">width</span> = <span class=\"bl\"></span>(<span class=\"f\">input</span>(<span class=\"s\">'가로: '</span>))\n<span class=\"b\">height</span> = <span class=\"bl\"></span>(<span class=\"f\">input</span>(<span class=\"s\">'세로: '</span>))\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'사각형 넓이: {<span class=\"bl\"></span>}'</span>)</pre></div>\n<div class=\"out\">가로: 5\n세로: 3\n사각형 넓이: 15</div>\n<details><summary>정답</summary><p><code>int</code>, <code>int</code>, <code>width * height</code></p></details>\n\n<h2>문제 2. 세 과목의 합과 평균 구하기</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">korean</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'국어: '</span>))\n<span class=\"b\">english</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'영어: '</span>))\n<span class=\"b\">math</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'수학: '</span>))\n<span class=\"b\">total</span> = <span class=\"bl\"></span>\n<span class=\"b\">average</span> = <span class=\"f\">round</span>(<span class=\"bl\"></span>, <span class=\"s\">2</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'총점: {total}, 평균: {average}'</span>)</pre></div>\n<div class=\"out\">국어: 85\n영어: 95\n수학: 92\n총점: 272, 평균: 90.67</div>\n<details><summary>정답</summary><p><code>korean + english + math</code>, <code>total / 3</code></p></details>\n\n<h2>문제 3. 홀수·짝수 판별하기</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">number</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'정수를 입력하세요: '</span>))\n<span class=\"k\">if</span> <span class=\"bl\"></span>:\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입력한 값 {number}: 짝수'</span>)\n<span class=\"k\">else</span>:\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입력한 값 {number}: 홀수'</span>)</pre></div>\n<div class=\"out\">정수를 입력하세요: 5\n입력한 값 5: 홀수</div>\n<details><summary>정답</summary><p><code>number % 2 == 0</code></p></details>\n\n<h2>문제 4. 두 수 중 큰 값 찾기</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">a</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'첫 번째 수: '</span>))\n<span class=\"b\">b</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'두 번째 수: '</span>))\n<span class=\"k\">if</span> <span class=\"bl\"></span>:\n    <span class=\"b\">big</span> = <span class=\"b\">a</span>\n<span class=\"k\">else</span>:\n    <span class=\"b\">big</span> = <span class=\"b\">b</span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'큰 값은 {big}입니다.'</span>)</pre></div>\n<div class=\"out\">첫 번째 수: 3\n두 번째 수: 8\n큰 값은 8입니다.</div>\n<details><summary>정답</summary><p><code>a &gt;= b</code></p></details>\n\n<h2>문제 5. 입장료 계산하기</h2>\n<div class=\"note\"><div class=\"ttl\">조건</div><p>기본 입장료 5,000원 · 8세 미만 무료 · 60세 이상 50% 할인</p></div>\n<div class=\"codewrap\"><pre><span class=\"b\">charge</span> = <span class=\"s\">5000</span>\n<span class=\"b\">age</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'나이를 입력하세요: '</span>))\n<span class=\"k\">if</span> <span class=\"bl\"></span>:\n    <span class=\"b\">charge</span> = <span class=\"s\">0</span>\n<span class=\"k\">elif</span> <span class=\"bl\"></span>:\n    <span class=\"b\">charge</span> = <span class=\"bl\"></span>\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'입장료는 {charge}원입니다.'</span>)</pre></div>\n<div class=\"out\">나이를 입력하세요: 65\n입장료는 2500원입니다.</div>\n<details><summary>정답</summary><p><code>age &lt; 8</code>, <code>age &gt;= 60</code>, <code>charge // 2</code></p></details>\n\n<h2>문제 6. 세 수 중 가장 큰 수 찾기</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">a</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'첫 번째 수: '</span>))\n<span class=\"b\">b</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'두 번째 수: '</span>))\n<span class=\"b\">c</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'세 번째 수: '</span>))\n\n<span class=\"k\">if</span> <span class=\"bl\"></span>:\n    <span class=\"k\">if</span> <span class=\"bl\"></span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">a</span>\n    <span class=\"k\">else</span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">c</span>\n<span class=\"k\">else</span>:\n    <span class=\"k\">if</span> <span class=\"bl\"></span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">b</span>\n    <span class=\"k\">else</span>:\n        <span class=\"b\">largest</span> = <span class=\"b\">c</span>\n\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'가장 큰 수: {largest}'</span>)</pre></div>\n<div class=\"out\">첫 번째 수: 17\n두 번째 수: 21\n세 번째 수: 10\n가장 큰 수: 21</div>\n<details><summary>정답</summary><p><code>a &gt;= b</code>, <code>a &gt;= c</code>, <code>b &gt;= c</code></p></details>\n\n<div class=\"checklist\">\n  <div><b>1</b><span>콜론을 빠뜨리지 않았는가?</span></div>\n  <div><b>2</b><span>같은 실행 범위의 들여쓰기를 맞췄는가?</span></div>\n  <div><b>3</b><span><code>=</code>과 <code>==</code>를 구분했는가?</span></div>\n  <div><b>4</b><span>경곗값과 같은 값을 넣어 보았는가?</span></div>\n</div>"
+  }
+];
+
+const toc=document.getElementById('toc'),pg=document.getElementById('pg');
+P.forEach((p,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<a href="#p${i}"><span class="n">${p.n}</span><span>${p.t}</span></a>`;
+  toc.appendChild(li);
+});
+function render(){
+  let i=parseInt((location.hash||'#p0').slice(2));
+  if(isNaN(i)||i<0||i>=P.length)i=0;
+  let nav='<div class="pager">';
+  nav += i>0?`<a href="#p${i-1}"><span class="dir">PREV</span><span class="t">${P[i-1].n} ${P[i-1].t}</span></a>`:'<span class="ph"></span>';
+  nav += i<P.length-1?`<a class="next" href="#p${i+1}"><span class="dir">NEXT</span><span class="t">${P[i+1].n} ${P[i+1].t}</span></a>`:'<span class="ph"></span>';
+  nav+='</div>';
+  const context='<div class="partkicker">3부 · 프로그램의 실행 흐름 바꾸기</div>';
+  pg.innerHTML=context+P[i].h+nav+'<p class="footnote">고1 정보가 쉬워지는 파이썬 · 3부 · 6장</p>';
+  document.querySelectorAll('.toc a').forEach((a,k)=>a.classList.toggle('on',k===i));
+  closeMenu();bindBlanks();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+const BANK=['[:6]','[6:]','[0]','[-1]','[1:6]','[::2]'];
+const CIRC=['①','②','③','④','⑤','⑥','⑦','⑧'];
+let menu=null;
+function closeMenu(){if(menu){menu.remove();menu=null;}}
+addEventListener('click',e=>{if(menu&&!menu.contains(e.target))closeMenu();});
+addEventListener('scroll',closeMenu,true);
+function bindBlanks(){
+  document.querySelectorAll('pre .bl[data-a]').forEach(bl=>{
+    bl.onclick=ev=>{
+      ev.stopPropagation();closeMenu();
+      const r=bl.getBoundingClientRect();
+      menu=document.createElement('div');menu.className='blmenu';
+      BANK.forEach((v,i)=>{
+        const b=document.createElement('button');
+        b.textContent=CIRC[i]+' '+v;
+        b.onclick=()=>{
+          bl.textContent=v;
+          bl.classList.remove('ok','no');
+          bl.classList.add(String(i+1)===bl.dataset.a?'ok':'no');
+          closeMenu();
+        };
+        menu.appendChild(b);
+      });
+      document.body.appendChild(menu);
+      const mh=menu.offsetHeight, mw=menu.offsetWidth;
+      let top=r.bottom+6, left=r.left;
+      if(top+mh>innerHeight-8) top=Math.max(8,r.top-mh-6);
+      if(left+mw>innerWidth-8) left=innerWidth-mw-8;
+      menu.style.top=top+'px';menu.style.left=left+'px';
+    };
+  });
+}
+addEventListener('hashchange',render);render();
+const sb=document.getElementById('sb'),mob=document.getElementById('mob');
+mob.onclick=()=>{sb.classList.toggle('collapsed');};
+if(innerWidth>980)sb.classList.remove('collapsed');
+addEventListener('resize',()=>{if(innerWidth>980)sb.classList.remove('collapsed')});
+document.querySelectorAll('.toc a').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=980)sb.classList.add('collapsed');}));
+</script>
+</body>
+</html>
