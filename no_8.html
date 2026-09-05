@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="고1 정보가 쉬워지는 파이썬 3부 8장: 자주 쓰는 코드를 함수로 묶기">
+<title>고1 정보가 쉬워지는 파이썬 | 3부 · 8장 자주 쓰는 코드를 함수로 묶기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1D23; --body:#33383F; --paper:#FFFFFF; --wash:#F7F8F9;
+  --blue:#2E7CC4; --blue-d:#1F5E99; --yellow:#C9911A;
+  --code:#15181E; --muted:#7A818B; --line:#DFE2E6;
+  --sans:'IBM Plex Sans KR',system-ui,sans-serif;
+  --mono:'JetBrains Mono','D2Coding',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--body);font-family:var(--sans);
+  line-height:1.75;font-size:15.5px;-webkit-font-smoothing:antialiased}
+
+.wrap{display:flex;min-height:100vh;align-items:flex-start}
+.sidebar{width:272px;flex:0 0 272px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--wash);border-right:1px solid var(--line);padding:0 0 40px}
+.brand{padding:20px 20px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+.brand .tgt{display:block;font-size:11px;color:var(--blue);margin-bottom:5px}
+.brand .bk{display:block;font-weight:700;font-size:16px;line-height:1.4;color:var(--ink)}
+.brand .sub2{display:block;margin-top:7px;font-size:11.5px;color:var(--muted);line-height:1.55}
+.brand .by{display:block;margin-top:9px;font-size:11.5px;color:var(--muted)}
+.navlabel{padding:14px 20px 10px;border-bottom:1px solid var(--line)}
+.navlabel .part{display:block;font-size:11px;font-weight:700;color:var(--blue);margin-bottom:3px}
+.navlabel .chapter{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.toc{list-style:none;margin:0;padding:0}
+.toc a{display:flex;gap:9px;padding:8px 20px;text-decoration:none;color:var(--body);font-size:14px}
+.toc a:hover{background:#EDEFF2}
+.toc a .n{font-family:var(--mono);font-size:12px;color:var(--muted);flex:0 0 30px}
+.toc a.on{background:var(--blue-d);color:#FFF;font-weight:500}
+.toc a.on .n{color:#BBD8F0}
+
+.main{flex:1;min-width:0;display:flex;justify-content:center;padding:0 44px 90px}
+.page{width:100%;max-width:720px;padding-top:38px}
+
+.banner{margin:0 0 26px}
+.banner .bmark{display:none}
+.partkicker{display:block;margin-bottom:10px;color:var(--blue-d);font-size:12px;font-weight:700;
+  letter-spacing:-.01em}
+h1{margin:0;font-size:25px;font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.4}
+h1 .num{border-bottom:3px solid var(--blue);padding-bottom:5px;margin-right:7px}
+h2{font-size:18px;font-weight:700;letter-spacing:-.025em;margin:44px 0 14px;color:var(--ink);
+  padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 .qn{color:var(--blue);margin-right:6px}
+h3{font-size:15.5px;font-weight:600;margin:26px 0 7px;color:var(--ink)}
+.lede{font-size:16px;color:var(--ink);margin:0 0 8px}
+p{margin:0 0 13px}
+strong{font-weight:600;color:var(--ink)}
+code{font-family:var(--mono);font-size:.88em;background:#EFF1F3;color:#2A5F8F;padding:1px 5px;border-radius:3px}
+code,pre,.out,.toc a .n{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+
+.ask{border:1px solid var(--line);border-radius:4px;background:var(--wash);
+  padding:13px 17px;margin:0 0 26px;font-size:15.5px;color:var(--ink)}
+.ask .who{display:block;font-size:11.5px;color:var(--blue);margin-bottom:5px;font-weight:600}
+
+.codewrap{margin:14px 0}
+.codehead{font-size:12px;color:var(--muted);margin-bottom:5px}
+pre{margin:0;background:var(--code);color:#E4E7EC;border-radius:4px;padding:14px 17px;
+  overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.7}
+pre .c{color:#748096} pre .s{color:#E5C07B} pre .k{color:#C678DD}
+pre .f{color:#61AFEF} pre .b{color:#98C379}
+pre .bl{display:inline-block;min-width:2.2em;height:1.15em;background:#B9BFC9;
+  border-radius:2px;vertical-align:-.16em;margin:0 2px}
+pre .bl[data-a]{cursor:pointer;text-align:center;color:#15181E;font-weight:500;
+  line-height:1.15em;padding:0 5px;transition:background .12s}
+pre .bl[data-a]:hover{background:#D5DAE1}
+pre .bl.ok{background:#7BC47F;color:#0E2E12}
+pre .bl.no{background:#E38B7E;color:#3A0F08}
+.blmenu{
+  position:fixed;z-index:99;background:var(--paper);border:1px solid var(--line);
+  border-radius:5px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:5px;
+  max-height:270px;overflow-y:auto;min-width:132px;
+}
+.blmenu button{
+  display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  font-family:var(--mono);font-size:13px;color:var(--ink);padding:6px 10px;border-radius:3px;
+}
+.blmenu button:hover{background:var(--wash)}
+.blhint{margin:-6px 0 16px;font-size:13px;color:var(--muted)}
+.out{border:1px solid #D5D9E0;border-radius:4px;
+  background:#F5F6F8;padding:11px 17px 12px;margin:8px 0 14px;font-family:var(--mono);
+  font-size:13.5px;white-space:pre-wrap;line-height:1.7;color:var(--ink)}
+.out::before{content:'실행 결과';display:block;font-family:var(--sans);font-size:11px;
+  font-weight:600;color:#5F6875;margin-bottom:5px}
+.pair{margin:0 0 18px}
+.pair pre{border-radius:4px 4px 0 0}
+.pair .out{margin:0;border-radius:0 0 4px 4px;border-top:none}
+
+figure{margin:18px 0 20px}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.6}
+figcaption b{color:var(--ink);font-weight:600}
+.memory-diagram-shot{margin:18px 0 22px}.memory-diagram-shot img{border:none;border-radius:16px;background:#fff}
+
+.predict{border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin:18px 0}
+.predict .ttl{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:9px}
+.predict pre{margin-bottom:11px}
+.picks{display:flex;gap:7px;flex-wrap:wrap}
+.pick{flex:1 1 118px;border:1px solid var(--line);border-radius:3px;background:var(--wash);
+  padding:9px 11px;font-family:var(--mono);font-size:13px;white-space:pre-wrap;line-height:1.6}
+.pick .no{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}
+
+.note{border:1px solid var(--line);border-radius:4px;background:var(--wash);
+  padding:13px 17px;margin:18px 0;font-size:15px}
+.note .ttl{font-weight:600;font-size:14px;margin-bottom:6px;color:var(--ink)}
+.note p:last-child,.note ul{margin-bottom:0}
+.key{border:1px solid #E3D5AE;background:#FCFAF3;border-radius:4px;padding:14px 18px;margin:30px 0 8px}
+.key .ttl{font-size:12px;font-weight:600;color:#96700F;margin-bottom:7px}
+.key ul{margin:0;padding-left:17px} .key li{margin-bottom:3px}
+.warn{border:1px solid #E8CCC5;background:#FCF7F5;border-radius:4px;padding:13px 17px;margin:18px 0;font-size:15px}
+.warn .ttl{font-weight:600;font-size:13.5px;color:#A8412A;margin-bottom:5px}
+
+ul,ol{margin:0 0 14px;padding-left:20px} li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left}
+th{background:var(--wash);font-weight:600;font-size:13.5px;color:var(--ink)}
+
+.sumtbl{font-size:14px}
+.sumtbl th:first-child{width:180px}
+.sumtbl td{vertical-align:top;padding:12px 14px}
+.sumtbl td:first-child{font-weight:600;color:var(--ink)}
+.sumtbl .no{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:700;margin-right:7px}
+.sumtbl ul{margin:0;padding-left:18px;line-height:1.65}
+.sumtbl li{margin-bottom:2px}
+.bank{border:1px solid var(--line);border-radius:4px;padding:13px 17px;margin:16px 0}
+.bank .ttl{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:9px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:13px;background:var(--wash);border:1px solid var(--line);
+  border-radius:3px;padding:4px 10px;color:var(--ink)}
+details{border:1px solid var(--line);border-radius:4px;padding:11px 17px;margin:16px 0}
+details summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--blue-d)}
+details[open] summary{margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+details p:last-child{margin-bottom:0}
+
+.step{display:flex;gap:13px;margin-bottom:2px}
+.step .num{flex:0 0 22px;height:22px;border-radius:3px;background:var(--blue-d);color:#FFF;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;margin-top:6px}
+.step .body{flex:1;min-width:0}
+.step .body h3{margin-top:1px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:56px;
+  border-top:1px solid var(--line);padding-top:20px}
+.pager a{flex:1;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  padding:11px 15px;color:var(--body)}
+.pager a:hover{border-color:var(--blue)}
+.pager .dir{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}
+.pager .t{font-weight:600;font-size:13.5px;color:var(--ink)}
+.pager .next{text-align:right} .pager .ph{flex:1}
+.footnote{margin-top:30px;font-size:11.5px;color:var(--muted)}
+
+.mobbar{display:none}
+@media (max-width:980px){
+  .wrap{flex-direction:column}
+  .sidebar{position:static;width:100%;flex:none;height:auto;border-right:none;
+    border-bottom:1px solid var(--line);padding-bottom:10px}
+  .sidebar.collapsed .navlabel,.sidebar.collapsed .toc{display:none}
+  .main{padding:0 18px 60px} .page{padding-top:26px}
+  h1{font-size:21px} h2{font-size:17px;margin-top:34px}
+  .mobbar{display:block;margin:10px 18px 0;padding:7px 12px;border:1px solid var(--line);
+    border-radius:4px;background:var(--paper);font-size:13px;cursor:pointer;color:var(--ink);font-family:var(--sans)}
+  .picks{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.idxtbl{width:100%;min-width:0;table-layout:fixed;font-size:11.5px}.idxtbl th,.idxtbl td{text-align:center;white-space:nowrap;padding:7px 2px;min-width:0}.idxtbl th{width:86px;white-space:normal;line-height:1.35}
+.memdiagram{margin:16px 0 12px;padding:12px;border:1px solid var(--line);background:#f8fafc}
+.memlookup{display:grid;grid-template-columns:minmax(160px,.9fr) 32px minmax(0,2fr);gap:8px;align-items:stretch;overflow:visible}
+.memstage{min-width:0;height:100%;display:flex;flex-direction:column;border:1px solid #aebbd0;background:#fff;border-radius:7px;overflow:hidden}
+.memstage-title{padding:7px 9px;background:#233375;color:#fff;font-size:12px;font-weight:700;text-align:center}
+.memlist{display:grid;grid-template-rows:repeat(4,1fr);flex:1;gap:4px;padding:8px}
+.memlist>div{display:grid;grid-template-columns:64px minmax(0,1fr);border:1px solid var(--line);background:#fff;font-size:11.5px;line-height:1.3}
+.memlist>div b,.memlist>div span{display:flex;align-items:center;justify-content:center;min-width:0;padding:6px 5px}
+.memlist>div b{border-right:1px solid var(--line)}
+.memlist>div span{font-family:var(--mono);font-size:10.5px;white-space:nowrap}
+.memlist .chosen{border-color:#d3ad3a;background:#fff8d9}
+.memarrow{display:flex;align-items:center;justify-content:center;color:#4058aa;font-size:23px;font-weight:700;line-height:1}
+.memchars{padding:8px;overflow:visible;flex:1;display:flex;flex-direction:column;justify-content:center}
+.memstring{margin-bottom:7px;text-align:center;font-size:11px;color:var(--muted)}
+.charrow,.idxrow{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));min-width:0}
+.charrow span,.idxrow span{text-align:center;padding:5px 0;border-right:1px solid var(--line);font-family:var(--mono);font-size:10px;line-height:1.2}
+.charrow span:first-child,.idxrow span:first-child{border-left:1px solid var(--line)}
+.charrow span{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+.idxrow span{padding-top:4px;color:#4a568a;border-bottom:1px solid var(--line);background:#f8fafc}
+.charrow .picked,.idxrow .picked{background:#fff6c7;color:#1d2e73;font-weight:700;box-shadow:inset 0 0 0 1px #263783}
+.memnote{margin:8px 8px 9px;padding:6px 7px;border:1px solid var(--line);background:#f8fafc;text-align:center;font-size:10.5px;line-height:1.35}
+.memresult{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:10px;font-family:var(--mono);font-size:14px;color:var(--ink)}
+.memresult code,.memresult strong code{font-size:14px}
+.memresult strong code{background:transparent;padding:0;color:inherit}
+.memresult strong{padding:3px 9px;border:1px solid #d3ad3a;background:#fff8d9;border-radius:5px;font-weight:600}
+.memcaption{margin:7px 0 0;text-align:center;color:var(--muted);font-size:11.5px;line-height:1.45}
+.slice-diagram{margin:12px 0 10px;padding:10px 12px;border:2px solid #18306b;border-radius:8px;background:#fff}
+.end-diagram{margin:12px 0 10px;padding:0;border:0;background:transparent}
+.slice-params{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.slice-param{overflow:hidden;border:1.5px solid #18306b;border-radius:7px;background:#fff;text-align:center}
+.slice-param b{display:block;padding:7px 3px;background:#123266;color:#fff;font-size:14px}
+.slice-param span{display:block;padding:8px 3px;background:#eef5ff;font-family:var(--mono);font-size:18px;color:#142e68}
+.slice-title{text-align:center;margin:5px 0 8px;font-size:16px;font-weight:700;color:#18306b}
+.slice-title code{padding:0;background:transparent;font-size:16px;color:inherit}
+.slice-track{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));width:100%;margin:0 auto}
+.slice-track span{display:flex;align-items:center;justify-content:center;min-width:0;font-family:var(--mono);color:#18306b}
+.slice-track .letter{padding:7px 1px;border-top:1px solid #7f8aa2;border-right:1px solid #7f8aa2;border-bottom:1px solid #7f8aa2;background:#fff;font-size:17px}
+.slice-track .letter.first{border-left:1px solid #7f8aa2}
+.slice-track .number{padding:4px 1px 1px;font-size:12px}
+.slice-track .take{background:#edf4ff}
+.slice-rule{margin:10px 0 8px;text-align:center;font-size:14.5px;font-weight:700;color:#18306b}
+.slice-result{display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--mono);font-size:16px}
+.slice-result code{font-size:16px}
+.slice-result>code{padding:5px 9px;border:1.5px solid #18306b;background:#fff;color:#18306b}
+.slice-result strong{padding:5px 10px;border:1.5px solid #18306b;background:#eef5ff;border-radius:5px}
+.slice-result strong code{padding:0;background:transparent;color:inherit}
+.slice-result small{font-family:var(--sans);font-size:12px;font-weight:600;color:#18306b}
+.end-grid{display:grid;grid-template-columns:76px repeat(14,minmax(0,1fr));overflow:hidden;border:1.5px solid #6f7b99;border-radius:8px;background:#fff}
+.end-grid>div{display:flex;align-items:center;justify-content:center;min-width:0;padding:8px 1px;border-right:1px solid #7f8aa2;border-bottom:1px solid #7f8aa2;font-family:var(--mono);font-size:12.5px;background:#fff}
+.end-grid>div:nth-child(15),.end-grid>div:nth-child(30),.end-grid>div:last-child{border-right:0}
+.end-grid>div:nth-child(n+31){border-bottom:0}
+.end-grid .label{font-family:var(--sans);font-size:14.5px;font-weight:700;color:#18306b;background:#edf1f8}
+.end-grid .take{background:#edf4ff}
+.end-grid .boundary{border-left:3px solid #d24d3e;background:#fff1ef;color:#bf4437}
+.end-grid .role-take{grid-column:span 6;min-height:46px;background:#edf4ff;font-family:var(--sans);font-size:12.5px;line-height:1.3;text-align:center}
+.end-grid .role-stop{grid-column:span 8;min-height:46px;background:#fff1ef;font-family:var(--sans);font-size:12.5px;line-height:1.3;text-align:center}
+.end-calc{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;padding:8px 12px;border:1.5px solid #6f7b99;border-radius:8px;background:#fff;font-size:14px}
+.end-calc b{color:#18306b}.end-calc code{font-size:14px}.paramrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}.paramrow span{display:flex;justify-content:center;gap:8px;padding:10px;background:#fbe4e8;border:1px solid #e7b1bc}.stopnote{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;color:var(--muted)}.stopnote b{color:var(--ink)}.endtbl{min-width:620px}.endtbl th,.endtbl td{text-align:center}.endtbl .take{background:#e9f3ff}.endtbl .stopcell{background:#fff1f1;border-left:4px solid #d34b4b}.calcbox{margin:16px 0;padding:16px 18px;background:#f5f7fa;border:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.calcbox code{font-size:16px;color:var(--navy)}
+@media(max-width:760px){.idxtbl{font-size:9px}.idxtbl th{width:62px;font-size:9px}.idxtbl th,.idxtbl td{padding:5px 1px}.memlookup{grid-template-columns:1fr;overflow:visible}.memarrow{display:flex;justify-content:center;align-items:center;transform:rotate(90deg)}.paramrow{grid-template-columns:repeat(2,1fr)}.memdiagram{padding:14px}}
+.scratch-shot{margin:16px 0 24px}.scratch-shot img{border:1.5px solid #aebbd0;border-radius:8px}.scratch-shot figcaption{margin-top:7px}
+.scratch-overview{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:18px 0}.scratch-overview>div{padding:13px 9px;border:1.5px solid #a7b3c9;border-radius:9px;background:#f8faff;text-align:center}.scratch-overview span{display:flex;align-items:center;justify-content:center;width:27px;height:27px;margin:0 auto 8px;border-radius:50%;background:#263775;color:#fff;font-weight:800}.scratch-overview b{display:block;color:#183475}.scratch-overview p{margin:7px 0 0;font-size:12px;line-height:1.55}
+.scratch-python{margin:-12px 0 28px;padding:13px 14px 14px;border:1.5px solid #97a6c2;border-radius:8px;background:#f7f9ff}.scratch-python .pair{margin:0}.scratch-python>p{margin:9px 2px 0}
+.parallel-list,.index-board{margin:16px 0;overflow:hidden;border:1.5px solid #73809d;border-radius:9px;background:#fff}
+.parallel-list>div,.ib-row{display:grid;grid-template-columns:120px repeat(3,minmax(0,1fr))}.parallel-list>div+div,.ib-row+.ib-row{border-top:1px solid #98a4bb}
+.parallel-list b,.parallel-list span,.ib-row b,.ib-row span{display:flex;align-items:center;justify-content:center;min-height:42px;padding:6px;border-right:1px solid #98a4bb}.parallel-list span:last-child,.ib-row span:last-child{border-right:0}
+.parallel-list b,.ib-row b{background:#edf3ff;color:#173475}.parallel-list>div:first-child span,.positive span{background:#f8faff;color:#24427f;font-family:var(--mono)}
+.compare-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.compare-cards section{overflow:hidden;padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#fff}.compare-cards h3{margin:0 0 10px;padding:0;background:none;color:#244b82;font-size:17px}.compare-cards pre{margin:0;border:0;border-radius:4px}.compare-cards p{margin:10px 0 0}.compare-cards .out{margin:8px 0 0;border-radius:4px}
+.index-board .ib-row{grid-template-columns:150px repeat(4,minmax(0,1fr))}.index-board .negative span{background:#fff8e5;color:#7b5300;font-family:var(--mono)}
+.nested-diagram{margin:16px 0;padding:12px;border:1.5px solid #6f7b99;border-radius:8px;background:#f8fafc}.nested-diagram>div{display:flex;align-items:center;justify-content:center;gap:14px;padding:9px;font-family:var(--mono);font-size:16px}.nested-diagram>div+div{border-top:1px solid var(--line)}.nested-diagram strong code{background:#fff8d9;color:#18306b}
+.methodtbl th,.methodtbl td{text-align:center}.methodtbl th:first-child{width:15%}
+.function-line{margin:20px 0 9px}.function-line b{margin-right:6px;color:#183475;font-size:17px}.function-table{table-layout:fixed;font-size:13px}.function-table th:nth-child(1){width:15%}.function-table th:nth-child(2){width:23%}.function-table th:nth-child(3){width:42%}.function-table th:nth-child(4){width:20%}.function-table td{vertical-align:middle}.function-table code{white-space:normal;line-height:1.65}
+.function-cards{display:grid;grid-template-columns:1fr;gap:16px;margin:14px 0 28px}.function-cards section{display:grid;grid-template-columns:150px minmax(0,1fr);overflow:hidden;padding:0;border:1px solid #c8ced9;border-radius:7px;background:#fff}.function-name{display:flex;align-items:flex-start;justify-content:center;padding:17px 12px;border-right:1px solid #c8ced9;background:#f3f6fa}.function-name code{padding:0;background:none;color:#244b82;font-size:18px;font-weight:700}.function-body{min-width:0;padding:14px}.function-purpose{display:inline;margin:0 8px 0 0;color:#384455;font-size:14px}.function-body p{display:inline;margin:0;padding:0;background:none;font-size:14px;line-height:1.65}.function-cards pre{margin:11px 0 0;padding:12px 15px;border:0;border-radius:4px;background:var(--code);color:#e4e7ec;font-size:12px;line-height:1.65}.function-cards pre .c{color:#748096}.function-cards pre .s{color:#e5c07b}.function-cards pre .k{color:#c678dd}.function-cards pre .f{color:#61afef}.function-cards pre .b{color:#98c379}.function-cards .out{margin:7px 0 0;padding:9px 15px;border:1px solid #d7dce5;border-radius:4px;background:#fff;font-size:12px}
+.formula,.unpack-diagram{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin:16px 0;padding:14px;border:1.5px solid #9ba8c1;border-radius:8px;background:#f8faff}.formula b{color:#183475;font-size:17px}
+.split-flow{display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1fr);align-items:stretch;margin:18px 0}.split-flow>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:92px;padding:10px;border:1.5px solid #8390ab;border-radius:8px;background:#f8faff}.split-flow>span{display:flex;align-items:center;justify-content:center;color:#263774;font-size:24px;font-weight:800}.split-flow b{color:#183475}
+.map-flow,.process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.map-flow>div,.process-grid>div{position:relative;padding:14px 10px;border:1.5px solid #9ba8c1;border-radius:8px;background:#f8faff;text-align:center}.map-flow span,.process-grid span{display:flex;align-items:center;justify-content:center;width:24px;height:24px;margin:0 auto 7px;border-radius:50%;background:#263775;color:#fff;font-weight:800}.map-flow b,.map-flow code{display:block;margin-top:5px}.process-grid b{color:#183475}.process-grid p{margin:7px 0 0;font-size:13px}
+@media(max-width:700px){.scratch-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-cards,.function-cards{grid-template-columns:1fr}.function-cards section{grid-template-columns:1fr}.function-name{justify-content:flex-start;padding:10px 12px;border-right:0;border-bottom:1px solid #c8ced9}.function-body{padding:12px}.parallel-list>div,.ib-row{grid-template-columns:82px repeat(3,minmax(0,1fr))}.index-board .ib-row{grid-template-columns:105px repeat(4,minmax(0,1fr))}.split-flow{grid-template-columns:1fr}.split-flow>span{height:28px;transform:rotate(90deg)}.map-flow,.process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.methodtbl{font-size:12px}.function-table{font-size:11px}.function-table th,.function-table td{padding:7px 4px}.function-cards p{min-height:0}.scratch-shot{margin-bottom:18px}}
+
+/* 6장 조건문 설명용 구성 */
+.flow-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}
+.flow-strip>div{padding:14px 10px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc;text-align:center}
+.flow-strip span{display:flex;align-items:center;justify-content:center;width:25px;height:25px;margin:0 auto 7px;border-radius:50%;background:#eef3f8;color:#244b82;font-family:var(--mono);font-weight:700}
+.flow-strip b{display:block;color:#26384f}.flow-strip p{margin:5px 0 0;font-size:12.5px}
+.scratch-compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:18px 0}
+.scratch-panel,.python-panel{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#fff}
+.scratch-panel h3,.python-panel h3{margin:0 0 11px;color:#244b82}
+.scratch-stack{padding:12px;background:#f7f8fa;border-radius:5px}
+.scratch-hat,.scratch-if,.scratch-say{width:max-content;max-width:100%;padding:8px 13px;border-radius:7px;color:#fff;font-weight:600;line-height:1.45}
+.scratch-hat{background:#f2a21b}.scratch-if{margin-top:5px;background:#f0a51b}.scratch-if .slot{display:inline-block;padding:2px 7px;border-radius:10px;background:#63b653;color:#fff;font-family:var(--mono)}
+.scratch-say{margin:5px 0 0 24px;background:#8066c9}.scratch-gap{margin-left:24px;padding:5px 0 2px;border-left:3px solid #efb13b}
+.indent-guide{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}
+.indent-guide>div{display:grid;grid-template-columns:120px minmax(0,1fr);border-bottom:1px solid #d9dde4}
+.indent-guide>div:last-child{border-bottom:0}.indent-guide b{padding:11px 13px;background:#f3f6fa;color:#30445e}.indent-guide span{padding:11px 13px}
+.truth-table td:first-child,.truth-table td:nth-child(2){font-family:var(--mono)}
+.truth-table td:last-child{text-align:center;font-family:var(--mono);font-weight:700}
+.branch-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.branch-cards>div{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc}
+.branch-cards b{display:block;margin-bottom:5px;color:#244b82}.branch-cards p{margin:0}
+.trace{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}
+.trace>div{display:grid;grid-template-columns:96px minmax(0,1fr);border-bottom:1px solid #d9dde4}
+.trace>div:last-child{border-bottom:0}.trace b{padding:10px 12px;background:#f3f6fa;color:#244b82;text-align:center}.trace span{padding:10px 13px}
+.flowchart{display:flex;flex-direction:column;align-items:center;gap:9px;margin:22px auto;padding:18px;border:1px solid #c8ced9;border-radius:8px;background:#fbfcfd}
+.fc-start,.fc-process,.fc-output{display:flex;align-items:center;justify-content:center;min-width:170px;min-height:48px;padding:9px 17px;border:1.5px solid #70809a;background:#fff;text-align:center}
+.fc-start{border-radius:50%}.fc-output{border-radius:3px;transform:skew(-12deg)}.fc-output>span{transform:skew(12deg)}.fc-process{border-radius:3px}
+.fc-diamond{display:flex;align-items:center;justify-content:center;width:118px;height:118px;margin:5px 0;transform:rotate(45deg);border:1.5px solid #70809a;background:#fff}
+.fc-diamond span{transform:rotate(-45deg);text-align:center;line-height:1.4}.fc-arrow{color:#52647f;font-size:20px;line-height:1}
+.fc-branches{display:grid;grid-template-columns:1fr 1fr;gap:26px;width:100%;max-width:540px}
+.fc-branches>div{display:flex;flex-direction:column;align-items:center;gap:7px}.fc-label{font-size:12px;font-weight:700;color:#244b82}
+.symbol-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.symbol-grid>div{padding:12px 8px;border:1px solid #c8ced9;border-radius:7px;background:#fff;text-align:center}.symbol-grid b{display:block;color:#244b82}.symbol-grid p{margin:5px 0 0;font-size:12px}
+.mini-symbol{display:flex;align-items:center;justify-content:center;width:88px;height:38px;margin:0 auto 9px;border:1.5px solid #70809a;background:#f8fafc;font-size:11px;color:#30445e}.mini-symbol.start{border-radius:50%}.mini-symbol.process{border-radius:2px}.mini-symbol.decision{width:54px;height:54px;margin-bottom:13px;transform:rotate(45deg)}.mini-symbol.decision span{transform:rotate(-45deg)}.mini-symbol.output{transform:skew(-12deg)}.mini-symbol.output span{transform:skew(12deg)}
+.boundary-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:14px 0}
+.boundary-row span{padding:9px 4px;border:1px solid #c8ced9;border-radius:4px;background:#f8fafc;text-align:center;font-family:var(--mono);font-weight:600;color:#244b82}
+.wrong-right{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.wrong-right h3{margin:0 0 8px}.wrong-right pre{height:100%}
+.checklist{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}.checklist>div{display:grid;grid-template-columns:42px minmax(0,1fr);border-bottom:1px solid #d9dde4}.checklist>div:last-child{border-bottom:0}.checklist b{display:flex;align-items:center;justify-content:center;background:#f3f6fa;color:#244b82}.checklist span{padding:10px 13px}
+@media(max-width:700px){.scratch-compare,.branch-cards,.wrong-right{grid-template-columns:1fr}.flow-strip{grid-template-columns:1fr}.symbol-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.boundary-row{grid-template-columns:repeat(5,minmax(52px,1fr));overflow-x:auto}.indent-guide>div{grid-template-columns:92px minmax(0,1fr)}.fc-branches{gap:10px}.fc-start,.fc-process,.fc-output{min-width:140px;padding:8px 10px;font-size:13px}}
+
+
+/* 7장 반복문 설명용 구성 */
+.repeat-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.repeat-flow>div{padding:13px 9px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc;text-align:center}.repeat-flow span{display:flex;align-items:center;justify-content:center;width:25px;height:25px;margin:0 auto 7px;border-radius:50%;background:#eef3f8;color:#244b82;font-family:var(--mono);font-weight:700}.repeat-flow b{display:block;color:#30445e}.repeat-flow p{margin:5px 0 0;font-size:12px}
+.scratch-repeat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:18px 0}.scratch-panel7,.python-panel7{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#fff}.scratch-panel7 h3,.python-panel7 h3{margin:0 0 11px;color:#244b82}.scratch-stack7{padding:13px;background:#f7f8fa;border-radius:5px}.scratch-hat7,.scratch-loop7,.scratch-say7{width:max-content;max-width:100%;padding:8px 13px;border-radius:7px;color:#fff;font-weight:600;line-height:1.45}.scratch-hat7{background:#f2a21b}.scratch-loop7{margin-top:5px;background:#f0a51b}.scratch-loop7 .slot{display:inline-block;padding:2px 8px;border-radius:10px;background:#fff;color:#91620c;font-family:var(--mono)}.scratch-inside7{margin-left:25px;padding:5px 0 3px;border-left:3px solid #efb13b}.scratch-say7{margin-left:0;background:#8066c9}
+.iteration-board{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}.iteration-board>div{display:grid;grid-template-columns:85px 120px minmax(0,1fr);border-bottom:1px solid #d9dde4}.iteration-board>div:last-child{border-bottom:0}.iteration-board b,.iteration-board code,.iteration-board span{padding:10px 12px}.iteration-board b{background:#f3f6fa;color:#244b82;text-align:center}.iteration-board code{border-radius:0;background:#fafbfc;color:#2a5f8f;text-align:center}.iteration-board span{border-left:1px solid #e1e4e9}
+.range-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:16px 0}.range-cards>div{padding:14px 10px;border:1px solid #c8ced9;border-radius:7px;background:#fff;text-align:center}.range-cards code{display:block;margin-bottom:8px;font-size:13px}.range-cards b{display:block;color:#244b82}.range-cards p{margin:5px 0 0;font-size:12.5px}
+.accumulate{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:16px 0}.accumulate>div{padding:10px 4px;border:1px solid #c8ced9;border-radius:5px;background:#f8fafc;text-align:center}.accumulate b{display:block;color:#244b82;font-family:var(--mono)}.accumulate span{font-family:var(--mono);font-size:12px}
+.while-parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}.while-parts>div{padding:14px 10px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc;text-align:center}.while-parts b{display:block;margin-bottom:5px;color:#244b82}.while-parts code{display:block;margin-top:6px}
+.loop-control{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.loop-control>div{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc}.loop-control b{display:block;margin-bottom:5px;color:#244b82}.loop-control p{margin:0}
+.nested-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:16px 0}.nested-grid span{padding:10px 4px;border:1px solid #c8ced9;background:#f8fafc;text-align:center;font-family:var(--mono);color:#30445e}.nested-guide{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}.nested-guide>div{display:grid;grid-template-columns:120px minmax(0,1fr);border-bottom:1px solid #d9dde4}.nested-guide>div:last-child{border-bottom:0}.nested-guide b{padding:10px 12px;background:#f3f6fa;color:#244b82}.nested-guide span{padding:10px 13px}
+.range-track{display:flex;align-items:stretch;gap:5px;margin:16px 0;overflow-x:auto}.range-track span{display:flex;align-items:center;justify-content:center;flex:1 0 48px;min-height:44px;border:1px solid #c8ced9;border-radius:4px;background:#f8fafc;font-family:var(--mono);color:#244b82}.range-track .stop{border-color:#dfb6aa;background:#fcf5f2;color:#a8412a;text-decoration:line-through}.range-caption{text-align:center;color:#657083;font-size:13px}
+@media(max-width:700px){.repeat-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.scratch-repeat,.loop-control{grid-template-columns:1fr}.range-cards,.while-parts{grid-template-columns:1fr}.iteration-board>div{grid-template-columns:68px 92px minmax(0,1fr);font-size:12px}.iteration-board b,.iteration-board code,.iteration-board span{padding:8px 6px}.accumulate{grid-template-columns:repeat(5,minmax(52px,1fr));overflow-x:auto}.nested-guide>div{grid-template-columns:90px minmax(0,1fr)}}
+
+
+/* 8장 함수 설명용 구성 */
+.scratch-placeholder{display:flex;align-items:center;justify-content:center;min-height:260px;margin:18px 0;border:2px dashed #c3c9d3;border-radius:8px;background:#fafbfc;color:#7a818b;text-align:center}.scratch-placeholder b{display:block;margin-bottom:6px;color:#4f5d70}.scratch-placeholder p{margin:0;font-size:13px}
+.function-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}.function-flow>div{padding:14px 9px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc;text-align:center}.function-flow span{display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:0 auto 7px;border-radius:50%;background:#eef3f8;color:#244b82;font-family:var(--mono);font-weight:700}.function-flow b{display:block;color:#30445e}.function-flow p{margin:5px 0 0;font-size:12.5px}
+.param-map{margin:16px 0;border:1px solid #c8ced9;border-radius:7px;overflow:hidden}.param-map>div{display:grid;grid-template-columns:130px minmax(0,1fr) 130px;border-bottom:1px solid #d9dde4}.param-map>div:last-child{border-bottom:0}.param-map b,.param-map code,.param-map span{padding:10px 12px;text-align:center}.param-map b{background:#f3f6fa;color:#244b82}.param-map code{border-radius:0;background:#fafbfc}.param-map span{border-left:1px solid #e1e4e9}
+.type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}.type-grid>div{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#fff}.type-grid b{display:block;margin-bottom:6px;color:#244b82}.type-grid p{margin:0;font-size:13px}
+.return-arrow{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);align-items:center;margin:18px 0}.return-arrow>div{padding:14px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc;text-align:center}.return-arrow>span{text-align:center;color:#52647f;font-size:25px;font-weight:700}.return-arrow b{display:block;color:#244b82}.return-arrow p{margin:5px 0 0;font-size:13px}
+.namespace{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.namespace>div{overflow:hidden;border:1px solid #c8ced9;border-radius:7px;background:#fff}.namespace b{display:block;padding:9px 12px;background:#f3f6fa;color:#244b82}.namespace p{margin:0;padding:12px 14px}.namespace code{display:inline-block;margin:2px}
+.module-dot{display:grid;grid-template-columns:minmax(0,1fr) 45px minmax(0,1fr);align-items:center;margin:16px 0;border:1px solid #c8ced9;border-radius:7px;background:#fff}.module-dot>div{padding:15px;text-align:center}.module-dot>span{font-family:var(--mono);font-size:26px;text-align:center;color:#244b82}.module-dot b{display:block;color:#244b82}.module-dot code{display:block;margin-top:6px}
+.help-card{margin:16px 0;padding:14px 17px;border:1px solid #c8ced9;border-radius:7px;background:#f8fafc}.help-card b{display:block;margin-bottom:5px;color:#244b82}.help-card p{margin:0}
+@media(max-width:700px){.function-flow{grid-template-columns:1fr}.param-map>div{grid-template-columns:90px minmax(0,1fr)}.param-map>div span{grid-column:1/-1;border-top:1px solid #e1e4e9;border-left:0}.type-grid,.namespace{grid-template-columns:1fr}.return-arrow{grid-template-columns:1fr}.return-arrow>span{transform:rotate(90deg)}.module-dot{grid-template-columns:1fr}.module-dot>span{transform:rotate(90deg)}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar collapsed" id="sb">
+    <div class="brand">
+      <span class="tgt">예비 고1을 위한</span>
+      <span class="bk">고1 정보가 쉬워지는 파이썬</span>
+      <span class="sub2">스크래치를 몰라도 그림으로 원리를 보고,<br>파이썬 코드로 옮길 수 있습니다.</span>
+      <span class="by">이현아 · 한다인</span>
+    </div>
+    <button class="mobbar" id="mob">목차</button>
+    <div class="navlabel">
+      <span class="part">3부 프로그램의 실행 흐름 바꾸기</span>
+      <span class="chapter">8장 자주 쓰는 코드를 함수로 묶기</span>
+    </div>
+    <ul class="toc" id="toc"></ul>
+  </aside>
+  <main class="main"><div class="page" id="pg"></div></main>
+</div>
+<script>
+const P=[
+  {
+    "n": "8장",
+    "t": "자주 쓰는 코드를 함수로 묶기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8장</span>자주 쓰는 코드를 함수로 묶기</h1></div>\n<p class=\"lede\">함수는 하나의 기능을 수행하는 코드를 이름으로 묶은 것이다. 필요한 값을 전달해 호출하면 묶어 둔 코드를 다시 사용할 수 있다.</p>\n\n<h2>학생 한 명의 정보를 출력하는 함수</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">print_student</span>(<span class=\"b\">name</span>, <span class=\"b\">score</span>):\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'이름: {name}'</span>)\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'점수: {score}'</span>)\n\n<span class=\"f\">print_student</span>(<span class=\"s\">'다인'</span>, <span class=\"s\">85</span>)</pre><div class=\"out\">이름: 다인\n점수: 85</div></div>\n\n<div class=\"function-flow\">\n  <div><span>1</span><b>함수 정의</b><p>기능에 이름을 붙여 만든다.</p></div>\n  <div><span>2</span><b>값 전달</b><p>함수에 필요한 값을 넣는다.</p></div>\n  <div><span>3</span><b>함수 호출</b><p>함수 이름으로 기능을 실행한다.</p></div>\n</div>\n\n<h2>이번 장에서 배울 내용</h2>\n<div class=\"key\"><div class=\"ttl\">학습 흐름</div><ol>\n  <li><code>def</code>로 함수를 정의하고 함수 이름으로 호출한다.</li>\n  <li>매개변수와 인수로 여러 값을 함수에 전달한다.</li>\n  <li><code>print()</code>와 <code>return</code>의 역할을 구분한다.</li>\n  <li>지역 변수와 전역 변수의 사용 범위를 이해한다.</li>\n  <li>모듈을 가져와 이미 만들어진 함수를 사용한다.</li>\n</ol></div>"
+  },
+  {
+    "n": "스크래치",
+    "t": "나만의 블록과 함수 비교하기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">스크래치로</span>나만의 블록과 파이썬 함수 비교하기</h1></div>\n<p class=\"lede\">스크래치의 ‘나만의 블록’과 파이썬 함수는 자주 사용하는 동작을 이름으로 묶어 필요할 때 호출한다는 공통점이 있다.</p>\n\n<div class=\"scratch-placeholder\"><div><b>스크래치 ‘나만의 블록’ 이미지 영역</b><p>이미지 완성 후 이 위치에 삽입</p></div></div>\n\n<h2>파이썬 함수 구조</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">def</span> 함수명(매개변수):\n    수행할 코드\n\n함수명(인수)</pre></div>\n<div class=\"nested-guide\">\n  <div><b>블록 만들기</b><span>파이썬에서는 <code>def</code>로 함수를 정의한다.</span></div>\n  <div><b>블록 이름</b><span>파이썬에서는 함수 이름으로 기능을 구분한다.</span></div>\n  <div><b>블록 사용</b><span>함수 이름 뒤에 괄호를 붙여 호출한다.</span></div>\n</div>\n<div class=\"note\"><div class=\"ttl\">이미지 반영 전</div><p>현재는 빈 영역만 두었으며 스크래치 이미지는 추가하지 않았다.</p></div>"
+  },
+  {
+    "n": "8-1",
+    "t": "함수 정의와 호출",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8-1</span>함수 정의와 호출</h1></div>\n<p class=\"lede\"><code>def</code> 뒤에 함수 이름과 괄호를 쓰고 콜론을 붙인다. 함수에 포함되는 코드는 네 칸 들여쓴다.</p>\n\n<h2><span class=\"qn\">1)</span>입력값과 반환값이 없는 함수</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">hi</span>():\n    <span class=\"s\">'''인사를 출력하는 함수'''</span>\n    <span class=\"f\">print</span>(<span class=\"s\">'안녕~'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'반가워~'</span>)\n\n<span class=\"f\">hi</span>()</pre><div class=\"out\">안녕~\n반가워~</div></div>\n<p>함수 이름 뒤의 빈 괄호는 전달받을 값이 없다는 뜻이다. 함수 안의 두 출력문은 <code>hi()</code>를 호출할 때 실행된다.</p>\n\n<h2><span class=\"qn\">2)</span>만들기만 하면 실행되지 않는다</h2>\n<div class=\"compare-cards\">\n  <section><h3>정의만 한 경우</h3><pre><span class=\"k\">def</span> <span class=\"f\">hi</span>():\n    <span class=\"f\">print</span>(<span class=\"s\">'안녕~'</span>)</pre><div class=\"out\">출력 없음</div></section>\n  <section><h3>호출한 경우</h3><pre><span class=\"k\">def</span> <span class=\"f\">hi</span>():\n    <span class=\"f\">print</span>(<span class=\"s\">'안녕~'</span>)\n\n<span class=\"f\">hi</span>()</pre><div class=\"out\">안녕~</div></section>\n</div>\n<p><code>def</code>는 기능을 만들어 저장하는 단계다. 함수 이름과 괄호를 사용해 호출해야 함수의 실행 위치로 이동한다.</p>\n\n<h2><span class=\"qn\">3)</span>같은 함수 다시 사용하기</h2>\n<div class=\"pair\"><pre><span class=\"f\">hi</span>()\n<span class=\"f\">hi</span>()</pre><div class=\"out\">안녕~\n반가워~\n안녕~\n반가워~</div></div>\n\n<h2><span class=\"qn\">4)</span>docstring과 <code>help()</code></h2>\n<div class=\"help-card\"><b>docstring</b><p>함수의 첫 줄에 작성하는 설명 문자열이다. 큰따옴표나 작은따옴표 세 개로 감싸며 함수의 기능을 기록한다.</p></div>\n<div class=\"codewrap\"><pre><span class=\"f\">help</span>(<span class=\"f\">hi</span>)\n<span class=\"f\">help</span>(<span class=\"f\">print</span>)\n<span class=\"f\">help</span>(<span class=\"f\">input</span>)</pre></div>\n<p><code>help()</code>는 함수의 사용 방법과 설명을 보여 준다. 직접 만든 함수에 docstring이 있으면 그 내용도 확인할 수 있다.</p>"
+  },
+  {
+    "n": "8-2",
+    "t": "매개변수와 인수",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8-2</span>매개변수와 인수</h1></div>\n<p class=\"lede\">함수를 정의할 때 값을 받을 이름을 매개변수라고 하고, 함수를 호출할 때 괄호 안에 넣는 실제 값을 인수라고 한다.</p>\n\n<div class=\"param-map\">\n  <div><b>함수 정의</b><code>def greet(name):</code><span><code>name</code>은 매개변수</span></div>\n  <div><b>함수 호출</b><code>greet('다인')</code><span><code>'다인'</code>은 인수</span></div>\n</div>\n\n<h2><span class=\"qn\">1)</span>값 하나 전달하기</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">greet</span>(<span class=\"b\">name</span>):\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'안녕 {name}'</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'반가워!!!'</span>)\n\n<span class=\"f\">greet</span>(<span class=\"s\">'다인'</span>)</pre><div class=\"out\">안녕 다인\n반가워!!!</div></div>\n\n<h2><span class=\"qn\">2)</span>여러 값 전달하기</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">add</span>(<span class=\"b\">x</span>, <span class=\"b\">y</span>):\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{x}와(과) {y}의 합은 {x + y}입니다.'</span>)\n\n<span class=\"f\">add</span>(<span class=\"s\">3</span>, <span class=\"s\">4</span>)</pre><div class=\"out\">3와(과) 4의 합은 7입니다.</div></div>\n<p>첫 번째 인수 3은 <code>x</code>, 두 번째 인수 4는 <code>y</code>에 순서대로 전달된다.</p>\n\n<h2><span class=\"qn\">3)</span>필요한 값을 넣지 않으면</h2>\n<div class=\"codewrap\"><pre><span class=\"f\">add</span>(<span class=\"s\">3</span>)</pre></div>\n<div class=\"out\">TypeError: add() missing 1 required positional argument: 'y'</div>\n<p><code>add(x, y)</code>에는 두 값이 필요하지만 하나만 전달했으므로 오류가 발생한다.</p>\n\n<h2><span class=\"qn\">4)</span>기본값이 있는 매개변수</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">introduce</span>(<span class=\"b\">name</span>, <span class=\"b\">grade</span>=<span class=\"s\">1</span>):\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'{name}: {grade}학년'</span>)\n\n<span class=\"f\">introduce</span>(<span class=\"s\">'다인'</span>)\n<span class=\"f\">introduce</span>(<span class=\"s\">'민수'</span>, <span class=\"s\">2</span>)</pre><div class=\"out\">다인: 1학년\n민수: 2학년</div></div>\n<p><code>grade</code>를 생략하면 기본값 1을 사용하고, 값을 전달하면 기본값 대신 전달한 값을 사용한다.</p>"
+  },
+  {
+    "n": "8-3",
+    "t": "print()와 return의 차이",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8-3</span><code>print()</code>와 <code>return</code>의 차이</h1></div>\n<p class=\"lede\"><code>print()</code>는 화면에 값을 보여 주고, <code>return</code>은 함수가 계산한 값을 호출한 위치로 전달한다.</p>\n<div class=\"note\"><div class=\"ttl\">여기서 ‘입력값’의 뜻</div><p>함수의 입력값은 <code>input()</code>으로 키보드에서 받는 값만 뜻하지 않는다. 함수를 호출할 때 괄호 안의 인수로 전달하는 값을 뜻한다.</p></div>\n\n<div class=\"return-arrow\">\n  <div><b><code>print()</code></b><p>화면에 결과 표시</p></div><span>↔</span><div><b><code>return</code></b><p>함수 밖으로 값 전달</p></div>\n</div>\n\n<h2><span class=\"qn\">1)</span>출력만 하는 함수</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">add_print</span>(<span class=\"b\">x</span>, <span class=\"b\">y</span>):\n    <span class=\"f\">print</span>(<span class=\"b\">x</span> + <span class=\"b\">y</span>)\n\n<span class=\"b\">a</span> = <span class=\"f\">add_print</span>(<span class=\"s\">3</span>, <span class=\"s\">4</span>)\n<span class=\"f\">print</span>(<span class=\"b\">a</span>)</pre><div class=\"out\">7\nNone</div></div>\n<p>함수 안의 <code>print()</code>가 7을 화면에 출력하지만 반환된 값은 없다. <code>return</code>이 없는 함수는 자동으로 <code>None</code>을 반환하므로 <code>a</code>에는 <code>None</code>이 저장된다.</p>\n\n<h2><span class=\"qn\">2)</span>계산 결과를 반환하는 함수</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">add</span>(<span class=\"b\">x</span>, <span class=\"b\">y</span>):\n    <span class=\"b\">s</span> = <span class=\"b\">x</span> + <span class=\"b\">y</span>\n    <span class=\"k\">return</span> <span class=\"b\">s</span>\n\n<span class=\"b\">a</span> = <span class=\"f\">add</span>(<span class=\"s\">3</span>, <span class=\"s\">4</span>)\n<span class=\"f\">print</span>(<span class=\"b\">a</span>)\n<span class=\"f\">print</span>(<span class=\"b\">a</span> / <span class=\"s\">2</span>)</pre><div class=\"out\">7\n3.5</div></div>\n<p>반환값을 변수에 저장하면 출력뿐 아니라 나누기, 평균 계산과 같은 다음 작업에 사용할 수 있다.</p>\n\n<h2><span class=\"qn\">3)</span>입력값과 반환값에 따른 함수 형태</h2>\n<div class=\"type-grid\">\n  <div><b>입력값 X · 반환값 X</b><p><code>hi()</code>처럼 정해진 동작만 실행</p></div>\n  <div><b>입력값 O · 반환값 X</b><p><code>greet(name)</code>처럼 받은 값을 사용해 출력</p></div>\n  <div><b>입력값 O · 반환값 O</b><p><code>add(x, y)</code>처럼 받은 값으로 계산 후 반환</p></div>\n  <div><b>입력값 X · 반환값 O</b><p><code>say()</code>처럼 함수 안에서 정한 값을 반환</p></div>\n</div>\n\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">say</span>():\n    <span class=\"k\">return</span> <span class=\"s\">'Hi'</span>\n\n<span class=\"b\">message</span> = <span class=\"f\">say</span>()\n<span class=\"f\">print</span>(<span class=\"b\">message</span>)</pre><div class=\"out\">Hi</div></div>"
+  },
+  {
+    "n": "8-4",
+    "t": "지역 변수와 전역 변수",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8-4</span>지역 변수와 전역 변수</h1></div>\n<p class=\"lede\">함수 안에서 만든 변수는 그 함수 안에서만 사용하는 지역 변수다. 함수 밖에서 만든 변수는 여러 위치에서 읽을 수 있는 전역 변수다.</p>\n\n<div class=\"namespace\">\n  <div><b>전역 이름 공간</b><p><code>school</code><br>함수 밖에서 만든 이름</p></div>\n  <div><b>함수의 지역 이름 공간</b><p><code>student</code><br>함수를 호출할 때 만들어지는 이름</p></div>\n</div>\n\n<h2><span class=\"qn\">1)</span>함수 안의 이름은 밖에서 보이지 않는다</h2>\n<div class=\"codewrap\"><pre><span class=\"b\">school</span> = <span class=\"s\">'인천고'</span>\n\n<span class=\"k\">def</span> <span class=\"f\">show</span>():\n    <span class=\"b\">student</span> = <span class=\"s\">'다인'</span>\n    <span class=\"f\">print</span>(<span class=\"b\">school</span>)\n    <span class=\"f\">print</span>(<span class=\"b\">student</span>)\n\n<span class=\"f\">show</span>()\n<span class=\"f\">print</span>(<span class=\"b\">student</span>)</pre></div>\n<div class=\"out\">인천고\n다인\nNameError: name 'student' is not defined</div>\n<p>함수는 전역 변수 <code>school</code>을 읽을 수 있지만, 함수가 끝난 뒤 지역 변수 <code>student</code>를 밖에서 사용할 수는 없다.</p>\n\n<h2><span class=\"qn\">2)</span>함수 밖의 값을 수정하려면</h2>\n<div class=\"pair\"><pre><span class=\"b\">count</span> = <span class=\"s\">0</span>\n\n<span class=\"k\">def</span> <span class=\"f\">add_count</span>():\n    <span class=\"k\">global</span> <span class=\"b\">count</span>\n    <span class=\"b\">count</span> = <span class=\"b\">count</span> + <span class=\"s\">1</span>\n\n<span class=\"f\">add_count</span>()\n<span class=\"f\">print</span>(<span class=\"b\">count</span>)</pre><div class=\"out\">1</div></div>\n<p><code>global count</code>는 함수 안에서 전역 변수 <code>count</code>를 수정하겠다는 뜻이다. 여러 함수가 같은 전역 값을 바꾸면 값의 변화를 추적하기 어려워질 수 있다.</p>\n\n<h2><span class=\"qn\">3)</span><code>return</code>으로 값 전달하기</h2>\n<div class=\"pair\"><pre><span class=\"k\">def</span> <span class=\"f\">add_count</span>(<span class=\"b\">value</span>):\n    <span class=\"k\">return</span> <span class=\"b\">value</span> + <span class=\"s\">1</span>\n\n<span class=\"b\">count</span> = <span class=\"s\">0</span>\n<span class=\"b\">count</span> = <span class=\"f\">add_count</span>(<span class=\"b\">count</span>)\n<span class=\"f\">print</span>(<span class=\"b\">count</span>)</pre><div class=\"out\">1</div></div>\n<div class=\"key\"><div class=\"ttl\"><code>global</code> 사용 원칙</div><p>함수의 계산 결과는 가능하면 <code>return</code>으로 전달한다. 여러 함수가 반드시 같은 상태를 직접 바꿔야 하는 경우에만 <code>global</code>을 사용한다.</p></div>"
+  },
+  {
+    "n": "8-5",
+    "t": "모듈의 함수 가져다 쓰기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8-5</span>모듈의 함수 가져다 쓰기</h1></div>\n<p class=\"lede\">모듈은 관련된 기능을 모아 둔 파일이다. <code>import</code>로 모듈을 가져오면 그 안에 이미 만들어진 함수를 사용할 수 있다.</p>\n\n<h2><span class=\"qn\">1)</span><code>import</code>의 역할</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">import</span> <span class=\"b\">random</span></pre></div>\n<p><code>random</code> 모듈을 현재 프로그램에서 사용할 수 있도록 불러온다. 가져오기 전에는 <code>random.randint()</code>를 사용할 수 없다.</p>\n\n<h2><span class=\"qn\">2)</span>점 앞뒤의 의미</h2>\n<div class=\"module-dot\">\n  <div><b>모듈 이름</b><code>random</code></div><span>.</span><div><b>모듈 안의 함수</b><code>randint(1, 6)</code></div>\n</div>\n<p><code>random.randint(1, 6)</code>은 “<code>random</code> 모듈에 들어 있는 <code>randint()</code> 함수를 사용한다.”라는 뜻이다. 1과 6을 모두 포함한 범위에서 정수 하나를 만든다.</p>\n\n<h2><span class=\"qn\">3)</span>주사위 함수 만들기</h2>\n<div class=\"pair\"><pre><span class=\"k\">import</span> <span class=\"b\">random</span>\n\n<span class=\"k\">def</span> <span class=\"f\">dice</span>():\n    <span class=\"s\">'''1부터 6 사이의 주사위 값을 반환하는 함수'''</span>\n    <span class=\"k\">return</span> <span class=\"b\">random</span>.<span class=\"f\">randint</span>(<span class=\"s\">1</span>, <span class=\"s\">6</span>)\n\n<span class=\"b\">number</span> = <span class=\"f\">dice</span>()\n<span class=\"f\">print</span>(<span class=\"b\">number</span>)</pre><div class=\"out\">3\n(실행할 때마다 1부터 6 사이의 값)</div></div>\n\n<h2><span class=\"qn\">4)</span>잠시 기다리는 함수</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">import</span> <span class=\"b\">time</span>\n\n<span class=\"f\">print</span>(<span class=\"s\">3</span>)\n<span class=\"b\">time</span>.<span class=\"f\">sleep</span>(<span class=\"s\">1</span>)\n<span class=\"f\">print</span>(<span class=\"s\">2</span>)</pre></div>\n<p><code>time.sleep(1)</code>은 프로그램의 실행을 1초 동안 멈춘다. 카운트다운처럼 출력 사이에 시간이 필요할 때 사용한다.</p>"
+  },
+  {
+    "n": "마무리",
+    "t": "학생 정보 프로그램을 함수로 나누기",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8장 마무리</span>입력·판단·출력을 함수로 나누기</h1></div>\n<p class=\"lede\">학생 정보를 입력받는 기능, 점수를 판단하는 기능, 결과를 출력하는 기능을 각각 함수로 나누어 하나의 프로그램으로 연결한다.</p>\n\n<div class=\"codewrap\"><pre><span class=\"k\">def</span> <span class=\"f\">input_student</span>():\n    <span class=\"b\">name</span> = <span class=\"f\">input</span>(<span class=\"s\">'이름: '</span>)\n    <span class=\"b\">grade</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'학년: '</span>))\n    <span class=\"b\">score</span> = <span class=\"f\">int</span>(<span class=\"f\">input</span>(<span class=\"s\">'점수: '</span>))\n    <span class=\"k\">return</span> [<span class=\"b\">name</span>, <span class=\"b\">grade</span>, <span class=\"b\">score</span>]\n\n<span class=\"k\">def</span> <span class=\"f\">judge</span>(<span class=\"b\">score</span>):\n    <span class=\"k\">if</span> <span class=\"b\">score</span> &gt;= <span class=\"s\">60</span>:\n        <span class=\"k\">return</span> <span class=\"s\">'통과'</span>\n    <span class=\"k\">return</span> <span class=\"s\">'보완 필요'</span>\n\n<span class=\"k\">def</span> <span class=\"f\">print_student</span>(<span class=\"b\">student</span>, <span class=\"b\">result</span>):\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'이름: {student[0]}'</span>)\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'학년: {student[1]}학년'</span>)\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'점수: {student[2]}점'</span>)\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'결과: {result}'</span>)\n\n<span class=\"b\">student</span> = <span class=\"f\">input_student</span>()\n<span class=\"b\">result</span> = <span class=\"f\">judge</span>(<span class=\"b\">student</span>[<span class=\"s\">2</span>])\n<span class=\"f\">print_student</span>(<span class=\"b\">student</span>, <span class=\"b\">result</span>)</pre></div>\n<div class=\"out\">이름: 다인\n학년: 1\n점수: 85\n이름: 다인\n학년: 1학년\n점수: 85점\n결과: 통과</div>\n\n<div class=\"function-flow\">\n  <div><span>1</span><b>입력 함수</b><p>학생 정보를 리스트로 반환</p></div>\n  <div><span>2</span><b>판단 함수</b><p>점수를 받아 결과 반환</p></div>\n  <div><span>3</span><b>출력 함수</b><p>학생 정보와 결과 출력</p></div>\n</div>\n\n<h2>8장 요점 정리</h2>\n<table class=\"sumtbl\"><thead><tr><th>구분</th><th>핵심 내용</th></tr></thead><tbody>\n  <tr><td><span class=\"no\">8-1</span>정의·호출</td><td><code>def</code>로 만든 함수는 함수 이름과 괄호로 호출해야 실행된다.</td></tr>\n  <tr><td><span class=\"no\">8-2</span>매개변수·인수</td><td>정의할 때는 매개변수, 호출할 때는 실제 인수를 사용한다.</td></tr>\n  <tr><td><span class=\"no\">8-3</span><code>return</code></td><td>계산 결과를 함수 밖으로 전달하여 다음 계산에 사용한다.</td></tr>\n  <tr><td><span class=\"no\">8-4</span>변수의 범위</td><td>지역 변수는 함수 안에서만 사용하며 전역 변수 수정은 최소화한다.</td></tr>\n  <tr><td><span class=\"no\">8-5</span>모듈</td><td><code>import</code>한 뒤 <code>모듈.함수()</code> 형태로 기능을 사용한다.</td></tr>\n</tbody></table>"
+  },
+  {
+    "n": "연습1",
+    "t": "함수 기본 실습",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8장 연습 1</span>함수 기본 실습</h1></div>\n<p class=\"lede\">함수의 입력값과 반환값을 구분하면서 수업에서 사용한 다섯 실습을 완성해 보자.</p>\n\n<h2>실습 1. 3초 카운트다운 함수</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">import</span> <span class=\"b\">time</span>\n\n<span class=\"bl\"></span> <span class=\"f\">countdown</span>():\n    <span class=\"s\">'''3초 카운트다운을 출력하는 함수'''</span>\n    <span class=\"k\">for</span> <span class=\"b\">i</span> <span class=\"k\">in</span> <span class=\"f\">range</span>(<span class=\"bl\"></span>, <span class=\"bl\"></span>, <span class=\"bl\"></span>):\n        <span class=\"f\">print</span>(<span class=\"bl\"></span>)\n        <span class=\"b\">time</span>.<span class=\"f\">sleep</span>(<span class=\"s\">1</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'출발!'</span>)\n\n<span class=\"f\">countdown</span>()</pre></div>\n<div class=\"out\">3\n2\n1\n출발!</div>\n<details><summary>정답</summary><p><code>def</code>, <code>3</code>, <code>0</code>, <code>-1</code>, <code>i</code></p></details>\n\n<h2>실습 2. 두 수의 합 출력하기</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">def</span> <span class=\"f\">add</span>(<span class=\"b\">x</span>, <span class=\"b\">y</span>):\n    <span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'<span class=\"bl\"></span>와(과) <span class=\"bl\"></span>의 합은 <span class=\"bl\"></span>입니다.'</span>)\n\n<span class=\"f\">add</span>(<span class=\"s\">3</span>, <span class=\"s\">4</span>)</pre></div>\n<div class=\"out\">3와(과) 4의 합은 7입니다.</div>\n<details><summary>정답</summary><p><code>{x}</code>, <code>{y}</code>, <code>{x + y}</code></p></details>\n\n<h2>실습 3. 전달받은 수부터 카운트다운하기</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">import</span> <span class=\"b\">time</span>\n\n<span class=\"bl\"></span> <span class=\"f\">countdown</span>(<span class=\"b\">x</span>):\n    <span class=\"k\">for</span> <span class=\"b\">i</span> <span class=\"k\">in</span> <span class=\"f\">range</span>(<span class=\"bl\"></span>, <span class=\"bl\"></span>, <span class=\"bl\"></span>):\n        <span class=\"f\">print</span>(<span class=\"bl\"></span>)\n        <span class=\"b\">time</span>.<span class=\"f\">sleep</span>(<span class=\"s\">1</span>)\n    <span class=\"f\">print</span>(<span class=\"s\">'출발!'</span>)\n\n<span class=\"f\">countdown</span>(<span class=\"s\">5</span>)</pre></div>\n<details><summary>정답</summary><p><code>def</code>, <code>x</code>, <code>0</code>, <code>-1</code>, <code>i</code></p></details>\n\n<h2>실습 4. 삼각형의 넓이 반환하기</h2>\n<div class=\"codewrap\"><pre><span class=\"bl\"></span> <span class=\"f\">tri</span>(<span class=\"b\">a</span>, <span class=\"b\">b</span>):\n    <span class=\"s\">'''밑변과 높이를 받아 삼각형의 넓이를 반환하는 함수'''</span>\n    <span class=\"bl\"></span> <span class=\"s\">0.5</span> * <span class=\"bl\"></span> * <span class=\"bl\"></span>\n\n<span class=\"b\">area</span> = <span class=\"f\">tri</span>(<span class=\"s\">10</span>, <span class=\"s\">5</span>)\n<span class=\"f\">print</span>(<span class=\"b\">area</span>)</pre></div>\n<div class=\"out\">25.0</div>\n<details><summary>정답</summary><p><code>def</code>, <code>return</code>, <code>a</code>, <code>b</code></p></details>\n\n<h2>실습 5. 주사위 값 반환하기</h2>\n<div class=\"codewrap\"><pre><span class=\"k\">import</span> <span class=\"b\">random</span>\n\n<span class=\"bl\"></span> <span class=\"f\">dice</span>():\n    <span class=\"s\">'''1부터 6 사이의 주사위 값을 반환하는 함수'''</span>\n    <span class=\"k\">return</span> <span class=\"b\">random</span>.<span class=\"f\">randint</span>(<span class=\"s\">1</span>, <span class=\"s\">6</span>)\n\n<span class=\"b\">a</span> = <span class=\"f\">dice</span>()\n<span class=\"f\">print</span>(<span class=\"b\">a</span>)</pre></div>\n<details><summary>정답</summary><p><code>def</code></p></details>"
+  },
+  {
+    "n": "연습2",
+    "t": "함수 종합 문제",
+    "h": "\n<div class=\"banner\"><h1><span class=\"num\">8장 연습 2</span>함수 종합 문제</h1></div>\n<p class=\"lede\">문자열, 리스트, 조건문과 함수를 연결하여 수업에서 사용한 다섯 문제를 완성해 보자.</p>\n\n<h2>문제 1. 전화번호의 마지막 네 자리 출력하기</h2>\n<div class=\"codewrap\"><pre><span class=\"bl\"></span> <span class=\"f\">last4</span>(<span class=\"bl\"></span>):\n    <span class=\"bl\"></span>\n\n<span class=\"f\">last4</span>(<span class=\"s\">'010-3385-7220'</span>)\n<span class=\"f\">last4</span>(<span class=\"s\">'01033857220'</span>)</pre></div>\n<div class=\"out\">7220\n7220</div>\n<details><summary>정답</summary><p><code>def</code>, <code>x</code>, <code>print(x[-4:])</code></p></details>\n\n<h2>문제 2. 세 수의 합 출력하기</h2>\n<div class=\"codewrap\"><pre><span class=\"bl\"></span> <span class=\"f\">my_sum1</span>(<span class=\"bl\"></span>):\n    <span class=\"bl\"></span>\n    <span class=\"f\">print</span>(<span class=\"bl\"></span>)\n\n<span class=\"f\">my_sum1</span>(<span class=\"s\">88</span>, <span class=\"s\">79</span>, <span class=\"s\">95</span>)</pre></div>\n<div class=\"out\">합은 262입니다.</div>\n<details><summary>정답</summary><p><code>def</code>, <code>x, y, z</code>, <code>s = x + y + z</code>, <code>f'합은 {s}입니다.'</code></p></details>\n\n<h2>문제 3. 반환된 합으로 평균 계산하기</h2>\n<div class=\"codewrap\"><pre><span class=\"bl\"></span> <span class=\"f\">my_sum2</span>(<span class=\"bl\"></span>):\n    <span class=\"bl\"></span>\n    <span class=\"bl\"></span>\n\n<span class=\"b\">a</span> = <span class=\"f\">my_sum2</span>(<span class=\"s\">88</span>, <span class=\"s\">79</span>, <span class=\"s\">95</span>)\n<span class=\"f\">print</span>(<span class=\"k\">f</span><span class=\"s\">'합은 {<span class=\"bl\"></span>}, 평균은 {<span class=\"bl\"></span>}입니다.'</span>)</pre></div>\n<div class=\"out\">합은 262, 평균은 87.3입니다.</div>\n<details><summary>정답</summary><p><code>def</code>, <code>x, y, z</code>, <code>s = x + y + z</code>, <code>return s</code>, <code>a</code>, <code>round(a / 3, 1)</code></p></details>\n\n<h2>문제 4. 문자열 덧셈식 계산하기</h2>\n<div class=\"codewrap\"><pre><span class=\"bl\"></span> <span class=\"f\">my_sum3</span>(<span class=\"bl\"></span>):\n    <span class=\"bl\"></span>\n    <span class=\"bl\"></span>\n    <span class=\"bl\"></span>\n\n<span class=\"b\">a</span> = <span class=\"f\">my_sum3</span>(<span class=\"s\">'12+34'</span>)\n<span class=\"f\">print</span>(<span class=\"b\">a</span>)</pre></div>\n<div class=\"out\">46</div>\n<details><summary>정답</summary><p><code>def</code>, <code>x</code>, <code>a, b = x.split('+')</code>, <code>s = int(a) + int(b)</code>, <code>return s</code></p></details>\n\n<h2>문제 5. 두 수와 연산자로 계산하기</h2>\n<div class=\"codewrap\"><pre><span class=\"bl\"></span> <span class=\"f\">my_sum4</span>(<span class=\"bl\"></span>):\n    <span class=\"k\">if</span> <span class=\"bl\"></span>:\n        <span class=\"bl\"></span>\n    <span class=\"k\">elif</span> <span class=\"bl\"></span>:\n        <span class=\"bl\"></span>\n    <span class=\"k\">else</span>:\n        <span class=\"bl\"></span>\n\n<span class=\"f\">my_sum4</span>(<span class=\"s\">12</span>, <span class=\"s\">7</span>, <span class=\"s\">'+'</span>)\n<span class=\"f\">my_sum4</span>(<span class=\"s\">12</span>, <span class=\"s\">7</span>, <span class=\"s\">'/'</span>)</pre></div>\n<div class=\"out\">19\n잘못된 연산자입니다. '+', '*' 중 하나를 입력하시오.</div>\n<details><summary>정답</summary><p><code>def</code>, <code>x, y, operator</code>, <code>operator == '+'</code>, <code>print(x + y)</code>, <code>operator == '*'</code>, <code>print(x * y)</code>, 오류 안내 출력문</p></details>\n\n<div class=\"checklist\">\n  <div><b>1</b><span>함수를 정의한 뒤 실제로 호출했는가?</span></div>\n  <div><b>2</b><span>매개변수의 개수만큼 인수를 전달했는가?</span></div>\n  <div><b>3</b><span>다음 계산에 사용할 값은 <code>return</code>했는가?</span></div>\n  <div><b>4</b><span>함수 안에서만 필요한 값은 지역 변수로 만들었는가?</span></div>\n  <div><b>5</b><span>모듈을 사용하기 전에 <code>import</code>했는가?</span></div>\n</div>"
+  }
+];
+
+const toc=document.getElementById('toc'),pg=document.getElementById('pg');
+P.forEach((p,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<a href="#p${i}"><span class="n">${p.n}</span><span>${p.t}</span></a>`;
+  toc.appendChild(li);
+});
+function render(){
+  let i=parseInt((location.hash||'#p0').slice(2));
+  if(isNaN(i)||i<0||i>=P.length)i=0;
+  let nav='<div class="pager">';
+  nav += i>0?`<a href="#p${i-1}"><span class="dir">PREV</span><span class="t">${P[i-1].n} ${P[i-1].t}</span></a>`:'<span class="ph"></span>';
+  nav += i<P.length-1?`<a class="next" href="#p${i+1}"><span class="dir">NEXT</span><span class="t">${P[i+1].n} ${P[i+1].t}</span></a>`:'<span class="ph"></span>';
+  nav+='</div>';
+  const context='<div class="partkicker">3부 · 프로그램의 실행 흐름 바꾸기</div>';
+  pg.innerHTML=context+P[i].h+nav+'<p class="footnote">고1 정보가 쉬워지는 파이썬 · 3부 · 8장</p>';
+  document.querySelectorAll('.toc a').forEach((a,k)=>a.classList.toggle('on',k===i));
+  closeMenu();bindBlanks();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+const BANK=['[:6]','[6:]','[0]','[-1]','[1:6]','[::2]'];
+const CIRC=['①','②','③','④','⑤','⑥','⑦','⑧'];
+let menu=null;
+function closeMenu(){if(menu){menu.remove();menu=null;}}
+addEventListener('click',e=>{if(menu&&!menu.contains(e.target))closeMenu();});
+addEventListener('scroll',closeMenu,true);
+function bindBlanks(){
+  document.querySelectorAll('pre .bl[data-a]').forEach(bl=>{
+    bl.onclick=ev=>{
+      ev.stopPropagation();closeMenu();
+      const r=bl.getBoundingClientRect();
+      menu=document.createElement('div');menu.className='blmenu';
+      BANK.forEach((v,i)=>{
+        const b=document.createElement('button');
+        b.textContent=CIRC[i]+' '+v;
+        b.onclick=()=>{
+          bl.textContent=v;
+          bl.classList.remove('ok','no');
+          bl.classList.add(String(i+1)===bl.dataset.a?'ok':'no');
+          closeMenu();
+        };
+        menu.appendChild(b);
+      });
+      document.body.appendChild(menu);
+      const mh=menu.offsetHeight, mw=menu.offsetWidth;
+      let top=r.bottom+6, left=r.left;
+      if(top+mh>innerHeight-8) top=Math.max(8,r.top-mh-6);
+      if(left+mw>innerWidth-8) left=innerWidth-mw-8;
+      menu.style.top=top+'px';menu.style.left=left+'px';
+    };
+  });
+}
+addEventListener('hashchange',render);render();
+const sb=document.getElementById('sb'),mob=document.getElementById('mob');
+mob.onclick=()=>{sb.classList.toggle('collapsed');};
+if(innerWidth>980)sb.classList.remove('collapsed');
+addEventListener('resize',()=>{if(innerWidth>980)sb.classList.remove('collapsed')});
+document.querySelectorAll('.toc a').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=980)sb.classList.add('collapsed');}));
+</script>
+</body>
+</html>
