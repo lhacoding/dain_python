@@ -635,16 +635,15 @@ TypeError: can only concatenate str (not "int") to str</div>
 </div>
 
 <div class="checkitem">
-  <h3>3. 숫자를 문자로 바꾸어 반복하기</h3>
-  <p class="qdesc"><code>5</code>를 입력했을 때 실행 결과와 같아지도록 빈칸에 들어갈 알맞은 표현을 고르시오.</p>
-  <div class="codewrap"><pre><span class="b">a</span> = <span class="f">int</span>(<span class="f">input</span>(<span class="s">'숫자를 입력하시오 : '</span>))
-<span class="f">print</span>(<span class="k">f</span><span class="s">'숫자 {a}를 문자로 바꾸어 {a}번 출력하면 {</span><span class="bl" data-bank="repeatstr" data-a="1"></span> * <span class="b">a</span><span class="s">}입니다.'</span>)</pre></div>
-  <div class="out goalout">숫자를 입력하시오 : 5
-숫자 5를 문자로 바꾸어 5번 출력하면 55555입니다.</div>
+  <h3>3. 입력한 두 수의 합 구하기</h3>
+  <p class="qdesc"><code>5</code>와 <code>7</code>을 차례로 입력했을 때 <code>두 수의 합은 12</code>가 출력되도록 빈칸을 완성하시오.</p>
+  <div class="codewrap"><pre><span class="b">a</span> = <span class="f">int</span>(<span class="f">input</span>(<span class="s">'첫번째 수는? '</span>))
+<span class="b">b</span> = <span class="f">int</span>(<span class="f">input</span>(<span class="s">'두번째 수는? '</span>))
+<span class="f">print</span>(<span class="k">f</span><span class="s">'두 수의 합은 {</span><span class="bl" data-bank="fsum" data-a="1"></span><span class="s">}'</span>)</pre></div>
   <div class="bank"><div class="ttl">보기</div><div class="chips">
-    <span class="chip">① str(a)</span><span class="chip">② a</span><span class="chip">③ int(a)</span><span class="chip">④ input(a)</span>
+    <span class="chip">① a + b</span><span class="chip">② str(a) + str(b)</span><span class="chip">③ a * b</span><span class="chip">④ a + 'b'</span>
   </div></div>
-  <details><summary>정답</summary><p><b>①</b></p><p class="answhy"><code>a</code>는 정수 <code>5</code>이므로 먼저 <code>str(a)</code>로 문자열 <code>'5'</code>로 바꾼다. 문자열에 <code>* 5</code>를 사용하면 같은 문자열이 5번 반복되어 <code>'55555'</code>가 된다.</p></details>
+  <details><summary>정답</summary><p><b>①</b></p><p class="answhy"><code>int(input(...))</code>으로 입력값을 정수로 바꾸어 저장했으므로 <code>a + b</code>는 <code>5 + 7</code>이 되어 <code>12</code>가 된다.</p></details>
 </div>
 
 <div class="checkitem">
@@ -659,17 +658,17 @@ TypeError: can only concatenate str (not "int") to str</div>
 </div>
 
 <div class="checkitem">
-  <h3>5. 입력한 두 수의 합 구하기</h3>
-  <p class="qdesc"><code>5</code>와 <code>7</code>을 차례로 입력했을 때 <code>두 수의 합은 12</code>가 출력되도록 빈칸을 완성하시오.</p>
-  <div class="codewrap"><pre><span class="b">a</span> = <span class="f">int</span>(<span class="f">input</span>(<span class="s">'첫번째 수는? '</span>))
-<span class="b">b</span> = <span class="f">int</span>(<span class="f">input</span>(<span class="s">'두번째 수는? '</span>))
-<span class="f">print</span>(<span class="k">f</span><span class="s">'두 수의 합은 {</span><span class="bl" data-bank="fsum" data-a="1"></span><span class="s">}'</span>)</pre></div>
+  <h3>5. 숫자를 문자로 바꾸어 반복하기</h3>
+  <p class="qdesc"><code>5</code>를 입력했을 때 실행 결과와 같아지도록 빈칸에 들어갈 알맞은 표현을 고르시오.</p>
+  <div class="codewrap"><pre><span class="b">a</span> = <span class="f">int</span>(<span class="f">input</span>(<span class="s">'숫자를 입력하시오 : '</span>))
+<span class="f">print</span>(<span class="k">f</span><span class="s">'숫자 {a}를 문자로 바꾸어 {a}번 출력하면 {</span><span class="bl" data-bank="repeatstr" data-a="1"></span> * <span class="b">a</span><span class="s">}입니다.'</span>)</pre></div>
+  <div class="out goalout">숫자를 입력하시오 : 5
+숫자 5를 문자로 바꾸어 5번 출력하면 55555입니다.</div>
   <div class="bank"><div class="ttl">보기</div><div class="chips">
-    <span class="chip">① a + b</span><span class="chip">② str(a) + str(b)</span><span class="chip">③ a * b</span><span class="chip">④ a + 'b'</span>
+    <span class="chip">① str(a)</span><span class="chip">② a</span><span class="chip">③ int(a)</span><span class="chip">④ input(a)</span>
   </div></div>
-  <details><summary>정답</summary><p><b>①</b></p><p class="answhy"><code>int(input(...))</code>으로 입력값을 정수로 바꾸어 저장했으므로 <code>a + b</code>는 <code>5 + 7</code>이 되어 <code>12</code>가 된다.</p></details>
+  <details><summary>정답</summary><p><b>①</b></p><p class="answhy"><code>a</code>는 정수 <code>5</code>이므로 먼저 <code>str(a)</code>로 문자열 <code>'5'</code>로 바꾼다. 문자열에 <code>* 5</code>를 사용하면 같은 문자열이 5번 반복되어 <code>'55555'</code>가 된다.</p></details>
 </div>
-
 <h2>요점 정리</h2>
 <p>점검이 끝났다면 이 장의 핵심만 다시 확인한다.</p>
 <table class="sumtbl">
