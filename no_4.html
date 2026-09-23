@@ -2311,13 +2311,14 @@ table.fn-table .fn-res{display:block;margin-top:2px;font-family:"D2Coding","Cons
 .fn-drawer-body table.name-table th,.fn-drawer-body table.name-table td{border:1px solid #d7dee6;padding:6px 8px;text-align:left}
 .fn-drawer-body table.name-table thead th{background:#e3e9f0}
 .fn-veil{position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:8999}
-.fn-float{position:fixed;right:18px;top:76px;z-index:8000;padding:8px 16px;border:0;border-radius:20px;
-  background:#234b70;color:#fff;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.fn-float:hover{background:#1a3a58}
+.fn-float{position:fixed;right:0;top:90px;z-index:8000;writing-mode:vertical-rl;letter-spacing:2px;
+  padding:14px 8px;border:0;border-radius:8px 0 0 8px;background:#234b70;color:#fff;font-size:13px;font-weight:800;cursor:pointer;
+  box-shadow:-2px 2px 8px rgba(0,0,0,.18)}
+.fn-float:hover{background:#1a3a58;padding-right:11px}
 .fn-float[hidden]{display:none !important}
 body.fn-opened .fn-float{display:none}
 @media screen and (max-width:760px){
-  .fn-float{top:64px;right:10px;padding:7px 13px;font-size:12.5px}
+  .fn-float{top:70px;padding:10px 6px;font-size:12px}
 }
 @media screen and (max-width:760px){
   .sheet .mem-svg{min-width:560px}
