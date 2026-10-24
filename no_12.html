@@ -3069,6 +3069,14 @@ html body main .sheet .chapter-coding-problem .qa-more a{color:#234b70!important
 </style><style id="chgen-v1">
 .sheet .output-img{margin:0;padding:10px 14px 12px 44px;border-top:1px solid #e6e9ec;background:#fff}
 .sheet .output-img img{display:block;max-width:100%;height:auto;max-height:340px}
+.sheet .output-df{margin:0;padding:10px 14px 12px 44px;border-top:1px solid #e6e9ec;background:#fff;overflow-x:auto}
+.sheet table.df-table{width:auto!important;border-collapse:collapse;font-family:Roboto,'Noto Sans KR',Arial,sans-serif!important;font-size:13px;line-height:1.4;color:#212121;table-layout:auto!important}
+.sheet table.df-table th,.sheet table.df-table td{padding:5px 12px;border:0;border-bottom:1px solid #e0e0e0;white-space:nowrap;background:transparent;font-family:inherit!important}
+.sheet table.df-table thead th{font-weight:700;text-align:right;border-bottom:1px solid #9e9e9e;background:#fff}
+.sheet table.df-table tbody th{font-weight:700;text-align:left}
+.sheet table.df-table th{color:#212121!important;background:transparent!important}
+.sheet table.df-table td.n{text-align:right}.sheet table.df-table td.s{text-align:left}
+.sheet table.df-table tbody tr:nth-child(odd){background:#f5f5f5}
 .sheet .qa-code .output-img img{max-height:240px}
 .sheet .sublesson-head.adv-head{display:flex;align-items:baseline;gap:12px;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid #dce2e7}
 .sheet .sublesson-head.adv-head h2{margin:0;color:#203240;font-size:20px;font-weight:800;line-height:1.5;letter-spacing:-.4px}
@@ -3157,7 +3165,7 @@ html body main .sheet .sol-explain li{text-align:justify!important}
 .sheet .sum-table.mis-table td{padding:8px 12px}
 .sheet .sum-table.mis-table td.sum-out{color:#4f5b66}
 @media screen and (max-width:760px){.sheet .sum-table{font-size:12px}.sheet .table-wrap{overflow-x:auto}.sheet .sum-table.mis-table td code{white-space:pre-wrap;word-break:break-all}}
-</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>12장 정렬과 탐색(심화)</strong></div><nav class="toc" aria-label="소제목 목차"><a href="#p1"><span class="number">12.1</span><span class="toc-title">두 값 바꾸기</span></a><a href="#p2"><span class="number">12.2</span><span class="toc-title">버블 정렬</span></a><a href="#p3"><span class="number">12.3</span><span class="toc-title">선택 정렬</span></a><a href="#p4"><span class="number">12.4</span><span class="toc-title">순차 탐색</span></a><a href="#p5"><span class="number">12.5</span><span class="toc-title">이진 탐색</span></a><a href="#p6"><span class="number"></span><span class="toc-title">12장 요점 정리</span></a><a href="#p7"><span class="number"></span><span class="toc-title">12장 문제풀이</span></a><a href="#p8"><span class="number"></span><span class="toc-title">12장 정답</span></a></nav><div class="side-foot">PYTHON · 12</div></aside><button class="veil" type="button" aria-label="목차 닫기"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span><div class="buttons"><button id="print-current" type="button">현재 내용 인쇄</button><button id="print-all" type="button">전체 인쇄</button></div></div><article class="sheet" id="p1" aria-labelledby="title1"><div class="page-chapter">12장 정렬과 탐색(심화)</div><header class="lesson-head chapter-title-head"><h1 id="title1">12장 정렬과 탐색(심화)</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">정렬과 탐색 알아보기</span></div><ul><li><span class="adv-badge">심화</span>이 장은 정렬과 탐색을 학교에서 깊이 다루는 학생을 위한 심화 장이다.</li><li>알고리즘은 문제를 해결하는 방법이나 절차이다. 같은 문제라도 방법에 따라 걸리는 시간이 달라서, 효율적인 알고리즘을 고르는 것이 중요하다.</li><li><strong>정렬</strong>은 데이터를 기준에 따라 순서대로 늘어놓는 것이다. 작은 값부터 늘어놓으면 오름차순, 큰 값부터 늘어놓으면 내림차순이다.</li><li><strong>탐색</strong>은 여러 데이터 중에서 원하는 데이터를 찾는 것이다.</li><li>4장의 <code>sort()</code>와 11장의 <code>sort_values()</code>는 한 줄로 정렬해 주었다. 이 장에서는 그 안에서 일어나는 일을 직접 코드로 만들고, 방법에 따라 교환 횟수와 탐색 횟수가 어떻게 다른지 비교한다.</li></ul></section><div class="sublesson-head"><span class="sublesson-no">12.1</span><h2>두 값 바꾸기</h2></div><div class="source-content"><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">두 값 바꾸기</span></div><div class="code-block"><pre class="python"><code><span class="cb-var">temp</span> = <span class="cb-var">a</span>      <span class="cb-cm"># 임시 변수에 옮겨 두기</span>
+</style><style id="final-fix-css">html body .sheet table.fit-measuring pre,html body .sheet table.fit-measuring code,html body .fn-drawer table.fit-measuring pre,html body .fn-drawer table.fit-measuring code{white-space:pre!important}table.fit-wrap td code,table.fit-wrap th code{white-space:pre-wrap!important;word-break:break-all!important}</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>12장 정렬과 탐색(심화)</strong></div><nav class="toc" aria-label="소제목 목차"><a href="#p1"><span class="number">12.1</span><span class="toc-title">두 값 바꾸기</span></a><a href="#p2"><span class="number">12.2</span><span class="toc-title">버블 정렬</span></a><a href="#p3"><span class="number">12.3</span><span class="toc-title">선택 정렬</span></a><a href="#p4"><span class="number">12.4</span><span class="toc-title">순차 탐색</span></a><a href="#p5"><span class="number">12.5</span><span class="toc-title">이진 탐색</span></a><a href="#p6"><span class="number"></span><span class="toc-title">12장 요점 정리</span></a><a href="#p7"><span class="number"></span><span class="toc-title">12장 문제풀이</span></a><a href="#p8"><span class="number"></span><span class="toc-title">12장 정답</span></a></nav><div class="side-foot">송도이샘로봇</div></aside><button class="veil" type="button" aria-label="목차 닫기"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span><div class="buttons"><button id="print-current" type="button">현재 내용 인쇄</button><button id="print-all" type="button">전체 인쇄</button></div></div><article class="sheet" id="p1" aria-labelledby="title1"><div class="page-chapter">12장 정렬과 탐색(심화)</div><header class="lesson-head chapter-title-head"><h1 id="title1">12장 정렬과 탐색(심화)</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">정렬과 탐색 알아보기</span></div><ul><li><span class="adv-badge">심화</span>이 장은 정렬과 탐색을 학교에서 깊이 다루는 학생을 위한 심화 장이다.</li><li>알고리즘은 문제를 해결하는 방법이나 절차이다. 같은 문제라도 방법에 따라 걸리는 시간이 달라서, 효율적인 알고리즘을 고르는 것이 중요하다.</li><li><strong>정렬</strong>은 데이터를 기준에 따라 순서대로 늘어놓는 것이다. 작은 값부터 늘어놓으면 오름차순, 큰 값부터 늘어놓으면 내림차순이다.</li><li><strong>탐색</strong>은 여러 데이터 중에서 원하는 데이터를 찾는 것이다.</li><li>4장의 <code>sort()</code>와 11장의 <code>sort_values()</code>는 한 줄로 정렬해 주었다. 이 장에서는 그 안에서 일어나는 일을 직접 코드로 만들고, 방법에 따라 교환 횟수와 탐색 횟수가 어떻게 다른지 비교한다.</li></ul></section><div class="sublesson-head"><span class="sublesson-no">12.1</span><h2>두 값 바꾸기</h2></div><div class="source-content"><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">두 값 바꾸기</span></div><div class="code-block"><pre class="python"><code><span class="cb-var">temp</span> = <span class="cb-var">a</span>      <span class="cb-cm"># 임시 변수에 옮겨 두기</span>
 <span class="cb-var">a</span> = <span class="cb-var">b</span>
 <span class="cb-var">b</span> = <span class="cb-var">temp</span>
 
@@ -3910,39 +3918,154 @@ b = a</code></td><td class="sum-out">두 값이 모두 b의 값이 됨</td><td c
   document.querySelectorAll('.code-textarea').forEach(area=>{const resize=()=>{if(area.closest('.sheet').hidden)return;area.style.height='auto';area.style.height=Math.max(145,area.scrollHeight)+'px';};area.addEventListener('input',resize);area.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();area.setRangeText('    ',area.selectionStart,area.selectionEnd,'end');resize();}});resize();});
   active(0);window.addEventListener('load',locate);
 })();
-</script><script>
-/* 자주 하는 실수 표: 칸마다 가장 긴 내용의 폭을 재고, 남는 폭을 세 칸에 똑같이 나누어 준다.
-   내용이 표 폭보다 길면 결과 칸만 줄을 바꾼다. */
+</script><script id="final-fix-v1">
 (function(){
-  function fit(){
-    document.querySelectorAll('table.mis-table').forEach(function(t){
-      var W = t.parentElement.clientWidth; if(!W) return;            // 숨겨진 쪽은 보일 때 계산
-      var cols = t.querySelectorAll('col');
-      cols.forEach(function(c){ c.style.width=''; });
-      // 줄을 바꾸지 않은 상태에서 칸마다 가장 긴 내용의 실제 폭(+칸 안쪽 여백)을 잰다
-      t.classList.add('measuring');
-      var need = [0,0,0];
-      t.querySelectorAll('tr').forEach(function(tr){
-        Array.prototype.forEach.call(tr.children, function(cell, i){
-          var rg = document.createRange(); rg.selectNodeContents(cell);
-          var rs = Array.prototype.slice.call(rg.getClientRects());
-          if(!rs.length) return;
-          var w = Math.max.apply(null, rs.map(function(x){return x.right;})) - Math.min.apply(null, rs.map(function(x){return x.left;}));
-          var cs = getComputedStyle(cell);
-          w += parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + 2;
-          if (w > need[i]) need[i] = w;
-        });
+  var SKIP = '.df-table';
+  function isCode(cell){
+    if (cell.classList.contains('sum-bad') || cell.classList.contains('sum-good')) return true;
+    if (cell.classList.contains('sum-out')) return false;
+    var all = (cell.textContent || '').replace(/\s+/g, '').length; if (!all) return false;
+    var c = 0; cell.querySelectorAll('code').forEach(function(x){ c += (x.textContent || '').replace(/\s+/g, '').length; });
+    return c >= all * 0.7;
+  }
+  function widthOf(cell){
+    var rg = document.createRange(); rg.selectNodeContents(cell);
+    var rs = Array.prototype.slice.call(rg.getClientRects()).filter(function(r){ return r.width > 0; });
+    if (!rs.length) return 0;
+    var w = Math.max.apply(null, rs.map(function(r){ return r.right; })) - Math.min.apply(null, rs.map(function(r){ return r.left; }));
+    var cs = getComputedStyle(cell);
+    return w + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.borderLeftWidth) + 3;
+  }
+  function restore(t){
+    if (t.dataset.fitDone !== '1') return;
+    t.querySelectorAll('col').forEach(function(c){ c.setAttribute('style', c.dataset.fitStyle || ''); });
+    if (t.dataset.fitAdded === '1') { var g = t.querySelector('colgroup'); if (g) g.remove(); t.dataset.fitAdded = ''; }
+    t.querySelectorAll('tr > *').forEach(function(c){ c.style.removeProperty('width'); });
+    t.style.removeProperty('table-layout'); t.style.removeProperty('width'); t.classList.remove('fit-wrap');
+    t.dataset.fitDone = '';
+  }
+  function fitTable(t){
+    var rows = Array.prototype.slice.call(t.rows); if (!rows.length) return;
+    for (var r = 0; r < rows.length; r++) for (var k = 0; k < rows[r].cells.length; k++) {
+      var cl = rows[r].cells[k]; if (cl.colSpan > 1 || cl.rowSpan > 1) return;
+    }
+    var n = Math.max.apply(null, rows.map(function(r){ return r.cells.length; })); if (n < 2) return;
+    var wrap = t.parentElement, W = wrap.clientWidth;
+    if (!W) return;
+    var cs = getComputedStyle(wrap); W -= parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    var cols = t.querySelectorAll('col');
+    if (t.dataset.fitDone !== '1') cols.forEach(function(c){ c.dataset.fitStyle = c.getAttribute('style') || ''; });
+    if (cols.length !== n) {
+      var g = t.querySelector('colgroup'); if (g) g.remove();
+      g = document.createElement('colgroup'); for (var i = 0; i < n; i++) g.appendChild(document.createElement('col'));
+      t.insertBefore(g, t.firstChild); t.dataset.fitAdded = '1'; cols = t.querySelectorAll('col');
+    }
+    // 줄을 바꾸지 않고 표를 내용 폭(max-content)으로 펼친 뒤 칸마다 폭을 잰다(인라인 !important로 다른 규칙을 이긴다)
+    cols.forEach(function(c){ c.style.removeProperty('width'); });
+    t.classList.remove('fit-wrap');
+    var saved = [[t, t.getAttribute('style')]];
+    t.style.setProperty('table-layout', 'auto', 'important'); t.style.setProperty('width', 'max-content', 'important');
+    t.style.setProperty('max-width', 'none', 'important'); t.style.setProperty('min-width', '0', 'important');
+    cols.forEach(function(c){ saved.push([c, c.getAttribute('style')]); c.style.setProperty('width', 'auto', 'important'); });
+    rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c){
+      saved.push([c, c.getAttribute('style')]);
+      c.style.setProperty('width', 'auto', 'important'); c.style.setProperty('min-width', '0', 'important');
+      c.style.setProperty('max-width', 'none', 'important'); c.style.setProperty('white-space', 'nowrap', 'important');
+    }); });
+    t.classList.add('fit-measuring');
+    var need = [], code = [], cnt = [];
+    for (var i = 0; i < n; i++) { need.push(0); code.push(0); cnt.push(0); }
+    rows.forEach(function(tr){
+      Array.prototype.forEach.call(tr.cells, function(cell, i){
+        var w = cell.getBoundingClientRect().width + 1; if (w > need[i]) need[i] = w;
+        if (cell.tagName === 'TD' && (cell.textContent || '').trim()) { cnt[i]++; if (isCode(cell)) code[i]++; }
       });
-      t.classList.remove('measuring');
-      var sum = need.reduce(function(a,b){return a+b;},0), ws;
-      if (sum <= W) { var sp=(W-sum)/3; ws = need.map(function(n){return n+sp;}); }
-      else { var rest = W-need[0]-need[2]; ws = rest > W*0.2 ? [need[0],rest,need[2]] : [W/3,W/3,W/3]; }
-      cols.forEach(function(c,i){ c.style.width=(ws[i]/W*100)+'%'; });
+    });
+    // 두 번째로 줄을 바꿀 수 있게 하고 가장 좁은 폭(min-content)을 잰다: 글 칸이 이보다 좁아지면 낱말이 칸 밖으로 넘친다
+    var minw = need.map(function(){ return 0; });
+    t.style.setProperty('width', 'min-content', 'important');
+    rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
+      c.style.setProperty('white-space', 'normal', 'important');
+    }); });
+    rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
+      var w = c.getBoundingClientRect().width + 1; if (w > minw[i]) minw[i] = w;
+    }); });
+    t.classList.remove('fit-measuring');
+    saved.forEach(function(x){ if (x[1] === null) x[0].removeAttribute('style'); else x[0].setAttribute('style', x[1]); });
+    rows[0] && Array.prototype.forEach.call(rows[0].cells, function(c){ c.style.removeProperty('width'); });
+    cols.forEach(function(c){ c.style.removeProperty('width'); });
+    t.style.removeProperty('table-layout'); t.style.removeProperty('width');
+    var sum = need.reduce(function(a, b){ return a + b; }, 0), ws, wrapAll = false;
+    if (sum <= W) {
+      // 칸이 셋 이상이면 남는 여백을 똑같이 나눈다. 두 칸이면 왼쪽(이름 칸)은 여백을 적게(20%) 주고 오른쪽에 더 준다
+      var slack = W - sum;
+      if (n === 2) ws = [need[0] + slack * 0.2, need[1] + slack * 0.8];
+      else ws = need.map(function(x){ return x + slack / n; });
+    } else {
+      var isC = need.map(function(x, i){ return cnt[i] > 0 && code[i] * 2 >= cnt[i]; });
+      var C = 0, T = 0, nt = 0;
+      need.forEach(function(x, i){ if (isC[i]) C += x; else { T += x; nt++; } });
+      // 글 칸이 줄을 바꿔도 되는 가장 좁은 폭(낱말 하나)
+      var M = 0, E = 0;
+      need.forEach(function(x, i){ if (!isC[i]) { M += minw[i]; E += Math.max(0, x - minw[i]); } });
+      if (nt && C + M <= W) {
+        // 코드 칸은 줄을 바꾸지 않은 폭 그대로, 글 칸은 최소 폭에 남은 폭을 내용 길이에 맞춰 더한다
+        // 남은 폭에 맞게 가장 넓은 글 칸부터 같은 높이(cap)로 깎는다: 짧은 글 칸은 줄을 바꾸지 않고, 긴 칸만 줄을 바꾼다
+        var avail = W - C, lo = 0, hi = W;
+        function used(cap){ var u = 0; need.forEach(function(x, i){ if (!isC[i]) u += Math.min(x, Math.max(cap, minw[i])); }); return u; }
+        for (var it = 0; it < 40; it++) { var mid = (lo + hi) / 2; if (used(mid) > avail) hi = mid; else lo = mid; }
+        ws = need.map(function(x, i){ return isC[i] ? x : Math.min(x, Math.max(lo, minw[i])); });
+        var left = W - ws.reduce(function(a, b){ return a + b; }, 0), tcols = 0;
+        need.forEach(function(x, i){ if (!isC[i]) tcols++; });
+        ws = ws.map(function(x, i){ return isC[i] ? x : x + left / tcols; });
+      } else {
+        ws = need.map(function(x){ return W * x / sum; }); wrapAll = true;
+      }
+    }
+    t.classList.toggle('fit-wrap', wrapAll);
+    t.style.setProperty('table-layout', 'fixed', 'important');
+    t.style.setProperty('width', '100%', 'important');
+    cols.forEach(function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
+    Array.prototype.forEach.call(rows[0].cells, function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
+    t.dataset.fitDone = '1';
+  }
+  function fit(){
+    var mobile = window.innerWidth < 760;
+    document.querySelectorAll('.sheet table, .fn-drawer table').forEach(function(t){
+      if (t.matches(SKIP) || t.closest('svg')) return;
+      if (mobile) { restore(t); return; }
+      if (!t.offsetParent && !t.getClientRects().length) return;      // 숨겨진 쪽·접힌 정답은 보일 때 계산
+      fitTable(t);
     });
   }
-  function later(){ setTimeout(fit,0); }
-  window.addEventListener('load',later); window.addEventListener('resize',later);
-  window.addEventListener('hashchange',later); window.addEventListener('beforeprint',fit);
-  if(document.readyState!=='loading') later(); else document.addEventListener('DOMContentLoaded',later);
+  var timer = 0;
+  function later(d){ clearTimeout(timer); timer = setTimeout(fit, d || 0); }
+
+  // 쪽을 넘길 때 다시 그리기(크롬에서 이전 쪽이 남거나 스크롤 길이가 틀리는 문제)
+  function repaint(){
+    var m = location.hash.match(/^#p(\d+)$/), cur = m ? Number(m[1]) - 1 : 0;
+    document.querySelectorAll('.sheet').forEach(function(s, i){ s.style.display = i === cur ? '' : 'none'; });
+    void document.body.offsetHeight;
+    document.documentElement.style.transform = 'translateZ(0)';
+    requestAnimationFrame(function(){
+      document.documentElement.style.transform = '';
+      void document.documentElement.scrollHeight;
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event('resize'));
+      later(30);
+    });
+  }
+  window.addEventListener('hashchange', function(){ setTimeout(repaint, 0); });
+  window.addEventListener('load', function(){ repaint(); later(60); });
+  window.addEventListener('resize', function(){ later(60); });
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('.sheet').forEach(function(s){ s.style.display = ''; });
+    fit();
+  });
+  window.addEventListener('afterprint', repaint);
+  document.addEventListener('toggle', function(){ later(10); }, true);            // 정답 펼치기
+  document.addEventListener('click', function(){ later(350); }, true);           // 함수 정리표 등 서랍 열기
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ later(0); });
+  if (document.readyState !== 'loading') { repaint(); later(0); } else document.addEventListener('DOMContentLoaded', function(){ repaint(); later(0); });
 })();
 </script></body></html>

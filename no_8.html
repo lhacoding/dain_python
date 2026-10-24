@@ -3305,7 +3305,7 @@ html body main .sheet .sol-explain li{text-align:justify!important}
 .sheet .sum-table.mis-table td{padding:8px 12px}
 .sheet .sum-table.mis-table td.sum-out{color:#4f5b66}
 @media screen and (max-width:760px){.sheet .sum-table{font-size:12px}.sheet .table-wrap{overflow-x:auto}.sheet .sum-table.mis-table td code{white-space:pre-wrap;word-break:break-all}}
-</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>8장 모듈</strong></div><nav class="toc" aria-label="소제목 목차"><a href="#p1"><span class="number">8.1</span><span class="toc-title">모듈 불러와 사용하기</span></a><a href="#p2"><span class="number">8.2</span><span class="toc-title">모듈 파일 만들기</span></a><a href="#p3"><span class="number">8.3</span><span class="toc-title">첫 번째 유형: 현재 작업 폴더의 모듈 불러오기</span></a><a href="#p4"><span class="number">8.4</span><span class="toc-title">두 번째 유형: from으로 하위 폴더의 모듈 불러오기</span></a><a href="#p5"><span class="number">8.5</span><span class="toc-title">세 번째 유형: 폴더 이름부터 모듈 불러오기</span></a><a href="#p6"><span class="number">8.6</span><span class="toc-title">네 번째 유형: 별명을 붙여 모듈 불러오기</span></a><a href="#p7"><span class="number">8.7</span><span class="toc-title">다섯 번째 유형: 모듈에서 함수만 불러오기</span></a><a href="#p8"><span class="number">8.8</span><span class="toc-title">다섯 가지 유형 비교</span></a><a href="#p9"><span class="number"></span><span class="toc-title">8장 요점 정리</span></a><a href="#p10"><span class="number"></span><span class="toc-title">8장 문제풀이</span></a><a href="#p11"><span class="number"></span><span class="toc-title">8장 정답</span></a></nav><div class="side-foot">PYTHON · 08</div></aside><button class="veil" type="button" aria-label="목차 닫기"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span><div class="buttons"><button id="print-current" type="button">현재 내용 인쇄</button><button id="print-all" type="button">전체 인쇄</button></div></div><article id="p1" aria-labelledby="title1" class="sheet"><div class="page-chapter">8장 모듈</div><header class="lesson-head chapter-title-head"><h1 id="title1">8장 모듈</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">모듈 알아보기</span></div><ul><li>모듈은 재사용할 파이썬 코드를 모아 둔 파일이다.</li><li>파이썬이 기본으로 제공하는 모듈을 사용하거나, 직접 만든 함수를 모듈로 묶어 사용할 수 있다.</li><li><code>import 모듈이름</code>으로 사용할 모듈을 불러온다.</li><li><code>help(모듈이름.함수이름)</code>으로 함수의 기능과 사용 방법을 확인한다. 이때 함수 이름 뒤에는 호출 괄호 <code>()</code>를 붙이지 않는다.</li></ul></section><div class="sublesson-head"><span class="sublesson-no">8.1</span><h2>모듈 불러와 사용하기</h2></div><div class="source-content"><section class="section name-rules"><h2>파이썬 기본 모듈 알아보기</h2><div class="section-body"><p class="box-lead">7장에서 사용한 random과 time도 파이썬이 기본으로 제공하는 모듈이다.</p><div class="table-wrap"><table class="name-table map-table"><colgroup><col style="width:18%"><col style="width:32%"><col style="width:50%"></colgroup><thead><tr><th>모듈</th><th>하는 일</th><th>사용 예</th></tr></thead><tbody><tr><td><code>random</code></td><td>무작위 값 만들기</td><td><code>random.randint(1, 6)</code></td></tr><tr><td><code>time</code></td><td>시간 다루기</td><td><code>time.sleep(1)</code></td></tr><tr><td><code>math</code></td><td>수학 계산하기</td><td><code>math.sqrt(49)</code></td></tr></tbody></table></div></div></section><section id="practice-8-1" class="section exercise"><h2 class="task-heading"><span class="task-number">파이썬 실습 8-1</span><span class="task-title">randint()의 도움말 확인하기</span></h2><div class="section-body"><div class="exercise-solution"><div class="code-block"><pre class="python"><code><span class="cb-kw">import</span> <span class="cb-var">random</span>
+</style><style id="final-fix-css">html body .sheet table.fit-measuring pre,html body .sheet table.fit-measuring code,html body .fn-drawer table.fit-measuring pre,html body .fn-drawer table.fit-measuring code{white-space:pre!important}table.fit-wrap td code,table.fit-wrap th code{white-space:pre-wrap!important;word-break:break-all!important}</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>8장 모듈</strong></div><nav class="toc" aria-label="소제목 목차"><a href="#p1"><span class="number">8.1</span><span class="toc-title">모듈 불러와 사용하기</span></a><a href="#p2"><span class="number">8.2</span><span class="toc-title">모듈 파일 만들기</span></a><a href="#p3"><span class="number">8.3</span><span class="toc-title">첫 번째 유형: 현재 작업 폴더의 모듈 불러오기</span></a><a href="#p4"><span class="number">8.4</span><span class="toc-title">두 번째 유형: from으로 하위 폴더의 모듈 불러오기</span></a><a href="#p5"><span class="number">8.5</span><span class="toc-title">세 번째 유형: 폴더 이름부터 모듈 불러오기</span></a><a href="#p6"><span class="number">8.6</span><span class="toc-title">네 번째 유형: 별명을 붙여 모듈 불러오기</span></a><a href="#p7"><span class="number">8.7</span><span class="toc-title">다섯 번째 유형: 모듈에서 함수만 불러오기</span></a><a href="#p8"><span class="number">8.8</span><span class="toc-title">다섯 가지 유형 비교</span></a><a href="#p9"><span class="number"></span><span class="toc-title">8장 요점 정리</span></a><a href="#p10"><span class="number"></span><span class="toc-title">8장 문제풀이</span></a><a href="#p11"><span class="number"></span><span class="toc-title">8장 정답</span></a></nav><div class="side-foot">송도이샘로봇</div></aside><button class="veil" type="button" aria-label="목차 닫기"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span><div class="buttons"><button id="print-current" type="button">현재 내용 인쇄</button><button id="print-all" type="button">전체 인쇄</button></div></div><article id="p1" aria-labelledby="title1" class="sheet"><div class="page-chapter">8장 모듈</div><header class="lesson-head chapter-title-head"><h1 id="title1">8장 모듈</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">모듈 알아보기</span></div><ul><li>모듈은 재사용할 파이썬 코드를 모아 둔 파일이다.</li><li>파이썬이 기본으로 제공하는 모듈을 사용하거나, 직접 만든 함수를 모듈로 묶어 사용할 수 있다.</li><li><code>import 모듈이름</code>으로 사용할 모듈을 불러온다.</li><li><code>help(모듈이름.함수이름)</code>으로 함수의 기능과 사용 방법을 확인한다. 이때 함수 이름 뒤에는 호출 괄호 <code>()</code>를 붙이지 않는다.</li></ul></section><div class="sublesson-head"><span class="sublesson-no">8.1</span><h2>모듈 불러와 사용하기</h2></div><div class="source-content"><section class="section name-rules"><h2>파이썬 기본 모듈 알아보기</h2><div class="section-body"><p class="box-lead">7장에서 사용한 random과 time도 파이썬이 기본으로 제공하는 모듈이다.</p><div class="table-wrap"><table class="name-table map-table"><colgroup><col style="width:18%"><col style="width:32%"><col style="width:50%"></colgroup><thead><tr><th>모듈</th><th>하는 일</th><th>사용 예</th></tr></thead><tbody><tr><td><code>random</code></td><td>무작위 값 만들기</td><td><code>random.randint(1, 6)</code></td></tr><tr><td><code>time</code></td><td>시간 다루기</td><td><code>time.sleep(1)</code></td></tr><tr><td><code>math</code></td><td>수학 계산하기</td><td><code>math.sqrt(49)</code></td></tr></tbody></table></div></div></section><section id="practice-8-1" class="section exercise"><h2 class="task-heading"><span class="task-number">파이썬 실습 8-1</span><span class="task-title">randint()의 도움말 확인하기</span></h2><div class="section-body"><div class="exercise-solution"><div class="code-block"><pre class="python"><code><span class="cb-kw">import</span> <span class="cb-var">random</span>
 
 <span class="cb-fn">help</span><span class="cb-b0">(</span><span class="cb-var">random</span>.<span class="cb-var">randint</span><span class="cb-b0">)</span></code></pre><pre class="output">Help on method randint in module random:
 
@@ -3573,14 +3573,18 @@ sleep(object, /)
 7
 NameError: name &#x27;my_func&#x27; is not defined</pre></div><p class="qa-row"><span class="qa-label qa-ans">정답</span><span class="qa-text">㉠ 2222, ㉡ 7, ㉢ <code>NameError: name 'my_func' is not defined</code></span></p><p class="qa-row"><span class="qa-label">풀이</span><span class="qa-text">last4는 함수만 가져왔으므로 이름만으로 호출할 수 있고, mf는 별명으로 불러왔으므로 mf.plus_print()로 호출할 수 있다. 그러나 my_func라는 이름으로 불러온 적이 없으므로 마지막 줄은 NameError가 난다. 불러온 줄에 쓴 이름 그대로 호출해야 한다.</span></p></div></details></div></section></div>
 <footer class="pager"><a href="#p7">← 다섯 번째 유형: 모듈에서 함수만 불러오기</a><span class="counter">8 / 11</span><a href="#p9">8장 요점 정리 →</a></footer></article><article aria-labelledby="title9" class="sheet summary-sheet" hidden="" id="p9"><div class="page-chapter">8장 모듈</div><header class="lesson-head chapter-problem-head"><h1 id="title9">8장 요점 정리</h1></header><div class="source-content"><section class="chapter-intro summary-box"><div class="chapter-intro-head"><span class="chapter-intro-title">한눈에 보기</span></div><div class="table-wrap"><table class="sum-table"><colgroup><col style="width:22%"><col style="width:34%"><col style="width:26%"><col style="width:18%"></colgroup><thead><tr><th>문법</th><th>하는 일</th><th>예</th><th>실행 결과</th></tr></thead><tbody><tr><td><code>import 모듈이름</code></td><td>기본 모듈이나 같은 위치의 모듈을 불러온다. 확장자 .py는 쓰지 않는다.</td><td><code>import my_func
-my_func.last4(x)</code></td><td class="sum-out">모듈이름.함수명()</td></tr><tr><td><code>from 폴더명 import 파일명</code></td><td>폴더 안의 모듈을 불러온다.</td><td><code>from module import my_func
-my_func.last4(x)</code></td><td class="sum-out">파일명.함수명()</td></tr><tr><td><code>import 폴더명.파일명</code></td><td>폴더 이름부터 모두 써서 불러온다.</td><td><code>import module.my_func
-module.my_func.last4(x)</code></td><td class="sum-out">폴더명.파일명.함수명()</td></tr><tr><td><code>import 폴더명.파일명 as 별명</code></td><td>모듈에 별명을 붙여 불러온다.</td><td><code>import module.my_func as mf
-mf.last4(x)</code></td><td class="sum-out">별명.함수명()</td></tr><tr><td><code>from 폴더명.파일명 import 함수명</code></td><td>모듈에서 함수만 가져온다. 쉼표로 여러 개를 가져올 수 있다.</td><td><code>from module.my_func import last4
-last4(x)</code></td><td class="sum-out">함수명()</td></tr><tr><td><code>from 모듈 import *</code></td><td>모듈의 함수를 한 번에 가져온다. 이름이 겹칠 수 있다.</td><td><code>from module.my_func import *</code></td><td class="sum-out">함수명()</td></tr><tr><td><code>help(모듈.함수명)</code></td><td>함수의 설명(독스트링)과 사용법을 보여 준다.</td><td><code>help(random.randint)</code></td><td class="sum-out">도움말 출력</td></tr><tr><td><code>math.ceil(), math.floor()</code></td><td>소수점 아래를 올리거나 버려 정수로 만든다.</td><td><code>math.ceil(45 / 20)
-math.floor(7.8)</code></td><td class="sum-out">3
-7</td></tr><tr><td><code>math.gcd(), math.sqrt()</code></td><td>최대공약수와 제곱근을 구한다.</td><td><code>math.gcd(12, 18)
-math.sqrt(49)</code></td><td class="sum-out">6
+my_func.last4(&#x27;010-1234-5678&#x27;)</code></td><td class="sum-out">5678</td></tr><tr><td><code>from 폴더명 import 파일명</code></td><td>폴더 안의 모듈을 불러온다.</td><td><code>from module import my_func
+my_func.last4(&#x27;010-1234-5678&#x27;)</code></td><td class="sum-out">5678</td></tr><tr><td><code>import 폴더명.파일명</code></td><td>폴더 이름부터 모두 써서 불러온다.</td><td><code>import module.my_func
+module.my_func.last4(&#x27;010-1234-5678&#x27;)</code></td><td class="sum-out">5678</td></tr><tr><td><code>import 폴더명.파일명 as 별명</code></td><td>모듈에 별명을 붙여 불러온다.</td><td><code>import module.my_func as mf
+mf.last4(&#x27;010-1234-5678&#x27;)</code></td><td class="sum-out">5678</td></tr><tr><td><code>from 폴더명.파일명 import 함수명</code></td><td>모듈에서 함수만 가져온다. 쉼표로 여러 개를 가져올 수 있다.</td><td><code>from module.my_func import last4
+last4(&#x27;010-1234-5678&#x27;)</code></td><td class="sum-out">5678</td></tr><tr><td><code>from 모듈 import *</code></td><td>모듈의 함수를 한 번에 가져온다. 이름이 겹칠 수 있다.</td><td><code>from module.my_func import *
+last4(&#x27;010-1234-5678&#x27;)</code></td><td class="sum-out">5678</td></tr><tr><td><code>help(모듈.함수명)</code></td><td>함수의 설명(독스트링)과 사용법을 보여 준다.</td><td><code>import random
+help(random.randint)</code></td><td class="sum-out">도움말 출력</td></tr><tr><td><code>math.ceil(), math.floor()</code></td><td>소수점 아래를 올리거나 버려 정수로 만든다.</td><td><code>import math
+print(math.ceil(45 / 20))
+print(math.floor(7.8))</code></td><td class="sum-out">3
+7</td></tr><tr><td><code>math.gcd(), math.sqrt()</code></td><td>최대공약수와 제곱근을 구한다.</td><td><code>import math
+print(math.gcd(12, 18))
+print(math.sqrt(49))</code></td><td class="sum-out">6
 7.0</td></tr><tr><td><code>라이브러리</code></td><td>모듈을 모아 놓은 것. 표준 라이브러리는 설치 없이, 외부 라이브러리는 설치해서 쓴다.</td><td><code>import matplotlib.pyplot</code></td><td class="sum-out">라이브러리.모듈</td></tr></tbody></table></div></section><section class="section remember"><h2>꼭 기억하기</h2><div class="section-body"><ul><li>모듈은 재사용할 코드를 모아 둔 .py 파일이다. 불러올 때는 확장자 .py를 쓰지 않는다.</li><li>불러온 줄에 쓴 이름 그대로 호출한다. import 파일명이면 파일명.함수명(), 함수만 가져오면 함수명()이다.</li><li>별명을 붙이면 별명으로만 호출할 수 있다.</li><li>help()에는 함수 이름만 넣는다. 괄호를 붙이면 함수가 실행된다.</li><li>코랩에서 모듈 파일을 고친 뒤에는 세션을 다시 시작하고 import부터 다시 실행한다.</li></ul></div></section><section class="chapter-intro summary-box summary-mistakes"><div class="chapter-intro-head"><span class="chapter-intro-title">자주 하는 실수</span></div><div class="table-wrap"><table class="sum-table mis-table"><colgroup><col><col><col></colgroup><thead><tr><th>잘못 쓴 코드</th><th>결과</th><th>바르게 쓴 코드</th></tr></thead><tbody><tr><td class="sum-bad"><code>import my_func.py</code></td><td class="sum-out">ModuleNotFoundError: No module named &#x27;my_func.py&#x27;; &#x27;my_func&#x27; is not a package</td><td class="sum-good"><code>import my_func</code></td></tr><tr><td class="sum-bad"><code>import my_func
 last4(x)</code></td><td class="sum-out">NameError: name &#x27;last4&#x27; is not defined</td><td class="sum-good"><code>import my_func
 my_func.last4(x)</code></td></tr><tr><td class="sum-bad"><code>import module.my_func as mf
@@ -3735,39 +3739,154 @@ hello</pre></div></div><p class="sol-answer-no">빈칸 답 : ㉠ <code>import mo
   document.querySelectorAll('.code-textarea').forEach(area=>{const resize=()=>{if(area.closest('.sheet').hidden)return;area.style.height='auto';area.style.height=Math.max(145,area.scrollHeight)+'px';};area.addEventListener('input',resize);area.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();area.setRangeText('    ',area.selectionStart,area.selectionEnd,'end');resize();}});resize();});
   active(0);window.addEventListener('load',locate);
 })();
-</script><script>
-/* 자주 하는 실수 표: 칸마다 가장 긴 내용의 폭을 재고, 남는 폭을 세 칸에 똑같이 나누어 준다.
-   내용이 표 폭보다 길면 결과 칸만 줄을 바꾼다. */
+</script><script id="final-fix-v1">
 (function(){
-  function fit(){
-    document.querySelectorAll('table.mis-table').forEach(function(t){
-      var W = t.parentElement.clientWidth; if(!W) return;            // 숨겨진 쪽은 보일 때 계산
-      var cols = t.querySelectorAll('col');
-      cols.forEach(function(c){ c.style.width=''; });
-      // 줄을 바꾸지 않은 상태에서 칸마다 가장 긴 내용의 실제 폭(+칸 안쪽 여백)을 잰다
-      t.classList.add('measuring');
-      var need = [0,0,0];
-      t.querySelectorAll('tr').forEach(function(tr){
-        Array.prototype.forEach.call(tr.children, function(cell, i){
-          var rg = document.createRange(); rg.selectNodeContents(cell);
-          var rs = Array.prototype.slice.call(rg.getClientRects());
-          if(!rs.length) return;
-          var w = Math.max.apply(null, rs.map(function(x){return x.right;})) - Math.min.apply(null, rs.map(function(x){return x.left;}));
-          var cs = getComputedStyle(cell);
-          w += parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + 2;
-          if (w > need[i]) need[i] = w;
-        });
+  var SKIP = '.df-table';
+  function isCode(cell){
+    if (cell.classList.contains('sum-bad') || cell.classList.contains('sum-good')) return true;
+    if (cell.classList.contains('sum-out')) return false;
+    var all = (cell.textContent || '').replace(/\s+/g, '').length; if (!all) return false;
+    var c = 0; cell.querySelectorAll('code').forEach(function(x){ c += (x.textContent || '').replace(/\s+/g, '').length; });
+    return c >= all * 0.7;
+  }
+  function widthOf(cell){
+    var rg = document.createRange(); rg.selectNodeContents(cell);
+    var rs = Array.prototype.slice.call(rg.getClientRects()).filter(function(r){ return r.width > 0; });
+    if (!rs.length) return 0;
+    var w = Math.max.apply(null, rs.map(function(r){ return r.right; })) - Math.min.apply(null, rs.map(function(r){ return r.left; }));
+    var cs = getComputedStyle(cell);
+    return w + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.borderLeftWidth) + 3;
+  }
+  function restore(t){
+    if (t.dataset.fitDone !== '1') return;
+    t.querySelectorAll('col').forEach(function(c){ c.setAttribute('style', c.dataset.fitStyle || ''); });
+    if (t.dataset.fitAdded === '1') { var g = t.querySelector('colgroup'); if (g) g.remove(); t.dataset.fitAdded = ''; }
+    t.querySelectorAll('tr > *').forEach(function(c){ c.style.removeProperty('width'); });
+    t.style.removeProperty('table-layout'); t.style.removeProperty('width'); t.classList.remove('fit-wrap');
+    t.dataset.fitDone = '';
+  }
+  function fitTable(t){
+    var rows = Array.prototype.slice.call(t.rows); if (!rows.length) return;
+    for (var r = 0; r < rows.length; r++) for (var k = 0; k < rows[r].cells.length; k++) {
+      var cl = rows[r].cells[k]; if (cl.colSpan > 1 || cl.rowSpan > 1) return;
+    }
+    var n = Math.max.apply(null, rows.map(function(r){ return r.cells.length; })); if (n < 2) return;
+    var wrap = t.parentElement, W = wrap.clientWidth;
+    if (!W) return;
+    var cs = getComputedStyle(wrap); W -= parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    var cols = t.querySelectorAll('col');
+    if (t.dataset.fitDone !== '1') cols.forEach(function(c){ c.dataset.fitStyle = c.getAttribute('style') || ''; });
+    if (cols.length !== n) {
+      var g = t.querySelector('colgroup'); if (g) g.remove();
+      g = document.createElement('colgroup'); for (var i = 0; i < n; i++) g.appendChild(document.createElement('col'));
+      t.insertBefore(g, t.firstChild); t.dataset.fitAdded = '1'; cols = t.querySelectorAll('col');
+    }
+    // 줄을 바꾸지 않고 표를 내용 폭(max-content)으로 펼친 뒤 칸마다 폭을 잰다(인라인 !important로 다른 규칙을 이긴다)
+    cols.forEach(function(c){ c.style.removeProperty('width'); });
+    t.classList.remove('fit-wrap');
+    var saved = [[t, t.getAttribute('style')]];
+    t.style.setProperty('table-layout', 'auto', 'important'); t.style.setProperty('width', 'max-content', 'important');
+    t.style.setProperty('max-width', 'none', 'important'); t.style.setProperty('min-width', '0', 'important');
+    cols.forEach(function(c){ saved.push([c, c.getAttribute('style')]); c.style.setProperty('width', 'auto', 'important'); });
+    rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c){
+      saved.push([c, c.getAttribute('style')]);
+      c.style.setProperty('width', 'auto', 'important'); c.style.setProperty('min-width', '0', 'important');
+      c.style.setProperty('max-width', 'none', 'important'); c.style.setProperty('white-space', 'nowrap', 'important');
+    }); });
+    t.classList.add('fit-measuring');
+    var need = [], code = [], cnt = [];
+    for (var i = 0; i < n; i++) { need.push(0); code.push(0); cnt.push(0); }
+    rows.forEach(function(tr){
+      Array.prototype.forEach.call(tr.cells, function(cell, i){
+        var w = cell.getBoundingClientRect().width + 1; if (w > need[i]) need[i] = w;
+        if (cell.tagName === 'TD' && (cell.textContent || '').trim()) { cnt[i]++; if (isCode(cell)) code[i]++; }
       });
-      t.classList.remove('measuring');
-      var sum = need.reduce(function(a,b){return a+b;},0), ws;
-      if (sum <= W) { var sp=(W-sum)/3; ws = need.map(function(n){return n+sp;}); }
-      else { var rest = W-need[0]-need[2]; ws = rest > W*0.2 ? [need[0],rest,need[2]] : [W/3,W/3,W/3]; }
-      cols.forEach(function(c,i){ c.style.width=(ws[i]/W*100)+'%'; });
+    });
+    // 두 번째로 줄을 바꿀 수 있게 하고 가장 좁은 폭(min-content)을 잰다: 글 칸이 이보다 좁아지면 낱말이 칸 밖으로 넘친다
+    var minw = need.map(function(){ return 0; });
+    t.style.setProperty('width', 'min-content', 'important');
+    rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
+      c.style.setProperty('white-space', 'normal', 'important');
+    }); });
+    rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
+      var w = c.getBoundingClientRect().width + 1; if (w > minw[i]) minw[i] = w;
+    }); });
+    t.classList.remove('fit-measuring');
+    saved.forEach(function(x){ if (x[1] === null) x[0].removeAttribute('style'); else x[0].setAttribute('style', x[1]); });
+    rows[0] && Array.prototype.forEach.call(rows[0].cells, function(c){ c.style.removeProperty('width'); });
+    cols.forEach(function(c){ c.style.removeProperty('width'); });
+    t.style.removeProperty('table-layout'); t.style.removeProperty('width');
+    var sum = need.reduce(function(a, b){ return a + b; }, 0), ws, wrapAll = false;
+    if (sum <= W) {
+      // 칸이 셋 이상이면 남는 여백을 똑같이 나눈다. 두 칸이면 왼쪽(이름 칸)은 여백을 적게(20%) 주고 오른쪽에 더 준다
+      var slack = W - sum;
+      if (n === 2) ws = [need[0] + slack * 0.2, need[1] + slack * 0.8];
+      else ws = need.map(function(x){ return x + slack / n; });
+    } else {
+      var isC = need.map(function(x, i){ return cnt[i] > 0 && code[i] * 2 >= cnt[i]; });
+      var C = 0, T = 0, nt = 0;
+      need.forEach(function(x, i){ if (isC[i]) C += x; else { T += x; nt++; } });
+      // 글 칸이 줄을 바꿔도 되는 가장 좁은 폭(낱말 하나)
+      var M = 0, E = 0;
+      need.forEach(function(x, i){ if (!isC[i]) { M += minw[i]; E += Math.max(0, x - minw[i]); } });
+      if (nt && C + M <= W) {
+        // 코드 칸은 줄을 바꾸지 않은 폭 그대로, 글 칸은 최소 폭에 남은 폭을 내용 길이에 맞춰 더한다
+        // 남은 폭에 맞게 가장 넓은 글 칸부터 같은 높이(cap)로 깎는다: 짧은 글 칸은 줄을 바꾸지 않고, 긴 칸만 줄을 바꾼다
+        var avail = W - C, lo = 0, hi = W;
+        function used(cap){ var u = 0; need.forEach(function(x, i){ if (!isC[i]) u += Math.min(x, Math.max(cap, minw[i])); }); return u; }
+        for (var it = 0; it < 40; it++) { var mid = (lo + hi) / 2; if (used(mid) > avail) hi = mid; else lo = mid; }
+        ws = need.map(function(x, i){ return isC[i] ? x : Math.min(x, Math.max(lo, minw[i])); });
+        var left = W - ws.reduce(function(a, b){ return a + b; }, 0), tcols = 0;
+        need.forEach(function(x, i){ if (!isC[i]) tcols++; });
+        ws = ws.map(function(x, i){ return isC[i] ? x : x + left / tcols; });
+      } else {
+        ws = need.map(function(x){ return W * x / sum; }); wrapAll = true;
+      }
+    }
+    t.classList.toggle('fit-wrap', wrapAll);
+    t.style.setProperty('table-layout', 'fixed', 'important');
+    t.style.setProperty('width', '100%', 'important');
+    cols.forEach(function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
+    Array.prototype.forEach.call(rows[0].cells, function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
+    t.dataset.fitDone = '1';
+  }
+  function fit(){
+    var mobile = window.innerWidth < 760;
+    document.querySelectorAll('.sheet table, .fn-drawer table').forEach(function(t){
+      if (t.matches(SKIP) || t.closest('svg')) return;
+      if (mobile) { restore(t); return; }
+      if (!t.offsetParent && !t.getClientRects().length) return;      // 숨겨진 쪽·접힌 정답은 보일 때 계산
+      fitTable(t);
     });
   }
-  function later(){ setTimeout(fit,0); }
-  window.addEventListener('load',later); window.addEventListener('resize',later);
-  window.addEventListener('hashchange',later); window.addEventListener('beforeprint',fit);
-  if(document.readyState!=='loading') later(); else document.addEventListener('DOMContentLoaded',later);
+  var timer = 0;
+  function later(d){ clearTimeout(timer); timer = setTimeout(fit, d || 0); }
+
+  // 쪽을 넘길 때 다시 그리기(크롬에서 이전 쪽이 남거나 스크롤 길이가 틀리는 문제)
+  function repaint(){
+    var m = location.hash.match(/^#p(\d+)$/), cur = m ? Number(m[1]) - 1 : 0;
+    document.querySelectorAll('.sheet').forEach(function(s, i){ s.style.display = i === cur ? '' : 'none'; });
+    void document.body.offsetHeight;
+    document.documentElement.style.transform = 'translateZ(0)';
+    requestAnimationFrame(function(){
+      document.documentElement.style.transform = '';
+      void document.documentElement.scrollHeight;
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event('resize'));
+      later(30);
+    });
+  }
+  window.addEventListener('hashchange', function(){ setTimeout(repaint, 0); });
+  window.addEventListener('load', function(){ repaint(); later(60); });
+  window.addEventListener('resize', function(){ later(60); });
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('.sheet').forEach(function(s){ s.style.display = ''; });
+    fit();
+  });
+  window.addEventListener('afterprint', repaint);
+  document.addEventListener('toggle', function(){ later(10); }, true);            // 정답 펼치기
+  document.addEventListener('click', function(){ later(350); }, true);           // 함수 정리표 등 서랍 열기
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ later(0); });
+  if (document.readyState !== 'loading') { repaint(); later(0); } else document.addEventListener('DOMContentLoaded', function(){ repaint(); later(0); });
 })();
 </script></body></html>
