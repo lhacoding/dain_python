@@ -2747,7 +2747,7 @@ html body main .sheet section.section.exercise:is(.quiz,.chapter-coding-problem)
 @media print{
   .sheet .memory-tip{break-inside:avoid}
 }
-</style><style id="final-fix-css">html body .sheet table.fit-measuring pre,html body .sheet table.fit-measuring code,html body .fn-drawer table.fit-measuring pre,html body .fn-drawer table.fit-measuring code{white-space:pre!important}table.fit-wrap td code,table.fit-wrap th code{white-space:pre-wrap!important;word-break:break-all!important}</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>3장 숫자형과 문자열, 불 자료형</strong></div><nav aria-label="소제목 목차" class="toc"><a href="#p1"><span class="number">3.1</span> <span><span class="toc-title">숫자형</span></span></a><a href="#p2"><span class="number">3.2</span> <span><span class="toc-title">숫자형 연산</span></span></a><a href="#p3"><span class="number">3.3</span> <span><span class="toc-title">문자열과 따옴표</span></span></a><a href="#p4"><span class="number">3.4</span> <span><span class="toc-title">문자열 인덱싱</span></span></a><a href="#p5"><span class="number">3.5</span> <span><span class="toc-title">문자열 슬라이싱</span></span></a><a href="#p6"><span class="number">3.6</span> <span><span class="toc-title">불 자료형</span></span></a><a href="#p7"><span aria-hidden="true" class="number"></span> <span><span class="toc-title">3장 요점 정리</span></span></a><a href="#p8"><span aria-hidden="true" class="number"></span> <span><span class="toc-title">3장 문제풀이</span></span></a><a href="#p9"><span aria-hidden="true" class="number"></span> <span><span class="toc-title">3장 정답</span></span></a></nav><div class="side-foot">송도이샘로봇</div></aside><button aria-label="목차 닫기" class="veil" type="button"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span></div><article aria-labelledby="title1" class="sheet" id="p1"><div class="page-chapter">3장 숫자형과 문자열, 불 자료형</div><header class="lesson-head chapter-title-head"><h1 id="title1">3장 숫자형과 문자열, 불 자료형</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">자료형 알아보기</span></div><p>자료형은 프로그램에서 사용하는 자료의 형태를 뜻한다. 숫자나 문자열처럼 자료의 형태에 따라 구분되며, 자료형에 따라 사용할 수 있는 연산도 달라진다. 파이썬의 대표적인 자료형은 다음과 같다.</p><div class="type-chips"><span class="type-chip now">숫자형</span><span class="type-chip now">문자열</span><span class="type-chip now">불</span><span class="type-chip">리스트</span><span class="type-chip">튜플</span><span class="type-chip">딕셔너리</span><span class="type-chip">집합</span></div><ul><li>숫자형: 정수와 실수를 나타내는 자료형</li><li>문자열: 문자, 숫자, 기호 등을 따옴표로 감싸 표현하는 자료형</li><li>불: True(참)와 False(거짓) 두 가지 값을 갖는 자료형</li></ul></section><div class="source-content"><div class="sublesson-head"><span class="sublesson-no">3.1</span><h2>숫자형</h2></div><section class="section exercise" id="practice-1"><h2 class="task-heading"><span class="task-number">파이썬 실습 3-1</span><span class="task-title">정수와 실수 확인하기</span></h2><div class="section-body"><div class="exercise-solution"><div class="code-block"><pre class="python"><code><span class="cb-var">a</span> = <span class="cb-num">10</span>
+</style><style id="final-fix-css">html body .sheet table.fit-measuring pre,html body .sheet table.fit-measuring code,html body .fn-drawer table.fit-measuring pre,html body .fn-drawer table.fit-measuring code{white-space:pre!important}table.fit-wrap td,table.fit-wrap th{overflow-wrap:anywhere}@media screen and (min-width:761px) and (max-width:1180px){html body .sheet table.ascii-col td{font-size:10.5px!important;padding:2px 1px!important;letter-spacing:0!important}html body .sheet table.ascii-col th{font-size:10px!important;padding:3px 0!important;letter-spacing:-.3px}html body .sheet table.ascii-col tr>:first-child{width:26%!important}html body .sheet table.ascii-col tr>:nth-child(2){width:50%!important}html body .sheet table.ascii-col tr>:last-child{width:24%!important}}</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>3장 숫자형과 문자열, 불 자료형</strong></div><nav aria-label="소제목 목차" class="toc"><a href="#p1"><span class="number">3.1</span> <span><span class="toc-title">숫자형</span></span></a><a href="#p2"><span class="number">3.2</span> <span><span class="toc-title">숫자형 연산</span></span></a><a href="#p3"><span class="number">3.3</span> <span><span class="toc-title">문자열과 따옴표</span></span></a><a href="#p4"><span class="number">3.4</span> <span><span class="toc-title">문자열 인덱싱</span></span></a><a href="#p5"><span class="number">3.5</span> <span><span class="toc-title">문자열 슬라이싱</span></span></a><a href="#p6"><span class="number">3.6</span> <span><span class="toc-title">불 자료형</span></span></a><a href="#p7"><span aria-hidden="true" class="number"></span> <span><span class="toc-title">3장 요점 정리</span></span></a><a href="#p8"><span aria-hidden="true" class="number"></span> <span><span class="toc-title">3장 문제풀이</span></span></a><a href="#p9"><span aria-hidden="true" class="number"></span> <span><span class="toc-title">3장 정답</span></span></a></nav><div class="side-foot">송도이샘로봇</div></aside><button aria-label="목차 닫기" class="veil" type="button"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span></div><article aria-labelledby="title1" class="sheet" id="p1"><div class="page-chapter">3장 숫자형과 문자열, 불 자료형</div><header class="lesson-head chapter-title-head"><h1 id="title1">3장 숫자형과 문자열, 불 자료형</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">자료형 알아보기</span></div><p>자료형은 프로그램에서 사용하는 자료의 형태를 뜻한다. 숫자나 문자열처럼 자료의 형태에 따라 구분되며, 자료형에 따라 사용할 수 있는 연산도 달라진다. 파이썬의 대표적인 자료형은 다음과 같다.</p><div class="type-chips"><span class="type-chip now">숫자형</span><span class="type-chip now">문자열</span><span class="type-chip now">불</span><span class="type-chip">리스트</span><span class="type-chip">튜플</span><span class="type-chip">딕셔너리</span><span class="type-chip">집합</span></div><ul><li>숫자형: 정수와 실수를 나타내는 자료형</li><li>문자열: 문자, 숫자, 기호 등을 따옴표로 감싸 표현하는 자료형</li><li>불: True(참)와 False(거짓) 두 가지 값을 갖는 자료형</li></ul></section><div class="source-content"><div class="sublesson-head"><span class="sublesson-no">3.1</span><h2>숫자형</h2></div><section class="section exercise" id="practice-1"><h2 class="task-heading"><span class="task-number">파이썬 실습 3-1</span><span class="task-title">정수와 실수 확인하기</span></h2><div class="section-body"><div class="exercise-solution"><div class="code-block"><pre class="python"><code><span class="cb-var">a</span> = <span class="cb-num">10</span>
 <span class="cb-fn">print</span><span class="cb-b0">(</span><span class="cb-var">a</span><span class="cb-b0">)</span>
 <span class="cb-fn">print</span><span class="cb-b0">(</span><span class="cb-type">type</span><span class="cb-b1">(</span><span class="cb-var">a</span><span class="cb-b1">)</span><span class="cb-b0">)</span></code></pre><pre class="output">10
 &lt;class 'int'&gt;</pre></div></div><p class="ex-note"><span class="ex-note-badge">해설</span><span class="ex-note-text">10은 정수이므로 a의 자료형은 int이다.</span></p><div class="exercise-solution"><div class="code-block"><pre class="python"><code><span class="cb-var">b</span> = <span class="cb-num">3.14</span>
@@ -3288,7 +3288,7 @@ document.querySelectorAll('.code-textarea').forEach(area => {
 </script>
 <script id="final-fix-v1">
 (function(){
-  var SKIP = '.df-table';
+  var SKIP = '.df-table,.ascii-col';
   function isCode(cell){
     if (cell.classList.contains('sum-bad') || cell.classList.contains('sum-good')) return true;
     if (cell.classList.contains('sum-out')) return false;
@@ -3310,6 +3310,8 @@ document.querySelectorAll('.code-textarea').forEach(area => {
     if (t.dataset.fitAdded === '1') { var g = t.querySelector('colgroup'); if (g) g.remove(); t.dataset.fitAdded = ''; }
     t.querySelectorAll('tr > *').forEach(function(c){ c.style.removeProperty('width'); });
     t.style.removeProperty('table-layout'); t.style.removeProperty('width'); t.classList.remove('fit-wrap');
+    t.querySelectorAll('[data-fit-wrap="1"]').forEach(function(c){ c.style.removeProperty('white-space'); c.style.removeProperty('word-break');
+      c.style.removeProperty('overflow-wrap'); c.dataset.fitWrap = ''; });
     t.dataset.fitDone = '';
   }
   function fitTable(t){
@@ -3331,6 +3333,8 @@ document.querySelectorAll('.code-textarea').forEach(area => {
     // 줄을 바꾸지 않고 표를 내용 폭(max-content)으로 펼친 뒤 칸마다 폭을 잰다(인라인 !important로 다른 규칙을 이긴다)
     cols.forEach(function(c){ c.style.removeProperty('width'); });
     t.classList.remove('fit-wrap');
+    t.querySelectorAll('[data-fit-wrap="1"]').forEach(function(c){ c.style.removeProperty('white-space'); c.style.removeProperty('word-break');
+      c.style.removeProperty('overflow-wrap'); c.dataset.fitWrap = ''; });
     var saved = [[t, t.getAttribute('style')]];
     t.style.setProperty('table-layout', 'auto', 'important'); t.style.setProperty('width', 'max-content', 'important');
     t.style.setProperty('max-width', 'none', 'important'); t.style.setProperty('min-width', '0', 'important');
@@ -3355,6 +3359,10 @@ document.querySelectorAll('.code-textarea').forEach(area => {
     rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
       c.style.setProperty('white-space', 'normal', 'important');
     }); });
+    t.classList.remove('fit-measuring');
+    var codes = t.querySelectorAll('td code, td pre, th code');
+    codes.forEach(function(c){ saved.push([c, c.getAttribute('style')]); c.style.setProperty('white-space', 'pre-wrap', 'important');
+      c.style.setProperty('word-break', 'normal', 'important'); c.style.setProperty('overflow-wrap', 'normal', 'important'); });
     rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
       var w = c.getBoundingClientRect().width + 1; if (w > minw[i]) minw[i] = w;
     }); });
@@ -3387,14 +3395,38 @@ document.querySelectorAll('.code-textarea').forEach(area => {
         need.forEach(function(x, i){ if (!isC[i]) tcols++; });
         ws = ws.map(function(x, i){ return isC[i] ? x : x + left / tcols; });
       } else {
-        ws = need.map(function(x){ return W * x / sum; }); wrapAll = true;
+        // 그래도 넘치면 모든 칸을 같은 높이(cap)로 깎는다: 좁은 칸은 그대로, 넓은 칸만 줄을 바꾼다(코드도 공백에서 줄을 바꾼다)
+        var lo2 = 0, hi2 = W;
+        for (var it2 = 0; it2 < 40; it2++) {
+          var m2 = (lo2 + hi2) / 2, u2 = need.reduce(function(a, x){ return a + Math.min(x, m2); }, 0);
+          if (u2 > W) hi2 = m2; else lo2 = m2;
+        }
+        ws = need.map(function(x){ return Math.min(x, lo2); }); wrapAll = true;
+        // 글 칸은 낱말 하나(가장 좁은 폭)보다 좁게 만들지 않는다. 그래서 넘치면 표를 넓히고 가로로 스크롤한다
+        var isC2 = need.map(function(x, i){ return cnt[i] > 0 && code[i] * 2 >= cnt[i]; });
+        ws = ws.map(function(x, i){ return isC2[i] ? x : Math.max(x, minw[i]); });
+        // 그만큼 넘친 폭은 여유가 있는 칸(가장 좁은 폭보다 넓은 칸)에서 덜어 낸다
+        var ex = ws.reduce(function(a, b){ return a + b; }, 0) - W;
+        if (ex > 0) {
+          var room = ws.map(function(x, i){ return Math.max(0, x - minw[i]); }), R = room.reduce(function(a, b){ return a + b; }, 0);
+          if (R > 0) ws = ws.map(function(x, i){ return x - room[i] * Math.min(1, ex / R); });
+        }
       }
     }
     t.classList.toggle('fit-wrap', wrapAll);
+    // 줄을 바꿔야 할 때는 칸 안의 코드에 직접(인라인) 줄 바꿈을 허락한다. 다른 규칙이 nowrap을 걸어도 글자가 옆 칸으로 넘치지 않는다
+    t.querySelectorAll('td code, td pre, th code').forEach(function(c){
+      if (wrapAll) { c.style.setProperty('white-space', 'pre-wrap', 'important'); c.style.setProperty('word-break', 'normal', 'important');
+                     c.style.setProperty('overflow-wrap', 'anywhere', 'important'); c.dataset.fitWrap = '1'; }
+      else if (c.dataset.fitWrap === '1') { c.style.removeProperty('white-space'); c.style.removeProperty('word-break');
+                     c.style.removeProperty('overflow-wrap'); c.dataset.fitWrap = ''; }
+    });
+    var total = ws.reduce(function(a, b){ return a + b; }, 0), over = total > W + 1, TW = over ? total : W;
     t.style.setProperty('table-layout', 'fixed', 'important');
-    t.style.setProperty('width', '100%', 'important');
-    cols.forEach(function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
-    Array.prototype.forEach.call(rows[0].cells, function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
+    t.style.setProperty('width', over ? Math.ceil(total) + 'px' : '100%', 'important');
+    if (over) wrap.style.setProperty('overflow-x', 'auto', 'important');
+    cols.forEach(function(c, i){ c.style.setProperty('width', (ws[i] / TW * 100).toFixed(3) + '%', 'important'); });
+    Array.prototype.forEach.call(rows[0].cells, function(c, i){ c.style.setProperty('width', (ws[i] / TW * 100).toFixed(3) + '%', 'important'); });
     t.dataset.fitDone = '1';
   }
   function fit(){

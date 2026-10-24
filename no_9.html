@@ -3140,7 +3140,7 @@ html body main .sheet .sol-explain li{text-align:justify!important}
 .sheet .sum-table.mis-table td{padding:8px 12px}
 .sheet .sum-table.mis-table td.sum-out{color:#4f5b66}
 @media screen and (max-width:760px){.sheet .sum-table{font-size:12px}.sheet .table-wrap{overflow-x:auto}.sheet .sum-table.mis-table td code{white-space:pre-wrap;word-break:break-all}}
-</style><style id="final-fix-css">html body .sheet table.fit-measuring pre,html body .sheet table.fit-measuring code,html body .fn-drawer table.fit-measuring pre,html body .fn-drawer table.fit-measuring code{white-space:pre!important}table.fit-wrap td code,table.fit-wrap th code{white-space:pre-wrap!important;word-break:break-all!important}</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>9장 클래스</strong></div><nav class="toc" aria-label="소제목 목차"><a href="#p1"><span class="number">9.1</span><span class="toc-title">함수로 용돈 관리하기</span></a><a href="#p2"><span class="number">9.2</span><span class="toc-title">클래스와 객체 만들기</span></a><a href="#p3"><span class="number">9.3</span><span class="toc-title">메서드와 self</span></a><a href="#p4"><span class="number">9.4</span><span class="toc-title">__init__으로 초깃값 정하기</span></a><a href="#p5"><span class="number">9.5</span><span class="toc-title">용돈 관리 클래스 완성하기</span></a><a href="#p6"><span class="number">9.6</span><span class="toc-title">독서 기록 클래스 만들기</span></a><a href="#p7"><span class="number"></span><span class="toc-title">9장 요점 정리</span></a><a href="#p8"><span class="number"></span><span class="toc-title">9장 문제풀이</span></a><a href="#p9"><span class="number"></span><span class="toc-title">9장 정답</span></a></nav><div class="side-foot">송도이샘로봇</div></aside><button class="veil" type="button" aria-label="목차 닫기"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span><div class="buttons"><button id="print-current" type="button">현재 내용 인쇄</button><button id="print-all" type="button">전체 인쇄</button></div></div><article class="sheet" id="p1" aria-labelledby="title1"><div class="page-chapter">9장 클래스</div><header class="lesson-head chapter-title-head"><h1 id="title1">9장 클래스</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">클래스 알아보기</span></div><ul><li>클래스는 관련 있는 변수와 함수를 하나로 묶어 놓은 설계도이다. 7장에서 명령을 함수로 묶었다면, 클래스는 함수와 변수를 함께 묶는다.</li><li>클래스로 만든 실제 값을 <strong>객체</strong>라고 한다. 하나의 클래스로 객체를 여러 개 만들 수 있다.</li><li>객체가 가진 변수를 <strong>속성</strong>, 클래스 안에 정의한 함수를 <strong>메서드</strong>라고 한다.</li><li>객체마다 속성을 따로 가지므로, 같은 메서드를 써도 객체마다 다른 값을 다룬다. 예를 들어 같은 계좌 클래스로 만든 두 사람의 계좌는 용돈이 섞이지 않는다.</li><li>4장의 리스트도 list 클래스로 만든 객체이다. <code>a.append(4)</code>처럼 객체 뒤에 점을 찍고 메서드를 호출했던 것이다.</li></ul></section><div class="sublesson-head"><span class="sublesson-no">9.1</span><h2>함수로 용돈 관리하기</h2></div><div class="source-content"><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">함수로 용돈 관리하기</span></div><div class="code-block"><pre class="python"><code><span class="cb-kwop">global</span> <span class="cb-var">변수이름</span>
+</style><style id="final-fix-css">html body .sheet table.fit-measuring pre,html body .sheet table.fit-measuring code,html body .fn-drawer table.fit-measuring pre,html body .fn-drawer table.fit-measuring code{white-space:pre!important}table.fit-wrap td,table.fit-wrap th{overflow-wrap:anywhere}@media screen and (min-width:761px) and (max-width:1180px){html body .sheet table.ascii-col td{font-size:10.5px!important;padding:2px 1px!important;letter-spacing:0!important}html body .sheet table.ascii-col th{font-size:10px!important;padding:3px 0!important;letter-spacing:-.3px}html body .sheet table.ascii-col tr>:first-child{width:26%!important}html body .sheet table.ascii-col tr>:nth-child(2){width:50%!important}html body .sheet table.ascii-col tr>:last-child{width:24%!important}}</style></head><body><aside class="sidebar" id="toc-panel"><div class="brand"><strong>9장 클래스</strong></div><nav class="toc" aria-label="소제목 목차"><a href="#p1"><span class="number">9.1</span><span class="toc-title">함수로 용돈 관리하기</span></a><a href="#p2"><span class="number">9.2</span><span class="toc-title">클래스와 객체 만들기</span></a><a href="#p3"><span class="number">9.3</span><span class="toc-title">메서드와 self</span></a><a href="#p4"><span class="number">9.4</span><span class="toc-title">__init__으로 초깃값 정하기</span></a><a href="#p5"><span class="number">9.5</span><span class="toc-title">용돈 관리 클래스 완성하기</span></a><a href="#p6"><span class="number">9.6</span><span class="toc-title">독서 기록 클래스 만들기</span></a><a href="#p7"><span class="number"></span><span class="toc-title">9장 요점 정리</span></a><a href="#p8"><span class="number"></span><span class="toc-title">9장 문제풀이</span></a><a href="#p9"><span class="number"></span><span class="toc-title">9장 정답</span></a></nav><div class="side-foot">송도이샘로봇</div></aside><button class="veil" type="button" aria-label="목차 닫기"></button><main><div class="toolbar"><button aria-controls="toc-panel" aria-expanded="false" class="menu" type="button">☰ 목차</button><span id="where"></span><div class="buttons"><button id="print-current" type="button">현재 내용 인쇄</button><button id="print-all" type="button">전체 인쇄</button></div></div><article class="sheet" id="p1" aria-labelledby="title1"><div class="page-chapter">9장 클래스</div><header class="lesson-head chapter-title-head"><h1 id="title1">9장 클래스</h1></header><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">클래스 알아보기</span></div><ul><li>클래스는 관련 있는 변수와 함수를 하나로 묶어 놓은 설계도이다. 7장에서 명령을 함수로 묶었다면, 클래스는 함수와 변수를 함께 묶는다.</li><li>클래스로 만든 실제 값을 <strong>객체</strong>라고 한다. 하나의 클래스로 객체를 여러 개 만들 수 있다.</li><li>객체가 가진 변수를 <strong>속성</strong>, 클래스 안에 정의한 함수를 <strong>메서드</strong>라고 한다.</li><li>객체마다 속성을 따로 가지므로, 같은 메서드를 써도 객체마다 다른 값을 다룬다. 예를 들어 같은 계좌 클래스로 만든 두 사람의 계좌는 용돈이 섞이지 않는다.</li><li>4장의 리스트도 list 클래스로 만든 객체이다. <code>a.append(4)</code>처럼 객체 뒤에 점을 찍고 메서드를 호출했던 것이다.</li></ul></section><div class="sublesson-head"><span class="sublesson-no">9.1</span><h2>함수로 용돈 관리하기</h2></div><div class="source-content"><section class="chapter-intro"><div class="chapter-intro-head"><span class="chapter-intro-title">함수로 용돈 관리하기</span></div><div class="code-block"><pre class="python"><code><span class="cb-kwop">global</span> <span class="cb-var">변수이름</span>
 <span class="cb-var">변수이름</span> = <span class="cb-var">새로운</span> <span class="cb-var">값</span></code></pre></div><ul><li>입금, 출금, 잔액 조회를 각각 함수로 만든다.</li><li>세 함수가 같은 잔액을 다루어야 하므로 잔액은 함수 밖의 전역 변수로 둔다.</li><li>함수 안에서 전역 변수에 새 값을 저장하려면 <code>global</code>로 그 이름을 먼저 알린다(7장 심화).</li><li>값을 읽기만 할 때는 <code>global</code>이 필요 없다.</li></ul></section><section class="section exercise" id="practice-9-1"><h2 class="task-heading"><span class="task-number">파이썬 실습 9-1</span><span class="task-title">global로 전역 변수의 값 바꾸기</span></h2><div class="section-body"><div class="exercise-solution"><div class="code-block"><pre class="python"><code><span class="cb-var">total</span> = <span class="cb-num">1000</span>
 
 <span class="cb-kwop">def</span> <span class="cb-var">add</span><span class="cb-b0">(</span><span class="cb-var">money</span><span class="cb-b0">)</span>:
@@ -3807,7 +3807,7 @@ a.hi()</code></td></tr><tr><td class="sum-bad"><code>def add(money):
 })();
 </script><script id="final-fix-v1">
 (function(){
-  var SKIP = '.df-table';
+  var SKIP = '.df-table,.ascii-col';
   function isCode(cell){
     if (cell.classList.contains('sum-bad') || cell.classList.contains('sum-good')) return true;
     if (cell.classList.contains('sum-out')) return false;
@@ -3829,6 +3829,8 @@ a.hi()</code></td></tr><tr><td class="sum-bad"><code>def add(money):
     if (t.dataset.fitAdded === '1') { var g = t.querySelector('colgroup'); if (g) g.remove(); t.dataset.fitAdded = ''; }
     t.querySelectorAll('tr > *').forEach(function(c){ c.style.removeProperty('width'); });
     t.style.removeProperty('table-layout'); t.style.removeProperty('width'); t.classList.remove('fit-wrap');
+    t.querySelectorAll('[data-fit-wrap="1"]').forEach(function(c){ c.style.removeProperty('white-space'); c.style.removeProperty('word-break');
+      c.style.removeProperty('overflow-wrap'); c.dataset.fitWrap = ''; });
     t.dataset.fitDone = '';
   }
   function fitTable(t){
@@ -3850,6 +3852,8 @@ a.hi()</code></td></tr><tr><td class="sum-bad"><code>def add(money):
     // 줄을 바꾸지 않고 표를 내용 폭(max-content)으로 펼친 뒤 칸마다 폭을 잰다(인라인 !important로 다른 규칙을 이긴다)
     cols.forEach(function(c){ c.style.removeProperty('width'); });
     t.classList.remove('fit-wrap');
+    t.querySelectorAll('[data-fit-wrap="1"]').forEach(function(c){ c.style.removeProperty('white-space'); c.style.removeProperty('word-break');
+      c.style.removeProperty('overflow-wrap'); c.dataset.fitWrap = ''; });
     var saved = [[t, t.getAttribute('style')]];
     t.style.setProperty('table-layout', 'auto', 'important'); t.style.setProperty('width', 'max-content', 'important');
     t.style.setProperty('max-width', 'none', 'important'); t.style.setProperty('min-width', '0', 'important');
@@ -3874,6 +3878,10 @@ a.hi()</code></td></tr><tr><td class="sum-bad"><code>def add(money):
     rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
       c.style.setProperty('white-space', 'normal', 'important');
     }); });
+    t.classList.remove('fit-measuring');
+    var codes = t.querySelectorAll('td code, td pre, th code');
+    codes.forEach(function(c){ saved.push([c, c.getAttribute('style')]); c.style.setProperty('white-space', 'pre-wrap', 'important');
+      c.style.setProperty('word-break', 'normal', 'important'); c.style.setProperty('overflow-wrap', 'normal', 'important'); });
     rows.forEach(function(tr){ Array.prototype.forEach.call(tr.cells, function(c, i){
       var w = c.getBoundingClientRect().width + 1; if (w > minw[i]) minw[i] = w;
     }); });
@@ -3906,14 +3914,38 @@ a.hi()</code></td></tr><tr><td class="sum-bad"><code>def add(money):
         need.forEach(function(x, i){ if (!isC[i]) tcols++; });
         ws = ws.map(function(x, i){ return isC[i] ? x : x + left / tcols; });
       } else {
-        ws = need.map(function(x){ return W * x / sum; }); wrapAll = true;
+        // 그래도 넘치면 모든 칸을 같은 높이(cap)로 깎는다: 좁은 칸은 그대로, 넓은 칸만 줄을 바꾼다(코드도 공백에서 줄을 바꾼다)
+        var lo2 = 0, hi2 = W;
+        for (var it2 = 0; it2 < 40; it2++) {
+          var m2 = (lo2 + hi2) / 2, u2 = need.reduce(function(a, x){ return a + Math.min(x, m2); }, 0);
+          if (u2 > W) hi2 = m2; else lo2 = m2;
+        }
+        ws = need.map(function(x){ return Math.min(x, lo2); }); wrapAll = true;
+        // 글 칸은 낱말 하나(가장 좁은 폭)보다 좁게 만들지 않는다. 그래서 넘치면 표를 넓히고 가로로 스크롤한다
+        var isC2 = need.map(function(x, i){ return cnt[i] > 0 && code[i] * 2 >= cnt[i]; });
+        ws = ws.map(function(x, i){ return isC2[i] ? x : Math.max(x, minw[i]); });
+        // 그만큼 넘친 폭은 여유가 있는 칸(가장 좁은 폭보다 넓은 칸)에서 덜어 낸다
+        var ex = ws.reduce(function(a, b){ return a + b; }, 0) - W;
+        if (ex > 0) {
+          var room = ws.map(function(x, i){ return Math.max(0, x - minw[i]); }), R = room.reduce(function(a, b){ return a + b; }, 0);
+          if (R > 0) ws = ws.map(function(x, i){ return x - room[i] * Math.min(1, ex / R); });
+        }
       }
     }
     t.classList.toggle('fit-wrap', wrapAll);
+    // 줄을 바꿔야 할 때는 칸 안의 코드에 직접(인라인) 줄 바꿈을 허락한다. 다른 규칙이 nowrap을 걸어도 글자가 옆 칸으로 넘치지 않는다
+    t.querySelectorAll('td code, td pre, th code').forEach(function(c){
+      if (wrapAll) { c.style.setProperty('white-space', 'pre-wrap', 'important'); c.style.setProperty('word-break', 'normal', 'important');
+                     c.style.setProperty('overflow-wrap', 'anywhere', 'important'); c.dataset.fitWrap = '1'; }
+      else if (c.dataset.fitWrap === '1') { c.style.removeProperty('white-space'); c.style.removeProperty('word-break');
+                     c.style.removeProperty('overflow-wrap'); c.dataset.fitWrap = ''; }
+    });
+    var total = ws.reduce(function(a, b){ return a + b; }, 0), over = total > W + 1, TW = over ? total : W;
     t.style.setProperty('table-layout', 'fixed', 'important');
-    t.style.setProperty('width', '100%', 'important');
-    cols.forEach(function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
-    Array.prototype.forEach.call(rows[0].cells, function(c, i){ c.style.setProperty('width', (ws[i] / W * 100).toFixed(3) + '%', 'important'); });
+    t.style.setProperty('width', over ? Math.ceil(total) + 'px' : '100%', 'important');
+    if (over) wrap.style.setProperty('overflow-x', 'auto', 'important');
+    cols.forEach(function(c, i){ c.style.setProperty('width', (ws[i] / TW * 100).toFixed(3) + '%', 'important'); });
+    Array.prototype.forEach.call(rows[0].cells, function(c, i){ c.style.setProperty('width', (ws[i] / TW * 100).toFixed(3) + '%', 'important'); });
     t.dataset.fitDone = '1';
   }
   function fit(){
